@@ -2,9 +2,9 @@
 """Main application."""
 from fastapi import FastAPI
 
-from config.security import pwd_context
+from core.security import pwd_context, get_password_hash, verify_password
+from core.settings_config import settings
 
 
-
-
-print(f'Security password configuration:\n{pwd_context.to_string()}')
+app = FastAPI()
+pwd_context.load_path(settings.SECURITY_CONIFIG_FILE)
