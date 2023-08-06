@@ -6,6 +6,8 @@ and data parsing.
 """
 from pydantic import BaseModel, EmailStr, ConfigDict
 
+from table import Table
+
 
 class UserBase(BaseModel):
     """Model defining the base attributes of a user."""
