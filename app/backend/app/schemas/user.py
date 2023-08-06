@@ -1,7 +1,7 @@
 #!/usr/bin/env python3
 """Pydantic models defining the schema for user data.
 
-This model will provide validation, conversion (where necessary)
+These models will provide validation, conversion (where necessary)
 and data parsing.
 """
 from pydantic import BaseModel, EmailStr, ConfigDict
