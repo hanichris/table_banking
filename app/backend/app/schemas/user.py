@@ -1,5 +1,5 @@
 #!/usr/bin/env python3
-"""Pydantic model defining the schema for user data.
+"""Pydantic models defining the schema for user data.
 
 This model will provide validation, conversion (where necessary)
 and data parsing.
