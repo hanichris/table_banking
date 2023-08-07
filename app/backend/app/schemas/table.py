@@ -36,4 +36,4 @@ class TableUsers(Table):
 
     Avoids the creation of a circular dependency.
     """
-    users: list[User] = []
+    users: set[User] = []

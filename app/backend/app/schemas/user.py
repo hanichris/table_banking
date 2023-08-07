@@ -48,4 +48,4 @@ class UserTables(User):
 
     Avoids a circular dependency.
     """
-    tables: list[Table] = []
+    tables: set[Table] = []
