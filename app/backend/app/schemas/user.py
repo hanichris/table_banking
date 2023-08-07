@@ -12,6 +12,7 @@ from table import Table
 class UserBase(BaseModel):
     """Model defining the base attributes of a user."""
     email: EmailStr
+    is_active: bool = True
     is_superuser: bool = False
     full_name: str | None = None
 
@@ -30,7 +31,6 @@ class UserUpdate(UserBase):
     their account.
     """
     password: str | None = None
-    is_active: bool
 
 class User(UserBase):
     """Model used when reading the data from an API endpoint.
@@ -39,8 +39,13 @@ class User(UserBase):
     a `dict`, but an ORM model. Makes it compatible with ORMs.
     """
     id: int
-    is_active: bool
     username: str
-    tables: list[Table] = []
 
     model_config = ConfigDict(from_attributes=True)
+
+class UserTables(User):
+    """Model defining the users who are apart of a `table`.
+
+    Avoids a circular dependency.
+    """
+    tables: list[Table] = []
