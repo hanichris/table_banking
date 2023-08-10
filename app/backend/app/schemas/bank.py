@@ -1,5 +1,5 @@
 #!/usr/bin/env python3
-"""Pydantic models defining the `table` data.
+"""Pydantic models defining the `bank` data.
 
 These models will parse the data providing validation and conversion
 (whenever necessary.)
@@ -11,28 +11,28 @@ from pydantic import BaseModel, ConfigDict
 from user import User
 
 
-class TableBase(BaseModel):
+class BankBase(BaseModel):
     """Model defining the common base attributes of a `table` bank."""
     title: str
     interest_rate: Decimal = Decimal(0)
     amount: Decimal = Decimal(0)
 
-class TableCreate(TableBase):
-    """Model defining properties to receive on `table` creation."""
+class BankCreate(BankBase):
+    """Model defining properties to receive on `bank` creation."""
     admin_id: int
 
-class TableUpdate(TableBase):
-    """Model defining the properties to receive on `table` update."""
+class BankUpdate(BankBase):
+    """Model defining the properties to receive on `bank` update."""
     amount_loaned_out: Decimal
 
-class Table(TableBase):
+class Bank(BankBase):
     id: int
     admin_id: int
 
     model_config = ConfigDict(from_attributes=True)
 
-class TableUsers(Table):
-    """Model defining the users who are apart of a `table`.
+class BankUsers(Bank):
+    """Model defining the users who are apart of a `bank`.
 
     Avoids the creation of a circular dependency.
     """
