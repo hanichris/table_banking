@@ -44,8 +44,8 @@ class User(UserBase):
     model_config = ConfigDict(from_attributes=True)
 
 class UserBanks(User):
-    """Model defining the users who are apart of a `table`.
+    """Model defining the users who are apart of a `table bank`.
 
     Avoids a circular dependency.
     """
-    tables: set[Bank] = []
+    banks: set[Bank] = []
