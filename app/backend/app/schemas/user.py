@@ -6,7 +6,7 @@ and data parsing.
 """
 from pydantic import BaseModel, EmailStr, ConfigDict
 
-from table import Table
+from app.schemas.bank import Bank
 
 
 class UserBase(BaseModel):
@@ -43,9 +43,9 @@ class User(UserBase):
 
     model_config = ConfigDict(from_attributes=True)
 
-class UserTables(User):
+class UserBanks(User):
     """Model defining the users who are apart of a `table`.
 
     Avoids a circular dependency.
     """
-    tables: set[Table] = []
+    tables: set[Bank] = []
