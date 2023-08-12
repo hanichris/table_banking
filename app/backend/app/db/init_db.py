@@ -10,6 +10,8 @@ from app.schemas import UserCreate
 from .db_setup import engine
 from . import Base
 
+import app.crud as crud
+
 
 def init_db(db: Session) -> None:
     """Creates the tables in the database and the admin user.
@@ -21,3 +23,11 @@ def init_db(db: Session) -> None:
     https://docs.sqlalchemy.org/en/20/tutorial/metadata.html#tutorial-emitting-ddl
     """
     Base.metadata.create_all(bind=engine)
+    
+    user = crud.user.get_by_email(db, email=settings.FIRST_SUPERUSER)
+    if not user:
+        print('No User with the given email found!!!')
+        # user_in = UserCreate(
+        #     email=settings.FIRST_SUPERUSER,
+        #     password=
+        # )
