@@ -14,7 +14,6 @@ from sqlalchemy.orm import Mapped
 from sqlalchemy.orm import mapped_column, relationship
 
 from app.db.base_class import Base, association_table
-from app.models.user import User
 
 
 class Bank(Base):
@@ -25,7 +24,13 @@ class Bank(Base):
     amount: Mapped[Decimal] = mapped_column(insert_default=Decimal(0))
     loaned_out_amount: Mapped[Decimal] = mapped_column(insert_default=Decimal(0))
 
-    members: Mapped[set[User]] = relationship(
-        secondary=association_table, back_populates='banks'
-    )
-    admin: Mapped[User] = relationship(back_populates='banks_admin')
+    members = relationship(
+        "User",
+        collection_class=set,
+        secondary=association_table,
+        back_populates='banks')
+
+    admin = relationship(
+        "User",
+        collection_class=set,
+        back_populates='banks_admin')

@@ -10,7 +10,6 @@ from sqlalchemy.orm import Mapped
 from sqlalchemy.orm import mapped_column, relationship
 
 from app.db.base_class import Base, association_table
-from app.models.bank import Bank
 
 
 class User(Base):
@@ -21,7 +20,13 @@ class User(Base):
     is_active: Mapped[bool] = mapped_column(insert_default=True)
     is_superuser: Mapped[bool] = mapped_column(insert_default=False)
 
-    banks: Mapped[set[Bank]] = relationship(
-        secondary=association_table, back_populates='members'
-    )
-    banks_admin: Mapped[set[Bank]] = relationship(back_populates='admin')
+    banks = relationship(
+        "Bank",
+        collection_class=set,
+        secondary=association_table,
+        back_populates='members')
+
+    banks_admin = relationship(
+        "Bank",
+        collection_class=set,
+        back_populates='admin')
