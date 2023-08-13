@@ -16,9 +16,10 @@ class User(Base):
     id: Mapped[int] = mapped_column(primary_key=True, index=True)
     email: Mapped[str] = mapped_column(unique=True, index=True)
     full_name: Mapped[str | None] = mapped_column(index=True)
-    hashed_password: Mapped[str] = mapped_column()
+    password: Mapped[str] = mapped_column()
     is_active: Mapped[bool] = mapped_column(insert_default=True)
     is_superuser: Mapped[bool] = mapped_column(insert_default=False)
+    username: Mapped[str] = mapped_column(unique=True, index=True)
 
     banks = relationship(
         "Bank",
