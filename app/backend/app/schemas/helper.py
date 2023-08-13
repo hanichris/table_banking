@@ -5,7 +5,7 @@ from .user import User
 
 
 class UserBanks(User):
-    """Model defining the users who are apart of a `table bank`.
+    """Model defining the banks a user is a part of.
 
     Avoids a circular dependency.
     """
