@@ -3,7 +3,7 @@
 from sqlalchemy import select
 from sqlalchemy.orm import Session
 
-from app.core.security import get_password_hash
+from app.core.security import get_password_hash, verify_password
 from .base import CRUDBase
 from app.models import User
 from app.schemas import UserCreate, UserUpdate
@@ -21,13 +21,20 @@ class CRUDUser(CRUDBase[User, UserCreate, UserUpdate]):
     def update_user():
         pass
 
-    def authenticate():
-        pass
+    def authenticate(
+            self, db: Session, /, *, email: str, password: str
+    ) -> User | None:
+        new_user = self.get_by_email(db, email=email)
+        if not new_user:
+            return None
+        if not verify_password(password, new_user.password):
+            return None
+        return new_user
 
-    def is_active(self, user: User) -> bool:
-        return user.is_active
+    def is_active(self, current_user: User) -> bool:
+        return current_user.is_active
 
-    def is_superuser(self, user: User) -> bool:
-        return user.is_superuser
+    def is_superuser(self, current_user: User) -> bool:
+        return current_user.is_superuser
 
 user = CRUDUser(User)
