@@ -8,8 +8,6 @@ from decimal import Decimal
 
 from pydantic import BaseModel, ConfigDict
 
-from user import User
-
 
 class BankBase(BaseModel):
     """Model defining the common base attributes of a `table` bank."""
@@ -30,10 +28,3 @@ class Bank(BankBase):
     admin_id: int
 
     model_config = ConfigDict(from_attributes=True)
-
-class BankUsers(Bank):
-    """Model defining the users who are apart of a `bank`.
-
-    Avoids the creation of a circular dependency.
-    """
-    users: set[User] = []

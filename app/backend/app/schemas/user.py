@@ -6,8 +6,6 @@ and data parsing.
 """
 from pydantic import BaseModel, EmailStr, ConfigDict
 
-from app.schemas.bank import Bank
-
 
 class UserBase(BaseModel):
     """Model defining the base attributes of a user."""
@@ -42,10 +40,3 @@ class User(UserBase):
     username: str
 
     model_config = ConfigDict(from_attributes=True)
-
-class UserBanks(User):
-    """Model defining the users who are apart of a `table bank`.
-
-    Avoids a circular dependency.
-    """
-    banks: set[Bank] = []
