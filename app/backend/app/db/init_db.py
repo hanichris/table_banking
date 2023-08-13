@@ -26,8 +26,10 @@ def init_db(db: Session) -> None:
     
     user = crud.user.get_by_email(db, email=settings.FIRST_SUPERUSER)
     if not user:
-        print('No User with the given email found!!!')
-        # user_in = UserCreate(
-        #     email=settings.FIRST_SUPERUSER,
-        #     password=
-        # )
+        user_in = UserCreate(
+            email=settings.FIRST_SUPERUSER,
+            password=settings.FIRST_SUPERUSER_PASSWORD,
+            is_superuser=True,
+            username=settings.FIRST_SUPERUSER_USERNAME
+        )
+        crud.user.create_user(db, obj_in=user_in)
