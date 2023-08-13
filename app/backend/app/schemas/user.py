@@ -13,7 +13,6 @@ class UserBase(BaseModel):
     is_active: bool = True
     is_superuser: bool = False
     full_name: str | None = None
-    username: str
 
 class UserCreate(UserBase):
     """Model detailing user attributes needed during creation.
