@@ -5,6 +5,7 @@ Involves creating the first superuser within the database.
 """
 from sqlalchemy.orm import Session
 
+from app.core.security import pwd_context
 from app.core.settings_config import settings
 from app.schemas import UserCreate
 from .db_setup import engine
@@ -30,6 +31,5 @@ def init_db(db: Session) -> None:
             email=settings.FIRST_SUPERUSER,
             password=settings.FIRST_SUPERUSER_PASSWORD,
             is_superuser=True,
-            username=settings.FIRST_SUPERUSER_USERNAME
         )
         crud.user.create_user(db, obj_in=user_in)
