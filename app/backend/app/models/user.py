@@ -19,7 +19,6 @@ class User(Base):
     password: Mapped[str] = mapped_column()
     is_active: Mapped[bool] = mapped_column(insert_default=True)
     is_superuser: Mapped[bool] = mapped_column(insert_default=False)
-    username: Mapped[str] = mapped_column(unique=True, index=True)
 
     banks = relationship(
         "Bank",
