@@ -13,6 +13,7 @@ class UserBase(BaseModel):
     is_active: bool = True
     is_superuser: bool = False
     full_name: str | None = None
+    username: str
 
 class UserCreate(UserBase):
     """Model detailing user attributes needed during creation.
@@ -20,7 +21,6 @@ class UserCreate(UserBase):
     Adds onto the base attributes of a User.
     """
     password: str
-    username: str
 
 class UserUpdate(UserBase):
     """Model detailing the user attributes that are eligible for updates.
@@ -37,6 +37,5 @@ class User(UserBase):
     a `dict`, but an ORM model. Makes it compatible with ORMs.
     """
     id: int
-    username: str
 
     model_config = ConfigDict(from_attributes=True)
