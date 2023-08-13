@@ -22,6 +22,10 @@ def main() -> None:
     print('Initial data generated.')
 
 if __name__ == "__main__":
+    from app.core.security import pwd_context
+    from app.core.settings_config import settings
+    
+    pwd_context.load_path(settings.SECURITY_CONIFIG_FILE)
     main()
     # import sys
     # print(sys.path)
