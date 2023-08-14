@@ -2,7 +2,9 @@
 """Router dedicated to handling users."""
 from typing import Annotated
 
-from fastapi import APIRouter, Depends, HTTPException
+from fastapi import APIRouter, Body, Depends, HTTPException
+from fastapi.encoders import jsonable_encoder
+from pydantic import EmailStr
 from sqlalchemy.orm import Session
 
 from app.api import deps
@@ -79,18 +81,30 @@ async def create_user(
 async def update_me(
     db: Annotated[Session, Depends(deps.get_db)],
     stored_user: Annotated[mdl.User, Depends(deps.get_current_active_user)],
-    user_in: UserUpdate
+    user_email: Annotated[EmailStr | None, Body()] = None,
+    user_full_name: Annotated[str | None, Body()] = None,
+    user_pwd: Annotated[str | None, Body()] = None
 ):
     """A user can update their own details.
 
     Args:
         * `db` - A SQLAlchemy session object.
         * `stored_user` - The details of the currently logged in user.
-        * `user_in` - The details to update the currently logged in user with.
+        * `user_email` - The new email for the logged in user.
+        * `user_full_name` - The new full name for the logged in user.
+        * `user_pwd` - The new password for the logged in user.
 
     Returns:
         * `User` - The updated details of the logged in user.
     """
+    stored_user_data = jsonable_encoder(stored_user)
+    user_in = UserUpdate(**stored_user_data)
+    if user_email:
+        user_in.email = user_email
+    if user_full_name:
+        user_in.full_name = user_full_name
+    if user_pwd:
+        user_in.password = user_pwd
     updated_user = user.update_user(
         db,
         user_db_model=stored_user,
@@ -117,13 +131,18 @@ async def read_me(
 @router.post('/open', response_model=User)
 async def create_user_open(
     db: Annotated[Session, Depends(deps.get_db)],
-    user_in: UserCreate
+    user_email: Annotated[EmailStr, Body()],
+    user_pwd: Annotated[str, Body()],
+    user_full_name: Annotated[str | None, Body()] = None,
 ):
     """Create a new user without needing to be logged in.
 
     Args:
         * `db` - A SQLAlchemy session object.
-        * `user_in` - A request body parameter with the details for a new user.
+        * `user_email` - A request body parameter with the email for a new user.
+        * `user_pwd` - A request body parameter with the password for a new user.
+        * `user_full_name` - A request body parameter with the fullname of the
+        new user.
 
     Raises:
         * `HTTPException` - if the server doesn't permit new user registration
@@ -139,12 +158,17 @@ async def create_user_open(
             detail='Open user registration is prohibited on this server.'
         )
 
-    new_user = user.get_by_email(db, email=user_in.email)
+    new_user = user.get_by_email(db, email=user_email)
     if new_user:
         raise HTTPException(
             status_code=400,
             detail='The username is already taken.'
         )
+    user_in = UserCreate(
+        email=user_email,
+        password=user_pwd,
+        full_name=user_full_name
+    )
     return user.create_user(db, obj_in=user_in)
 
 
