@@ -18,8 +18,14 @@ class CRUDUser(CRUDBase[User, UserCreate, UserUpdate]):
         obj_in.password = get_password_hash(obj_in.password)
         return super().create(db, obj_in=obj_in)
 
-    def update_user():
-        pass
+    def update_user(
+            self, db: Session, /, *, user_db_model: User, obj_in: UserUpdate
+    ) -> User:
+        update_data = obj_in.model_dump(exclude_unset=True)
+        if update_data.get('password'):
+            update_data['password'] = get_password_hash(update_data['password'])
+        return super().update(db, db_obj=user_db_model, obj_in=update_data)
+
 
     def authenticate(
             self, db: Session, /, *, email: str, password: str
