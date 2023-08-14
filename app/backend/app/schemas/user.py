@@ -9,7 +9,7 @@ from pydantic import BaseModel, EmailStr, ConfigDict
 
 class UserBase(BaseModel):
     """Model defining the base attributes of a user."""
-    email: EmailStr
+    email: EmailStr | None = None
     is_active: bool = True
     is_superuser: bool = False
     full_name: str | None = None
@@ -19,6 +19,7 @@ class UserCreate(UserBase):
 
     Adds onto the base attributes of a User.
     """
+    email: EmailStr
     password: str
 
 class UserUpdate(UserBase):
@@ -38,3 +39,7 @@ class User(UserBase):
     id: int
 
     model_config = ConfigDict(from_attributes=True)
+
+class UserInDB(User):
+    """Obtain additional properties of the user stored in the database."""
+    password: str
