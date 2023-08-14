@@ -71,7 +71,17 @@ def get_current_user(
 def get_current_active_user(
         current_user: Annotated[User, Depends(get_current_user)]
 ) -> User:
-    """Relies on the dependency injection system to test if the user is active."""
+    """Relies on the dependency injection system to test if the user is active.
+
+    Args:
+    * `current_user` - Instance of SQLAlchemy `User` class.
+
+    Raises:
+    * `HTTPException` - If the found user is inactive.
+
+    Returns:
+    * `User` - An instance of the SQLAlchemy class with a set active attribute.
+    """
     if not user.is_active(current_user):
         raise HTTPException(
             status_code=400, detail="Inactive user"
@@ -81,7 +91,17 @@ def get_current_active_user(
 def get_current_active_superuser(
         current_user: Annotated[User, Depends(get_current_user)]
 ) -> User:
-    """Relies on the dependency injection system to test if the user is an admin"""
+    """Relies on the dependency injection system to test if the user is an admin.
+
+    Args:
+    * `current_user` - Instance of SQLAlchemy `User` class.
+
+    Raises:
+    * `HTTPException` - If the found user is not one of the admins of the app.
+
+    Returns:
+    * `User` - Instance of SQLAlchemy `User` class with a set is_superuser attr.
+    """
     if not user.is_superuser(current_user):
         raise HTTPException(
             status_code=400, detail="The user doesn't have enough priviledges.")
