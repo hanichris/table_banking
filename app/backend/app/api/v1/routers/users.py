@@ -19,7 +19,8 @@ router = APIRouter(
     responses={
         404: {'description': 'Not Found'},
         401: {'description': 'Unauthorized'},
-        403: {'description': 'Prohibited'},}
+        403: {'description': 'Prohibited'},
+        400: {'description': 'Bad Request'}}
 )
 
 @router.get('/',
