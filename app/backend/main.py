@@ -2,7 +2,8 @@
 """Main application."""
 from fastapi import FastAPI
 
-from app.core.security import pwd_context, create_access_token
+from app.api.v1.api import api_router
+from app.core.security import pwd_context
 from app.core.settings_config import settings
 
 
@@ -12,6 +13,4 @@ app = FastAPI(
     )
 pwd_context.load_path(settings.SECURITY_CONIFIG_FILE)
 
-@app.get('/{username}')
-async def main(username: str):
-    return create_access_token(username)
+app.include_router(api_router, prefix=settings.API_V1_STR)
