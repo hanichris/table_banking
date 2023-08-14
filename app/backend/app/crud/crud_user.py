@@ -26,7 +26,6 @@ class CRUDUser(CRUDBase[User, UserCreate, UserUpdate]):
             update_data['password'] = get_password_hash(update_data['password'])
         return super().update(db, db_obj=user_db_model, obj_in=update_data)
 
-
     def authenticate(
             self, db: Session, /, *, email: str, password: str
     ) -> User | None:
