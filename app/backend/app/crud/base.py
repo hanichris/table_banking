@@ -1,6 +1,6 @@
 #!/usr/bin/env python3
 """Define the base class for CRUD operations."""
-from typing import Generic, TypeVar
+from typing import Any, Generic, TypeVar
 
 from fastapi.encoders import jsonable_encoder
 from pydantic import BaseModel
@@ -14,7 +14,8 @@ ModelType = TypeVar('ModelType', bound=Base)
 CreateSchemaType = TypeVar('CreateSchemaType', bound=BaseModel)
 UpdateSchemaType = TypeVar('UpdateSchemaType', bound=BaseModel)
 
-class CRUDBase(Generic[ModelType, CreateSchemaType, UpdateSchemaType]):
+class CRUDBase(
+    Generic[ModelType, CreateSchemaType, UpdateSchemaType]):
     """Base class for CRUD operations that inherits from the Generic base class.
 
     The `Generic` class which this class inherits from has been parameterized
@@ -40,9 +41,24 @@ class CRUDBase(Generic[ModelType, CreateSchemaType, UpdateSchemaType]):
 
     def create(
             self, db: Session, /, *, obj_in: CreateSchemaType
-            ) -> ModelType:
+    ) -> ModelType:
         data = jsonable_encoder(obj_in)
         db_obj = self.model(**data)
+        db.add(db_obj)
+        db.commit()
+        db.refresh(db_obj)
+        return db_obj
+    
+    def update(
+            self,
+            db: Session, /, *,
+            db_obj: ModelType,
+            obj_in: dict[str, Any],
+    ) -> ModelType:
+        db_obj_data = jsonable_encoder(db_obj)
+        for field in db_obj_data:
+            if field in obj_in:
+                setattr(db_obj, field, obj_in[field])
         db.add(db_obj)
         db.commit()
         db.refresh(db_obj)
