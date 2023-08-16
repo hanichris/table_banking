@@ -14,7 +14,7 @@ class BankBase(BaseModel):
     title: str | None = None
     interest_rate: Decimal = Decimal(0)
     amount: Decimal = Decimal(0)
-    amount_loaned_out: Decimal = Decimal(0)
+    loaned_out_amount: Decimal = Decimal(0)
 
 class BankCreate(BankBase):
     """Model defining properties to receive on `bank` creation."""
