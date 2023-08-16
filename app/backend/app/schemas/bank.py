@@ -11,17 +11,18 @@ from pydantic import BaseModel, ConfigDict
 
 class BankBase(BaseModel):
     """Model defining the common base attributes of a `table` bank."""
-    title: str
+    title: str | None = None
     interest_rate: Decimal = Decimal(0)
     amount: Decimal = Decimal(0)
+    amount_loaned_out: Decimal = Decimal(0)
 
 class BankCreate(BankBase):
     """Model defining properties to receive on `bank` creation."""
-    admin_id: int
+    title: str
 
 class BankUpdate(BankBase):
     """Model defining the properties to receive on `bank` update."""
-    amount_loaned_out: Decimal
+    pass
 
 class Bank(BankBase):
     id: int
