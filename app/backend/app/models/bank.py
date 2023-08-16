@@ -28,9 +28,11 @@ class Bank(Base):
         "User",
         collection_class=set,
         secondary=association_table,
+        lazy='selectin',
         back_populates='banks')
 
     admin = relationship(
         "User",
         collection_class=set,
+        lazy='selectin',
         back_populates='banks_admin')
