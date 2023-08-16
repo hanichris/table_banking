@@ -29,20 +29,24 @@ class CRUDBank(CRUDBase[Bank, BankCreate, BankUpdate]):
             db: Session, /, *,
             bank_model: Bank,
             user_model: User
-    ):
+    ) -> Bank:
         bank_model.members.add(user_model)
         db.add(bank_model)
         db.commit()
+        db.refresh(bank_model)
+        return bank_model
 
     def remove_bank_member(
             self,
             db: Session, /, *,
             bank_model: Bank,
             user_model: User
-    ):
+    ) -> Bank:
         bank_model.members.remove(user_model)
         db.add(bank_model)
         db.commit()
+        db.refresh(bank_model)
+        return bank_model
 
     def get_multi_by_admin(
             self,
@@ -56,3 +60,5 @@ class CRUDBank(CRUDBase[Bank, BankCreate, BankUpdate]):
             .filter_by(admin_id=admin_id)
             .offset(skip)
             .limit(limit)).scalars().unique().all()
+
+_bank = CRUDBank(Bank)
