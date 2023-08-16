@@ -9,11 +9,14 @@ class UserBanks(User):
 
     Avoids a circular dependency.
     """
+    # The banks for which the user is a member.
     banks: set[Bank] = []
+    # The banks for which the user is an admin.
+    banks_admin: set[Bank] = []
 
 class BankUsers(Bank):
     """Model defining the users who are apart of a `bank`.
 
     Avoids the creation of a circular dependency.
     """
-    users: set[User] = []
+    members: set[User] = []
