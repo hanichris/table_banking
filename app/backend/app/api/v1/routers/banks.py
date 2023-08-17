@@ -27,6 +27,19 @@ async def read_banks(
     skip: int = 0,
     limit: int = 100
 ):
+    """Get a list of bank instances in a paginated manner.
+
+    The instances obtained depend on if an application admin is requesting them
+    or if a user with administrative priviledges over some banks is.
+    Args:
+        * `db` - A session object.
+        * `current_user` - The currently logged in user.
+        * `skip` - The offset parameter to paginate the data with.
+        * `limit` - The maximum number of instances to get per request.
+
+    Returns:
+        * A paginated list of results.
+    """
     if user.is_superuser(current_user):
         banks = _bank.get_multi(db, skip=skip, limit=limit)
     else:
@@ -41,6 +54,17 @@ async def create_bank(
     current_user: Annotated[mdl.User, Depends(deps.get_current_active_user)],
     bank_in: BankCreate
 ):
+    """Create a new table bank with an associated admin for it.
+
+    Args:
+        * `db` - A session object.
+        * `current_user` - The currently logged in user who will be the admin
+        for this bank being created.
+        * `bank_in` - The details for the newly created bank.
+
+    Returns:
+        * The newly created bank instance.
+    """
     return _bank.create_with_owner(db, admin_id=current_user.id, obj_in=bank_in)
 
 @router.patch('/{bank_id}/users/{user_id}', response_model=BankUsers)
@@ -56,6 +80,18 @@ async def add_or_remove_bank_member(
               Otherwise, removes the member when `r=1` or `r=True`."""
         )] = False
 ):
+    """Add or remove a member from the given bank.
+
+    Args:
+        * `db` - A session object.
+        * `bank_id` - The id of the bank to add or remove members from.
+        * `user_id` - The id of the user to add or remove from the bank.
+        * `current_user` - The currently logged in user.
+        * `r` - Query flag denoting whether to add or remove the user.
+
+    Returns:
+        * The changes to the membership of the bank.
+    """
     member = user.get(db, id=user_id)
     if not member:
         raise HTTPException(
