@@ -101,5 +101,15 @@ class CRUDBank(CRUDBase[Bank, BankCreate, BankUpdate]):
             .filter_by(admin_id=admin_id)
             .offset(skip)
             .limit(limit)).scalars().unique().all()
+    
+    def update_bank(
+            self,
+            db: Session, /, *,
+            bank_db_model: Bank,
+            obj_in: BankUpdate
+    ):
+        """"""
+        update_data = obj_in.model_dump(exclude_unset=True)
+        return super().update(db, db_obj=bank_db_model, obj_in=update_data)
 
 _bank = CRUDBank(Bank)
