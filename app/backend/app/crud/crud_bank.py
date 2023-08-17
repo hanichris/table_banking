@@ -17,6 +17,16 @@ class CRUDBank(CRUDBase[Bank, BankCreate, BankUpdate]):
             admin_id: int,
             obj_in: BankCreate
     ) -> Bank:
+        """Create a new table bank and link it with an admin.
+
+        Args:
+            * `db`: A session object.
+            * `admin_id`: The table banks's administrator.
+            * `obj_in`: The details pertaining to a new table bank.
+
+        Returns:
+            * `Bank` - A SQLAlchemy class instance with updated attributes (id).
+        """
         obj_in_data = jsonable_encoder(obj_in)
         db_obj = self.model(**obj_in_data, admin_id=admin_id)
         db.add(db_obj)
@@ -30,6 +40,16 @@ class CRUDBank(CRUDBase[Bank, BankCreate, BankUpdate]):
             bank_model: Bank,
             user_model: User
     ) -> Bank:
+        """Add a member to the particular table bank.
+
+        Args:
+            * `db`- A session object.
+            * `bank_model` - A SQLAlchemy class instance of the table bank.
+            * `user_model` - A SQLAlchemy class instance of the user to add.
+
+        Returns:
+            * `Bank` - A SQLAlchemy class instance of the bank with the updates.
+        """
         bank_model.members.add(user_model)
         db.add(bank_model)
         db.commit()
@@ -42,6 +62,16 @@ class CRUDBank(CRUDBase[Bank, BankCreate, BankUpdate]):
             bank_model: Bank,
             user_model: User
     ) -> Bank:
+        """Remove a member from the particular table bank.
+
+        Args:
+            * `db`- A session object.
+            * `bank_model` - A SQLAlchemy class instance of the table bank.
+            * `user_model` - A SQLAlchemy class instance of the user to remove.
+
+        Returns:
+            * `Bank` - A SQLAlchemy class instance of the bank with the updates.
+        """
         bank_model.members.remove(user_model)
         db.add(bank_model)
         db.commit()
@@ -55,6 +85,17 @@ class CRUDBank(CRUDBase[Bank, BankCreate, BankUpdate]):
             skip: int = 0,
             limit: int = 100
     ) -> list[Bank]:
+        """Obtain a list of `Bank` instances in a paginated manner.
+
+        Args:
+            * `db` - A session object.
+            * `admin_id` - The admin of a particular table bank.
+            * `skip` - The offset to start indexing the list from.
+            * `limit` - The maximum number of table banks to get per request.
+    
+        Returns:
+            * A list of the `Bank` instances.
+        """
         return db.execute(
             select(self.model)
             .filter_by(admin_id=admin_id)
