@@ -11,7 +11,7 @@ from app.api import deps
 from app.core.settings_config import settings
 from app.core.security import create_access_token
 from app.crud import user
-from app.schemas import Token
+from app.schemas import Msg, Token
 
 
 router = APIRouter(
@@ -42,3 +42,11 @@ async def login_for_access_token(
         'access_token': create_access_token(current_user.id, access_token_expires),
         'token_type': 'bearer',
     }
+
+@router.post('/password-recovery/{user_email}', response_model=Msg)
+async def recover_password():
+    pass
+
+@router.post('/reset-password', response_model=Msg)
+async def reset_password():
+    pass
