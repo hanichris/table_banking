@@ -44,8 +44,18 @@ async def login_for_access_token(
     }
 
 @router.post('/password-recovery/{user_email}', response_model=Msg)
-async def recover_password():
-    pass
+async def recover_password(
+    db: Annotated[Session, Depends(deps.get_db)],
+    user_email: str,
+):
+    current_user = user.get_by_email(db, email=user_email)
+    if not current_user:
+        raise HTTPException(
+            status_code=404,
+            detail="The user with this email does not exist."
+        )
+    password_reset_token = ""
+    return {'msg': 'Password recovery email sent'}
 
 @router.post('/reset-password', response_model=Msg)
 async def reset_password():
