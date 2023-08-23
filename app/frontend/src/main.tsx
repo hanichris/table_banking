@@ -1,7 +1,7 @@
 import React from 'react'
 import ReactDOM from 'react-dom/client'
-import App from './App.tsx'
 import './index.css'
+import App from './App.tsx'
 
 // Perform / trigger the inital render.
 // It targets the target DOM node referenced by the id `root`.
