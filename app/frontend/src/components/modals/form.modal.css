@@ -1,0 +1,41 @@
+ /* Helpers
+============================= */
+
+.visually-hidden:not(:focus):not(:active) {
+    position: absolute !important;
+    height: 1px;
+    width: 1px;
+    overflow: hidden;
+    clip: rect(1px, 1px, 1px, 1px);
+    white-space: nowrap;
+}
+
+/* FORM */
+form {
+    display: flex;
+    flex-direction: column;
+    margin: 0;
+}
+
+fieldset {
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-start;
+    padding: 0;
+    margin: 0;
+    border: none;
+}
+
+label {
+    cursor: pointer;
+    display: block;
+    white-space: nowrap;
+    font-size: 1.6rem;
+    padding: 0 0 .5rem;
+}
+
+input[type=email],
+input[type=password] {
+    position: relative;
+    width: 100%;
+}
