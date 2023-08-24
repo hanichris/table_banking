@@ -22,7 +22,7 @@ export default function UserForm({ isOpen, setIsOpen }: UserFormProps) {
     
     return (
         <>
-            <div className="modal" style={isOpen ? {display: "block"} : {display: 'none'}}>
+            <section className="modal" style={isOpen ? {display: "block"} : {display: 'none'}}>
                 <div className="modal-container" onClick={() => setIsOpen(false)}>
                     <div className="modal-cell">
                         <div className="modal-element" style={isOpen ? {position:'relative', transform: 'translate3d(0, 0, 0) scale(1)', opacity:'1'}: {}}>
@@ -30,7 +30,7 @@ export default function UserForm({ isOpen, setIsOpen }: UserFormProps) {
                                 <h2>Hello!</h2>
                                 <div>Use your email or another service to continue with Table Bank.</div>
                             </div>
-                            <a className="modal_button-left btn btn--icon btn--xs btn--transparent">
+                            <a className="modal_button-left btn btn--icon btn--xs btn--transparent" onClick={() => setIsOpen(false)}>
                                 <RiCloseLine />
                             </a>
                             <div className="modal-body">
@@ -54,7 +54,7 @@ export default function UserForm({ isOpen, setIsOpen }: UserFormProps) {
                         </div>
                     </div>
                 </div>
-            </div>
+            </section>
             {/* <section className="user-form">
                 <header>
                     <button onClick={handleChangePage}> SignUp</button>
