@@ -1,36 +1,31 @@
-import { useState } from "react";
-
-import Login from "./Login";
-import SignUp from "./Signup";
 import { RiCloseLine } from "react-icons/ri";
 import { FaGoogle } from "react-icons/fa6"
 import { FaApple } from "react-icons/fa6"
+
 import './modal.css'
 
 interface UserFormProps {
-    isOpen: boolean,
     setIsOpen: (param: boolean) => void,
+    setUserForm: (param: boolean) => void,
+    status: string,
 }
 
-export default function UserForm({ isOpen, setIsOpen }: UserFormProps) {
-    const [isLogin, setIsLogin] = useState(false);
+export default function UserForm({ setIsOpen, setUserForm, status }: UserFormProps) {
 
-    // Go to sign up page
-    // function handleChangePage() {
-    //     setIsLogin(!isLogin);
-    // }
+    const auth: boolean = status === 'signIn' || status === 'signUp';
+
     
     return (
         <>
-            <section className="modal" style={isOpen ? {display: "block"} : {display: 'none'}}>
-                <div className="modal-container" onClick={() => setIsOpen(false)}>
+            <section className="modal" style={auth ? {display: "block"} : {display: 'none'}}>
+                <div className="modal-container">
                     <div className="modal-cell">
-                        <div className="modal-element" style={isOpen ? {position:'relative', transform: 'translate3d(0, 0, 0) scale(1)', opacity:'1'}: {}}>
+                        <div className="modal-element" style={auth ? {position:'relative', transform: 'translate3d(0, 0, 0) scale(1)', opacity:'1'}: {}}>
                             <div className="modal-title">
                                 <h2>Hello!</h2>
                                 <div>Use your email or another service to continue with Table Bank.</div>
                             </div>
-                            <a className="modal_button-left btn btn--icon btn--xs btn--transparent" onClick={() => setIsOpen(false)}>
+                            <a className="modal_button-left btn btn--icon btn--xs btn--transparent" onClick={() => setUserForm(false)}>
                                 <RiCloseLine />
                             </a>
                             <div className="modal-body">
@@ -42,7 +37,7 @@ export default function UserForm({ isOpen, setIsOpen }: UserFormProps) {
                                     <i><FaApple style={{fontSize: '2rem'}}/></i>
                                     <span>Continue with Apple</span>
                                 </a>
-                                <a className="btn btn--m btn--primary">
+                                <a className="btn btn--m btn--primary" onClick={() => {setIsOpen(true); setUserForm(false)}}>
                                     <span>Continue with email</span>
                                 </a>
                                 <div className="small-text _m-t-3">
