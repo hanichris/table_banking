@@ -17,12 +17,16 @@
   ============================= */
 :root {
   --color-black: #090909;
-  --color-white: #ffffff;
-  --color-grey: #7d7c83;
-  --color-light-grey: #f2f2f3;
   --color-blue: #0066ff;
+  --color-grey: #7d7c83;
+  --color-green: #08805b;
+  --color-light-grey: #f2f2f3;
+  --color-red: #cd3e65;
+  --color-white: #ffffff;
 
+  --error-color: var(--color-red);
   --text-color: var(--color-black);
+  --valid-color: var(--color-green);
 
   --font-family: Inter, system-ui, Avenir, Helvetica, Arial, sans-serif;
 
@@ -134,6 +138,7 @@ body {
   background: var(--color-blue);
   box-shadow: rgba(255, 255, 255, 0) 0 0 0 3px, rgba(0, 102, 255, 0) 0 0 0 4px;
   color: var(--color-white);
+  font-weight: var(--font-weight-bold);
 }
 
 .btn--icon {
