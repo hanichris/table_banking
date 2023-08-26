@@ -31,11 +31,110 @@ label {
     display: block;
     white-space: nowrap;
     font-size: 1.6rem;
-    padding: 0 0 .5rem;
+    font-family: var(--font-family);
+    padding: 0 0 .5rem .5rem;
+    text-align: start;
 }
 
 input[type=email],
-input[type=password] {
+input[type=password],
+input[type=text] {
     position: relative;
     width: 100%;
+    line-height: 1;
+    padding: 0 1.4rem;
+    height: 4.6rem;
+    border: none;
+    border-radius: 1rem;
+    box-shadow: inset #d8d8da 0 0 0 1px, inset white 0 0 0 100px !important;
+    transition: box-shadow .1s;
+    font-size: var(--font-size-medium);
+    font-family: var(--font-family);
+}
+
+input[type=email]:focus:not(:disabled),
+input[type=password]:focus:not(:disabled),
+input[type=text]:focus:not(:disabled) {
+    box-shadow: inset var(--color-blue) 0 0 0 1px, inset white 0 0 0 100px !important;
+}
+
+input[type=email]:focus-visible,
+input[type=password]:focus-visible,
+input[type=text]:focus-visible {
+    outline: none;
+}
+
+::placeholder {
+    color: #d8d8da;
+}
+
+/* FORM GROUP */
+
+.form-group-size-m {
+    margin-top: .5rem;
+    margin-bottom: 1.5rem;
+}
+
+/* FORM FIELD CONTAINER */
+.form-field {
+    position: relative;
+}
+.form-field-container {
+    position: relative;
+}
+
+.form-field-icon {
+    font-style: normal;
+}
+
+/* FORM HELP */
+.form-group .form-help {
+    margin: 0;
+    line-height: 1.3;
+    letter-spacing: .019rem;
+    font-size: var(--font-size-small);
+    font-weight: var(--font-weight-regular);
+    color: var(--color-grey);
+    max-height: 0;
+    overflow: hidden;
+    transition: .3s;
+}
+
+.form-group:focus-within .form-help {
+    max-height: 3rem;
+}
+
+/* FORM ERROR HANDLING */
+input:not(:placeholder-shown) ~ .form-field-icon::after {
+    height: 100%;
+    position: absolute;
+    pointer-events: none;
+    right: .5rem;
+    top: 0;
+    width: 1.3em;
+}
+
+input:required:invalid:not(:focus):not(:placeholder-shown) ~ .form-field-icon::after {
+    content: '✘';
+    color: var(--error-color);
+}
+
+input:required:valid ~ .form-field-icon::after {
+    content: '✔';
+    color: var(--valid-color);
+}
+
+input:required:valid:not(:placeholder-shown) {
+    box-shadow: inset var(--valid-color) 0 0 0 1px, inset white 0 0 0 100px !important;
+}
+
+input:required:invalid:not(:focus):not(:placeholder-shown) {
+    box-shadow: inset var(--error-color) 0 0 0 1px, inset white 0 0 0 100px !important;
+}
+
+/* Password Visibility icon */
+.pwd-icon {
+    position: absolute;
+    right: 1rem;
+    top: .09rem;
 }
