@@ -1,12 +1,12 @@
-import { api } from "../../api";
-import { IToken, IUserProfile } from "../../interfaces";
+// import { IToken, IUserProfile } from "../../interfaces";
 
-import React, { useState } from "react";
+import React, { useState, useContext } from "react";
 import { RiCloseLine } from "react-icons/ri";
 import { VscEye, VscEyeClosed } from "react-icons/vsc";
 import '../modal.css'
 import './form.modal.css'
-import { getLocalToken, setLocalToken } from "../../utils";
+import { actions } from "../../store/main/actions";
+import { UsersDispatchContext } from "../../context/userContext";
 
 interface UserFormProps {
   isOpen: boolean,
@@ -18,6 +18,7 @@ interface UserFormProps {
 export default function SignIn({ isOpen, setIsOpen, setStatus }: UserFormProps) {
   const [pwdType, setPwdType] = useState('password');
   const [pwdInput, setPwdInput] = useState('');
+  const dispatch = useContext(UsersDispatchContext);
 
   function handlePwdChange(e: React.ChangeEvent<HTMLInputElement>) {
     setPwdInput(e.target.value);
@@ -30,32 +31,37 @@ export default function SignIn({ isOpen, setIsOpen, setStatus }: UserFormProps) 
   async function handleFormSubmit(e: React.FormEvent<HTMLFormElement>){
     e.preventDefault();
     const formData = new FormData(e.currentTarget as HTMLFormElement);
-    let responseJson: IToken;
-    let users: IUserProfile;
+    // let responseJson: IToken;
+    // let users: IUserProfile;
+    const actionObj = await actions.actionLogIn({
+      username: formData.get('username') as string,
+      password: formData.get('password') as string,
+    })
+    dispatch?.(actionObj);
 
-    try {
-      const resp = await api.loginGetToken(
-        formData.get('username') as string,
-        formData.get('password') as string,
-      );
-      if (!resp.ok) {
-        throw new Error("Network response was not OK");  
-      }
-      responseJson = await resp.json();
-      setLocalToken(responseJson.access_token);
-      const resp2 = await api.getUsers(getLocalToken() as string);
-      if (!resp2.ok) {
-        throw new Error("Network response was not OK");
-      }
-      users = await resp2.json();
-      console.log(users);
-    } catch (err) {
-      if (err instanceof Error) {
-        console.error(err.message);
-      } else {
-        console.error(`Unexpected error: ${err}`);
-      }
-    }
+    // try {
+    //   const resp = await api.loginGetToken(
+    //     formData.get('username') as string,
+    //     formData.get('password') as string,
+    //   );
+    //   if (!resp.ok) {
+    //     throw new Error("Network response was not OK");  
+    //   }
+    //   responseJson = await resp.json();
+    //   setLocalToken(responseJson.access_token);
+    //   const resp2 = await api.getUsers(getLocalToken() as string);
+    //   if (!resp2.ok) {
+    //     throw new Error("Network response was not OK");
+    //   }
+    //   users = await resp2.json();
+    //   console.log(users);
+    // } catch (err) {
+    //   if (err instanceof Error) {
+    //     console.error(err.message);
+    //   } else {
+    //     console.error(`Unexpected error: ${err}`);
+    //   }
+    // }
   }
 
     // eslint-disable-next-line no-useless-escape
