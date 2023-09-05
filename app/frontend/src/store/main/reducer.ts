@@ -5,6 +5,7 @@ export default function usersReducer(state: MainState, action: Action) {
     case 'loggedIn': {
       return {
         ...state,
+        logInError: action.payload.logInError,
         isLoggedIn: action.payload.isLoggedIn,
         token: action.payload.token,
       };
@@ -14,6 +15,8 @@ export default function usersReducer(state: MainState, action: Action) {
       return {
         ...state,
         logInError: action.payload.logInError,
+        isLoggedIn: action.payload.isLoggedIn,
+        token: action.payload.token,
       }
     }
     case 'loggedOut': {
