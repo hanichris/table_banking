@@ -30,7 +30,8 @@ nav.header_menu-btn {
 }
 
 #mobile_header-logo {
-    left: 36.76%;
+    left: 50%;
+    margin-left: -4.5rem;
 }
 
 #header-logo {
