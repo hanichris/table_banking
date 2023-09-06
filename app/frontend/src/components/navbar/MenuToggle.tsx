@@ -1,7 +1,7 @@
 import { motion } from 'framer-motion';
 import React from 'react';
 
-type PathProps = React.ComponentPropsWithRef<typeof motion.path>
+type PathProps = React.ComponentPropsWithoutRef<typeof motion.path>
 interface ToggleProp {
   toggle: () => void,
 }
