@@ -21,7 +21,7 @@ const sideBar = {
     transition: {
       damping: 40,
       delay: 0.1,
-      stiffness: 400,
+      stiffness: 900,
       type: 'spring',
     }
   },
@@ -60,6 +60,7 @@ function NavBar() {
       <motion.nav className='header_menu-btn'
         initial={false}
         animate={isOpen ? 'open' : 'closed'}
+        custom={height}
         ref={containerRef}
         >
           <div id='mobile_menu-overlay' style={isOpen ? {opacity: 1, visibility: 'visible'} : {}}></div>
