@@ -3,13 +3,14 @@ import { motion, useCycle } from 'framer-motion';
 import { useRef } from 'react';
 
 import MenuToggle from './MenuToggle';
+import { Menu } from './Menu';
 import './navbar.css'
 import logo from '../../assets/table-bank-transparent-background.svg';
 import { useDimensions } from './useDimensions';
 
 const sideBar = {
   open: (height: number) => ({
-    clipPath:  `circle(${height * 2 + 20}rem at 3.3rem 3rem)`,
+    clipPath:  `circle(${height * 2 + 200}px at 33px 3px)`,
     transition: {
       restDelta: 2,
       stiffness: 20,
@@ -21,7 +22,7 @@ const sideBar = {
     transition: {
       damping: 40,
       delay: 0.1,
-      stiffness: 900,
+      stiffness: 400,
       type: 'spring',
     }
   },
@@ -65,6 +66,7 @@ function NavBar() {
         >
           <div id='mobile_menu-overlay' style={isOpen ? {opacity: 1, visibility: 'visible'} : {}}></div>
           <motion.div className='background' custom={height} variants={sideBar} />
+          <Menu isOpen={isOpen}/>
           <MenuToggle toggle={() => toggleOpen()}/>
       </motion.nav>
     </>
