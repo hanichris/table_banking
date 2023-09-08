@@ -8,17 +8,23 @@ import './form.modal.css'
 import { actions } from "../../store/main/actions";
 import { UsersDispatchContext } from "../../context/userContext";
 
-interface UserFormProps {
-  isOpen: boolean,
-  setIsOpen: (param: boolean) => void,
-  setStatus: (param: string) => void,
+type State = {
+    displayForm: boolean,
+    status: string,
+}
+
+interface SignInFormProps {
+  state: State,
+  openForm: (paramA?: string, paramB?: boolean) => void,
 }
 
 
-export default function SignIn({ isOpen, setIsOpen, setStatus }: UserFormProps) {
+export default function SignIn({ state, openForm }: SignInFormProps) {
   const [pwdType, setPwdType] = useState('password');
   const [pwdInput, setPwdInput] = useState('');
   const dispatch = useContext(UsersDispatchContext);
+
+  const open = state.status === 'signIn' && !state.displayForm;
 
   function handlePwdChange(e: React.ChangeEvent<HTMLInputElement>) {
     setPwdInput(e.target.value);
@@ -31,51 +37,26 @@ export default function SignIn({ isOpen, setIsOpen, setStatus }: UserFormProps) 
   async function handleFormSubmit(e: React.FormEvent<HTMLFormElement>){
     e.preventDefault();
     const formData = new FormData(e.currentTarget as HTMLFormElement);
-    // let responseJson: IToken;
-    // let users: IUserProfile;
+    
     const actionObj = await actions.actionLogIn({
       username: formData.get('username') as string,
       password: formData.get('password') as string,
     })
     dispatch?.(actionObj);
-
-    // try {
-    //   const resp = await api.loginGetToken(
-    //     formData.get('username') as string,
-    //     formData.get('password') as string,
-    //   );
-    //   if (!resp.ok) {
-    //     throw new Error("Network response was not OK");  
-    //   }
-    //   responseJson = await resp.json();
-    //   setLocalToken(responseJson.access_token);
-    //   const resp2 = await api.getUsers(getLocalToken() as string);
-    //   if (!resp2.ok) {
-    //     throw new Error("Network response was not OK");
-    //   }
-    //   users = await resp2.json();
-    //   console.log(users);
-    // } catch (err) {
-    //   if (err instanceof Error) {
-    //     console.error(err.message);
-    //   } else {
-    //     console.error(`Unexpected error: ${err}`);
-    //   }
-    // }
   }
 
     // eslint-disable-next-line no-useless-escape
     // const regex = "[\\w!#$%&'*+\\/=?`{|}~^-]+(?:\\.[\\w!#$%&'*+\\/=?`{|}~^-]+)*@(?:[a-zA-Z0-9-]+\\.)+[a-zA-Z]{2,6}";
   return (
-      <section className="modal" style={isOpen ? {display: "block"} : {display: 'none'}}>
+      <section className="modal" style={open ? {display: "block"} : {display: 'none'}}>
             <div className="modal-container">
                 <div className="modal-cell">
-                    <div className="modal-element" style={isOpen ? {position:'relative', transform: 'translate3d(0, 0, 0) scale(1)', opacity:'1'}: {}}>
+                    <div className="modal-element" style={open ? {position:'relative', transform: 'translate3d(0, 0, 0) scale(1)', opacity:'1'}: {}}>
                         <header className="modal-title">
                             <h2>Sign in</h2>
                             <div>Sign in with your email here</div>
                         </header>
-                        <a className="modal_button-left btn btn--icon btn--xs btn--transparent" onClick={() => setIsOpen(false)}>
+                        <a className="modal_button-left btn btn--icon btn--xs btn--transparent" onClick={() => openForm('', false)}>
                             <RiCloseLine />
                         </a>
                         <div className="modal-body">
@@ -130,7 +111,7 @@ export default function SignIn({ isOpen, setIsOpen, setStatus }: UserFormProps) 
                         <footer className="modal-footer">
                             Forgot password? <a className="link link--primary">Reset</a>
                             <br />
-                            Don't have an account? <a className="link link--primary" onClick={() => setStatus('signUp')}>Sign up</a>
+                            Don't have an account? <a className="link link--primary" onClick={() => openForm('signUp', false)}>Sign up</a>
                         </footer>
                     </div>
                 </div>
