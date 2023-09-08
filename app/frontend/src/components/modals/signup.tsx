@@ -4,17 +4,21 @@ import { VscEye, VscEyeClosed } from "react-icons/vsc";
 import '../modal.css'
 import './form.modal.css'
 
-interface UserFormProps {
-    isOpen: boolean,
-    setIsOpen: (param: boolean) => void,
-    setStatus: (param: string) => void,
-}
+type State = {
+    displayForm: boolean,
+    status: string,
+};
+
+interface SignUpFormProps {
+    state: State,
+    openForm: (paramA?: string, paramB?: boolean) => void,
+  }
 
 interface formDataType {
     [key: string]: FormDataEntryValue
 }
 
-export default function SignUp({ isOpen, setIsOpen, setStatus }: UserFormProps) {
+export default function SignUp({ state, openForm }: SignUpFormProps) {
   const [user, setUser] = useState({
     user_email: '',
     user_full_name: '',
@@ -23,6 +27,7 @@ export default function SignUp({ isOpen, setIsOpen, setStatus }: UserFormProps) 
   const [user_pwd, setPwdInput] = useState('');
 
   const requestBody: formDataType = {};
+  const open = state.status === 'signUp' && !state.displayForm
 
   function handleChange(e:React.ChangeEvent<HTMLInputElement>) {
       setUser({
@@ -65,15 +70,15 @@ export default function SignUp({ isOpen, setIsOpen, setStatus }: UserFormProps) 
     // eslint-disable-next-line no-useless-escape
     // const regex = "[\w!#$%&'*+\/=?`{|}~^-]+(?:\.[\w!#$%&'*+\/=?`{|}~^-]+)*@(?:[a-zA-Z0-9-]+\.)+[a-zA-Z]{2,6}";
   return (
-      <section className="modal" style={isOpen ? {display: "block"} : {display: 'none'}}>
+      <section className="modal" style={open ? {display: "block"} : {display: 'none'}}>
               <div className="modal-container">
                   <div className="modal-cell">
-                      <div className="modal-element" style={isOpen ? {position:'relative', transform: 'translate3d(0, 0, 0) scale(1)', opacity:'1'}: {}}>
+                      <div className="modal-element" style={open ? {position:'relative', transform: 'translate3d(0, 0, 0) scale(1)', opacity:'1'}: {}}>
                           <header className="modal-title">
                               <h2>Sign up</h2>
                               <div>Create a free account with your email</div>
                           </header>
-                          <a className="modal_button-left btn btn--icon btn--xs btn--transparent" onClick={() => setIsOpen(false)}>
+                          <a className="modal_button-left btn btn--icon btn--xs btn--transparent" onClick={() => openForm('', false)}>
                               <RiCloseLine />
                           </a>
                           <div className="modal-body">
@@ -151,7 +156,7 @@ export default function SignUp({ isOpen, setIsOpen, setStatus }: UserFormProps) 
                               </div>
                           </div>
                           <footer className="modal-footer">
-                              Already have an account? <a className="link link--primary" onClick={() => setStatus('signIn')}>Sign in</a>
+                              Already have an account? <a className="link link--primary" onClick={() => openForm('signIn', false)}>Sign in</a>
                           </footer>
                       </div>
                   </div>
