@@ -4,28 +4,30 @@ import { FaApple } from "react-icons/fa6"
 
 import './modal.css'
 
-interface UserFormProps {
-    setIsOpen: (param: boolean) => void,
-    setUserForm: (param: boolean) => void,
+type State = {
+    displayForm: boolean,
     status: string,
+};
+
+interface UserFormProps {
+    state: State,
+    openForm: (paramA?: string, paramB?: boolean) => void,
 }
 
-export default function UserForm({ setIsOpen, setUserForm, status }: UserFormProps) {
-
-  const auth: boolean = status === 'signIn' || status === 'signUp';
+export default function UserForm({ openForm, state }: UserFormProps) {
 
     
   return (
       <>
-          <section className="modal" style={auth ? {display: "block"} : {display: 'none'}}>
+          <section className="modal" style={state.displayForm ? {display: "block"} : {display: 'none'}}>
               <div className="modal-container">
                   <div className="modal-cell">
-                      <div className="modal-element" style={auth ? {position:'relative', transform: 'translate3d(0, 0, 0) scale(1)', opacity:'1'}: {}}>
+                      <div className="modal-element" style={state.displayForm ? {position:'relative', transform: 'translate3d(0, 0, 0) scale(1)', opacity:'1'}: {}}>
                           <div className="modal-title">
                               <h2>Hello!</h2>
                               <div>Use your email or another service to continue with Table Bank.</div>
                           </div>
-                          <a className="modal_button-left btn btn--icon btn--xs btn--transparent" onClick={() => setUserForm(false)}>
+                          <a className="modal_button-left btn btn--icon btn--xs btn--transparent" onClick={() => openForm(undefined, false)}>
                               <RiCloseLine />
                           </a>
                           <div className="modal-body">
@@ -37,7 +39,7 @@ export default function UserForm({ setIsOpen, setUserForm, status }: UserFormPro
                                   <i><FaApple style={{fontSize: '2rem'}}/></i>
                                   <span>Continue with Apple</span>
                               </a>
-                              <a className="btn btn--m btn--primary" onClick={() => {setIsOpen(true); setUserForm(false)}}>
+                              <a className="btn btn--m btn--primary" onClick={() => {openForm(state.status, false)}}>
                                   <span>Continue with email</span>
                               </a>
                               <div className="small-text _m-t-3">
