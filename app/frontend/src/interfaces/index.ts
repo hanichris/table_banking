@@ -32,3 +32,7 @@ export interface ModalProp {
 export interface MenuProp extends ModalProp {
   isOpen: boolean,
 }
+
+export interface formDataType {
+  [key: string]: FormDataEntryValue
+}
