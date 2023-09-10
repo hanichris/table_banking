@@ -1,3 +1,4 @@
+import { IUserProfile } from "../../interfaces";
 import { Action, MainState } from "./state";
 
 export default function usersReducer(state: MainState, action: Action) {
@@ -8,6 +9,7 @@ export default function usersReducer(state: MainState, action: Action) {
         logInError: action.payload.logInError,
         isLoggedIn: action.payload.isLoggedIn,
         token: action.payload.token,
+        userProfile: action.payload.userProfile as IUserProfile,
       };
     }
 
@@ -17,6 +19,7 @@ export default function usersReducer(state: MainState, action: Action) {
         logInError: action.payload.logInError,
         isLoggedIn: action.payload.isLoggedIn,
         token: action.payload.token,
+        userProfile: action.payload.userProfile,
       }
     }
     case 'loggedOut': {
