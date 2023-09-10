@@ -18,3 +18,17 @@ export interface IUserProfile {
 export interface ContextProp {
   children: React.ReactNode,
 }
+
+type State = {
+  displayForm: boolean,
+  status: string,
+};
+
+export interface ModalProp {
+  state: State,
+  openForm: (paramA?: string, paramB?: boolean) => void,
+}
+
+export interface MenuProp extends ModalProp {
+  isOpen: boolean,
+}
