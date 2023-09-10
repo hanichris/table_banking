@@ -7,6 +7,7 @@ const userCtx: MainState = {
   logInError: false,
   isLoggedIn: false,
   token: '',
+  userProfile: undefined,
 };
 
 export const UsersContext = createContext<MainState | null>(null);
