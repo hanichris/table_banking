@@ -3,22 +3,10 @@ import { RiCloseLine } from "react-icons/ri";
 import { VscEye, VscEyeClosed } from "react-icons/vsc";
 import '../modal.css'
 import './form.modal.css'
+import { formDataType, ModalProp } from "../../interfaces";
 
-type State = {
-    displayForm: boolean,
-    status: string,
-};
 
-interface SignUpFormProps {
-    state: State,
-    openForm: (paramA?: string, paramB?: boolean) => void,
-  }
-
-interface formDataType {
-    [key: string]: FormDataEntryValue
-}
-
-export default function SignUp({ state, openForm }: SignUpFormProps) {
+export default function SignUp({ state, openForm }: ModalProp) {
   const [user, setUser] = useState({
     user_email: '',
     user_full_name: '',
