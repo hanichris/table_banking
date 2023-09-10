@@ -1,13 +1,25 @@
-import { useEffect, useRef } from "react"
+import { useEffect, useState } from "react";
 
-export const useDimensions = (ref: React.MutableRefObject<HTMLElement | null>) => {
-  const dimensions = useRef({ width: 0, height: 0});
+function getWindowDimensions(){
+  const {innerHeight: height, innerWidth: width} = window;
+  return {
+    height,
+    width,
+  };
+}
+
+export const useWindowDimensions = () => {
+  const [windowDimensions, setWindowDimensions] = useState(getWindowDimensions());
 
   useEffect(() => {
-    dimensions.current.width = ref?.current?.offsetWidth as number;
-    dimensions.current.height = ref?.current?.offsetHeight as number;
-    console.log(dimensions.current.height)
-  }, [ref]);
+    function handleResize() {
+      setWindowDimensions(getWindowDimensions());
+    }
+    window.addEventListener('resize', handleResize);
+    return () => {
+      window.removeEventListener('resize', handleResize);
+    };
+  }, []);
 
-  return dimensions.current;
+  return windowDimensions;
 }
