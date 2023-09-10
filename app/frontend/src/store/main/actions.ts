@@ -1,8 +1,17 @@
 import { api } from "../../api";
-import { IToken } from "../../interfaces";
+import { IToken, IUserProfile } from "../../interfaces";
 import { removeLocalToken, setLocalToken } from "../../utils";
 
 export const actions = {
+  actionGetUserProfile:async (token:string) => {
+    let respJson: IUserProfile | undefined = undefined;
+    const resp = await api.getMe(token);
+    if (!resp.ok) {
+      throw new Error("Network response was not OK!!!");
+    }
+    respJson = await resp.json();
+    return respJson;
+  },
   actionLogIn:async (payload:{username: string, password:string}) => {
     let respJson: IToken;
     try {
@@ -14,12 +23,14 @@ export const actions = {
       const token = respJson.access_token;
       if (token) {
         setLocalToken(token);
+        const userProfile = await actions.actionGetUserProfile(token);
         return {
           type: 'loggedIn',
           payload: {
             logInError: false,
             isLoggedIn: true,
-            token: token,
+            token,
+            userProfile,
           }
         };
       }
@@ -35,7 +46,8 @@ export const actions = {
       payload: {
         logInError: true,
         isLoggedIn: false,
-        token: ''
+        token: '',
+        userProfile: undefined,
       }
     }
   },
