@@ -1,15 +1,16 @@
 // import { Link } from 'react-router-dom';
 import { motion, useCycle } from 'framer-motion';
-import { useRef } from 'react';
+import { useState } from 'react';
 
 import MenuToggle from './MenuToggle';
 import { Menu } from './Menu';
+import { SignInSignUp } from '../modals/ModalForm';
 import './navbar.css'
 import logo from '../../assets/table-bank-transparent-background.svg';
-import { useDimensions } from './useDimensions';
+import { useWindowDimensions } from './useDimensions';
 
 const sideBar = {
-  open: (height: number) => ({
+  open: (height: number = 1000) => ({
     clipPath:  `circle(${height * 2 + 200}px at 33px 3px)`,
     transition: {
       restDelta: 2,
@@ -30,8 +31,21 @@ const sideBar = {
 
 function NavBar() {
   const [isOpen, toggleOpen] = useCycle(false, true);
-  const containerRef = useRef(null);
-  const { height } = useDimensions(containerRef);
+  const { height, width } = useWindowDimensions();
+
+  const [auth, setAuth] = useState({
+    displayForm: false,
+    status: '',
+  });
+
+
+  function handleClick(state: string = '', open: boolean = true) {
+    setAuth({
+      ...auth,
+      displayForm: open,
+      status: state,
+    });
+  }
 
   return (
     <>
@@ -40,7 +54,7 @@ function NavBar() {
           <img src={logo} alt="logo" width={90} height={60}/>
         </a>
       </header>
-      <header id='header'>
+      {width > 767 && <header id='header'>
         <a href="/" id='header-logo'>
           <img src={logo} alt="logo" width={100} height={60}/>
         </a>
@@ -50,25 +64,25 @@ function NavBar() {
               <span className='divider'></span>
             </li>
             <li>
-              <a href="" id='header_signin-btn'>Sign in</a>
+              <a id='header_signin-btn' onClick={() => handleClick('signIn')}>Sign in</a>
             </li>
             <li>
-              <a href="" id='header_signup-btn' className='btn btn--primary btn--s'>Sign up</a>
+              <a id='header_signup-btn' className='btn btn--primary btn--s' onClick={() => handleClick('signUp')}>Sign up</a>
             </li>
           </ul>
         </nav>
-      </header>
-      <motion.nav className='header_menu-btn'
+        <SignInSignUp state={auth} openForm={handleClick}/>
+      </header>}
+      {width < 768 && <motion.nav className='header_menu-btn'
         initial={false}
-        animate={isOpen ? 'open' : 'closed'}
+        animate={isOpen || auth.status !== '' ? 'open' : 'closed'}
         custom={height}
-        ref={containerRef}
         >
-          <div id='mobile_menu-overlay' style={isOpen ? {opacity: 1, visibility: 'visible'} : {}}></div>
+          <div id='mobile_menu-overlay' style={isOpen || auth.status !== '' ? {opacity: 1, visibility: 'visible'} : {}}></div>
           <motion.div className='background' custom={height} variants={sideBar} />
-          <Menu isOpen={isOpen}/>
+          <Menu isOpen={isOpen} openForm={handleClick} state={auth}/>
           <MenuToggle toggle={() => toggleOpen()}/>
-      </motion.nav>
+      </motion.nav>}
     </>
   );
 }
