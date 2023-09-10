@@ -7,21 +7,14 @@ import '../modal.css'
 import './form.modal.css'
 import { actions } from "../../store/main/actions";
 import { UsersDispatchContext } from "../../context/userContext";
-
-type State = {
-    displayForm: boolean,
-    status: string,
-}
-
-interface SignInFormProps {
-  state: State,
-  openForm: (paramA?: string, paramB?: boolean) => void,
-}
+import { ModalProp } from "../../interfaces";
+import { Spinner } from "../Spinner";
 
 
-export default function SignIn({ state, openForm }: SignInFormProps) {
+export default function SignIn({ state, openForm }: ModalProp) {
   const [pwdType, setPwdType] = useState('password');
   const [pwdInput, setPwdInput] = useState('');
+  const [isLoading, setIsLoading] = useState(false);
   const dispatch = useContext(UsersDispatchContext);
 
   const open = state.status === 'signIn' && !state.displayForm;
@@ -36,6 +29,7 @@ export default function SignIn({ state, openForm }: SignInFormProps) {
 
   async function handleFormSubmit(e: React.FormEvent<HTMLFormElement>){
     e.preventDefault();
+    setIsLoading(true);
     const formData = new FormData(e.currentTarget as HTMLFormElement);
     
     const actionObj = await actions.actionLogIn({
@@ -43,6 +37,7 @@ export default function SignIn({ state, openForm }: SignInFormProps) {
       password: formData.get('password') as string,
     })
     dispatch?.(actionObj);
+    setIsLoading(false);
   }
 
     // eslint-disable-next-line no-useless-escape
@@ -76,7 +71,10 @@ export default function SignIn({ state, openForm }: SignInFormProps) {
                                                 maxLength={55}
                                                 autoComplete="on"
                                                 accessKey="e"
-                                                required/>
+                                                required
+                                                disabled={isLoading}
+                                                className={isLoading ? 'disabled': ''}
+                                                />
                                             </span>
                                         </div>
                                     </div>
@@ -92,14 +90,20 @@ export default function SignIn({ state, openForm }: SignInFormProps) {
                                                 id="your-password"
                                                 placeholder="password" 
                                                 minLength={8}
-                                                required/>
+                                                required
+                                                disabled={isLoading}
+                                                className={isLoading ? 'disabled': ''}
+                                                />
                                                 <a className="pwd-icon" onClick={togglePwdType}>
                                                     {pwdType === 'password' ? <VscEye /> : <VscEyeClosed />}
                                                 </a>
                                             </span>
                                         </div>
                                     </div>
-                                    <button type="submit" className="btn btn--m btn--primary">Sign in</button>
+                                    <button type="submit" className={isLoading ? "btn btn--m btn--primary is-disabled": "btn btn--m btn--primary"} disabled={isLoading}>
+                                        Sign in
+                                        {isLoading && <Spinner />}
+                                    </button>
                                 </fieldset>
                             </form>
                             <div className="small-text _m-t-3">
