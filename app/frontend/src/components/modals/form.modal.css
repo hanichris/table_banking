@@ -138,3 +138,11 @@ input:required:invalid:not(:focus):not(:placeholder-shown) {
     right: 1rem;
     top: .09rem;
 }
+
+.is-disabled {
+    color: var(--color-dark-green);
+}
+
+input[type='email'].disabled, input[type='password'].disabled {
+    color: #d8d8da !important;
+}
