@@ -25,7 +25,7 @@ export const actions = {
         setLocalToken(token);
         const userProfile = await actions.actionGetUserProfile(token);
         return {
-          type: 'loggedIn',
+          type: 'main/loggedIn',
           payload: {
             logInError: false,
             isLoggedIn: true,
@@ -42,7 +42,7 @@ export const actions = {
       }
       }
     return {
-      type: 'logInError',
+      type: 'main/logInError',
       payload: {
         logInError: true,
         isLoggedIn: false,
@@ -54,7 +54,7 @@ export const actions = {
   actionLogOut:async () => {
     removeLocalToken();
     return {
-      type: 'loggedOut',
+      type: 'main/loggedOut',
       payload: {
         isLoggedIn: false,
         token: '',
