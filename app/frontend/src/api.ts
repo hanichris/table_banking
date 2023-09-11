@@ -1,3 +1,5 @@
+import { IUserProfileCreate } from "./interfaces";
+
 const serverEndpoint = import.meta.env.VITE_SERVER_ENDPOINT;
 
 function authHeader(token:string) {
@@ -24,5 +26,14 @@ export const api = {
   },
   getUsers:async (token:string) => {
     return fetch(`${serverEndpoint}/users/`, authHeader(token));
-  }
+  },
+  createUser:async (token:string, data: IUserProfileCreate) => {
+    const header: Record<string, Record<string, string>> = structuredClone(authHeader(token));
+    header.headers['Content-Type'] = 'application/json;charset=utf-8';
+    return fetch(`${serverEndpoint}/users/`,{
+      method: 'POST',
+      headers: header.headers,
+      body: JSON.stringify(data),
+    });
+  },
 };
