@@ -4,6 +4,7 @@ import { VscEye, VscEyeClosed } from "react-icons/vsc";
 import '../modal.css'
 import './form.modal.css'
 import { formDataType, ModalProp } from "../../interfaces";
+import { Spinner } from "../Spinner";
 
 
 export default function SignUp({ state, openForm }: ModalProp) {
@@ -13,6 +14,7 @@ export default function SignUp({ state, openForm }: ModalProp) {
   });
   const [pwdType, setPwdType] = useState('password');
   const [user_pwd, setPwdInput] = useState('');
+  const [isLoading, setIsLoading] = useState(false);
 
   const requestBody: formDataType = {};
   const open = state.status === 'signUp' && !state.displayForm
@@ -24,8 +26,9 @@ export default function SignUp({ state, openForm }: ModalProp) {
       });
   }
 
-  function handleFormSubmit(e:React.FormEvent<HTMLFormElement>) {
+  async function handleFormSubmit(e:React.FormEvent<HTMLFormElement>) {
     e.preventDefault();
+    setIsLoading(true);
     const formData = new FormData(e.currentTarget as HTMLFormElement);
 
     formData.forEach((value, key:string) => requestBody[key] = value);
@@ -39,12 +42,7 @@ export default function SignUp({ state, openForm }: ModalProp) {
     .then(result => console.log(result))
     .catch(e => console.log(e));
 
-      // if (response.ok) {
-      //     json = await response.json();
-      // } else {
-      //     console.log(`HTTP-ERROR ${response.status}`);
-      // }
-      // console.log(json);
+    setIsLoading(false);
   }
 
   function handlePwdChange(e: React.ChangeEvent<HTMLInputElement>) {
@@ -88,7 +86,9 @@ export default function SignUp({ state, openForm }: ModalProp) {
                                                   maxLength={100}
                                                   autoComplete="false"
                                                   accessKey="f"
-                                                  required/>
+                                                  required
+                                                  className={isLoading ? 'disabled': ''}
+                                                  />
                                                   <i className="form-field-icon"></i>
                                                   <p className="form-help">Full name should be at least 3 characters and only contains letters</p>
                                               </span>
@@ -109,7 +109,9 @@ export default function SignUp({ state, openForm }: ModalProp) {
                                                   maxLength={55}
                                                   autoComplete="on"
                                                   accessKey="e"
-                                                  required/>
+                                                  required
+                                                  className={isLoading ? 'disabled': ''}
+                                                  />
                                                   <i className="form-field-icon"></i>
                                                   <p className="form-help">Email should be a valid email address that matches the RFC standard</p>
                                               </span>
@@ -127,14 +129,19 @@ export default function SignUp({ state, openForm }: ModalProp) {
                                                   id="your-password"
                                                   placeholder="password" 
                                                   minLength={8}
-                                                  required/>
+                                                  required
+                                                  className={isLoading ? 'disabled': ''}
+                                                  />
                                                   <a className="pwd-icon" onClick={togglePwdType}>
                                                       {pwdType === 'password' ? <VscEye /> : <VscEyeClosed />}
                                                   </a>
                                               </span>
                                           </div>
                                       </div>
-                                      <button type="submit" className="btn btn--m btn--primary">Create your free account</button>
+                                      <button type="submit" className={isLoading ? "btn btn--m btn--primary is-disabled" : "btn btn--m btn--primary"} disabled={isLoading}>
+                                        Create your free account
+                                        {isLoading && <Spinner />}
+                                      </button>
                                   </fieldset>
                               </form>
                               <div className="small-text _m-t-3">
