@@ -3,7 +3,7 @@ import { Action, MainState } from "./state";
 
 export default function usersReducer(state: MainState, action: Action) {
   switch (action.type) {
-    case 'loggedIn': {
+    case 'main/loggedIn': {
       return {
         ...state,
         logInError: action.payload.logInError,
@@ -13,7 +13,7 @@ export default function usersReducer(state: MainState, action: Action) {
       };
     }
 
-    case 'logInError': {
+    case 'main/logInError': {
       return {
         ...state,
         logInError: action.payload.logInError,
@@ -22,7 +22,7 @@ export default function usersReducer(state: MainState, action: Action) {
         userProfile: action.payload.userProfile,
       }
     }
-    case 'loggedOut': {
+    case 'main/loggedOut': {
       return {
         ...state,
         isLoggedIn: action.payload.isLoggedIn,
@@ -30,7 +30,7 @@ export default function usersReducer(state: MainState, action: Action) {
       };
     }
 
-    case 'getMe': {
+    case 'main/getMe': {
       return {
         ...state,
         userProfile: action.payload.userProfile
