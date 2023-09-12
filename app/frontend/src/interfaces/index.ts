@@ -1,5 +1,14 @@
 import React from "react";
 
+export interface IBank {
+  title: string,
+  interest_rate: number,
+  amount: number,
+  loaned_out_amount: number,
+  id: number,
+  admin_id: number,
+}
+
 export interface IToken {
   access_token: string;
   token_type:string;
@@ -11,8 +20,6 @@ export interface IUserProfile {
   is_superuser: boolean;
   full_name: string;
   id: number;
-  banks?: Array<object>;
-  banks_admin?: Array<object>;
 }
 
 export interface IUserProfileCreate {
@@ -29,6 +36,17 @@ export interface IUserProfileUpdate {
   password?: string;
   is_active?: boolean;
   is_superuser?: boolean;
+}
+
+type UserBankItem = {
+  id: number,
+  userId: number,
+  bankId: number,
+};
+
+export interface IUserBank {
+  byId: Record<number, UserBankItem>;
+  allIds: Array<number>;
 }
 
 export interface ContextProp {
