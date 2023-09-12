@@ -1,12 +1,9 @@
-import { AdminAction } from "./state";
+import { createSlice } from "@reduxjs/toolkit";
 
-export default function adminReducer(state, action: AdminAction) {
-  switch (action.type) {
-    case 'getUsers': {
-      return 
-    }
-  
-    default:
-      break;
-  }
-}
+const adminSlice = createSlice({
+  name: 'admin',
+  initialState: undefined,
+  reducers: {},
+});
+
+export default adminSlice.reducer;
