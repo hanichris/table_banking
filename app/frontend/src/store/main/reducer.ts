@@ -1,4 +1,6 @@
 import { createSlice } from "@reduxjs/toolkit";
+import { defaultState } from ".";
+import { actions } from "./actions";
 
 // import { IUserProfile } from "../../interfaces";
 // import { MainState } from "./state";
@@ -6,21 +8,36 @@ import { createSlice } from "@reduxjs/toolkit";
 
 export const mainSlice = createSlice({
   name: 'main',
-  initialState: undefined,
+  initialState: defaultState,
   reducers: {
-    loggedIn: () => {
-      console.log('Not implemented');
+    loggedOut: (state) => {
+      state.isLoggedIn = false;
+      state.token = '';
+      state.userProfile = null;
+      state.status = 'idle';
+      state.error = undefined;
     },
-    logInError: () => {
-      console.log('Not implemented');
-    },
-    loggedOut: () => {
-      console.log('Not implemented');
-    },
-  }
+    loaded: () => {},
+  },
+  extraReducers(builder) {
+    builder
+      .addCase(actions.logIn.pending, state => {
+        state.status = 'loading';
+      })
+      .addCase(actions.logIn.fulfilled, (state, action) => {
+        state.status = 'succeeded';
+        state.token = action.payload.token;
+        state.isLoggedIn = action.payload.isLoggedIn;
+        state.userProfile = action.payload.userProfile
+      })
+      .addCase(actions.logIn.rejected, (state, action) => {
+        state.status = 'failed';
+        state.error = action.error.message;
+      })
+  },
 });
 
-export const { loggedIn, logInError, loggedOut } = mainSlice.actions;
+export const { loggedOut } = mainSlice.actions;
 export default mainSlice.reducer;
 
 // export default function usersReducer(state: MainState, action: Action) {
