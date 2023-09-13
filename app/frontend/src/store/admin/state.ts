@@ -1,3 +1,8 @@
-import { Action } from "../main/state";
+import { IUserProfile, IBank } from "../../interfaces";
 
-export interface AdminAction extends Action {}
+export interface AdminState {
+  users: IUserProfile[];
+  banks: IBank[];
+  status: 'idle' | 'loading' | 'succeeded' | 'failed';
+  error: string | null;
+}
