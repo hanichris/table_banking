@@ -1,12 +1,14 @@
 // import { IToken, IUserProfile } from "../../interfaces";
 
-import React, { useState, useContext } from "react";
+import React, { useState } from "react";
+import { useAppDispatch, useAppSelector } from "../../hooks";
 import { RiCloseLine } from "react-icons/ri";
 import { VscEye, VscEyeClosed } from "react-icons/vsc";
+
 import '../modal.css'
 import './form.modal.css'
 import { actions } from "../../store/main/actions";
-import { UsersDispatchContext } from "../../context/userContext";
+// import { UsersDispatchContext } from "../../context/userContext";
 import { ModalProp } from "../../interfaces";
 import { Spinner } from "../Spinner";
 
@@ -14,8 +16,10 @@ import { Spinner } from "../Spinner";
 export default function SignIn({ state, openForm }: ModalProp) {
   const [pwdType, setPwdType] = useState('password');
   const [pwdInput, setPwdInput] = useState('');
-  const [isLoading, setIsLoading] = useState(false);
-  const dispatch = useContext(UsersDispatchContext);
+  const dispatch = useAppDispatch();
+  const reqStatus = useAppSelector(state => state.main.status);
+
+  const isLoading = reqStatus === 'loading';
 
   const open = state.status === 'signIn' && !state.displayForm;
 
@@ -29,15 +33,13 @@ export default function SignIn({ state, openForm }: ModalProp) {
 
   async function handleFormSubmit(e: React.FormEvent<HTMLFormElement>){
     e.preventDefault();
-    setIsLoading(true);
     const formData = new FormData(e.currentTarget as HTMLFormElement);
     
-    const actionObj = await actions.actionLogIn({
-      username: formData.get('username') as string,
-      password: formData.get('password') as string,
+    const actionObj = actions.logIn({
+      uname: formData.get('username') as string,
+      pwd: formData.get('password') as string,
     })
-    dispatch?.(actionObj);
-    setIsLoading(false);
+    dispatch(actionObj);
   }
 
     // eslint-disable-next-line no-useless-escape
