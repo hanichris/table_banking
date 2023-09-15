@@ -78,7 +78,7 @@ body {
   margin: 0;
   min-width: 32rem;
   min-height: 100vh;
-  padding-top: 2rem;
+  padding-top: 6rem;
 }
 
 @media (min-width: 768px){
@@ -100,8 +100,51 @@ ul, ol {
   padding: 0;
 }
 
+.wrapper {
+  display: flex;
+  flex-direction: column;
+  padding: 6rem 0;
+  width: 100%;
+  min-height: calc(100% - 6rem);
+  justify-content: center;
+}
+
+.container {
+  margin: 0 auto;
+  position: relative;
+  padding: 0 2.4rem;
+  text-align: left;
+  width: 100%;
+}
+
+.container--s {
+  max-width: 57.6rem;
+  width: auto;
+}
+
+.container--xl {
+  max-width: 120rem;
+  width: auto;
+}
+
+@media (min-width: 768px) {
+  .container {
+    padding: 0 3.5rem;
+  }
+}
+
+@media (min-width: 992px) {
+  .container {
+    padding: 0 4.2rem;
+  }
+}
+
 ._m-b-2 {
   margin-bottom: 1.4rem;
+}
+
+._m-b-4 {
+  margin-bottom: 3.5rem;
 }
 
 ._m-t-3 {
@@ -187,6 +230,15 @@ ul, ol {
 
 .btn--with-icon-center i > svg {
   vertical-align: middle;
+}
+
+#error-page{
+  display: flex;
+  flex-direction: column;
+  width: 100%;
+  align-items: center;
+  justify-content: center;
+  height: 100vh;
 }
 
 /* button {
