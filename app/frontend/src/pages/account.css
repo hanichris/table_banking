@@ -1,0 +1,21 @@
+.wrapper--align-top {
+    justify-content: flex-start;
+}
+
+.page-title {
+    margin-bottom: 6rem;
+    text-align: center;
+}
+
+.page-title__header {
+    font-size: 5rem;
+    font-variation-settings: 'wght' 900;
+    margin-bottom: 3rem;
+}
+
+.page_title__subheader {
+    color: #7d7c83;
+    font-size: 2rem;
+    line-height: 1.7;
+    margin: 0;
+}
