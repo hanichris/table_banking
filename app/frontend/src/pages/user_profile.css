@@ -1,0 +1,35 @@
+#profile_info {
+    text-align: center;
+    padding-bottom: 6rem;
+}
+
+.avatar {
+    display: inline-block;
+    position: relative;
+    vertical-align: middle;
+}
+
+.avatar--l {
+    height: 14rem;
+    width: 14rem;
+}
+
+.user-info {
+    font-size: 3.5rem;
+    font-variation-settings: 'wght' 900;
+    margin-bottom: 1rem;
+}
+
+#profile_banks_no-results {
+    background-color: #f7f7f8;
+    border-radius: 1.4rem;
+    color: #7d7c83;
+    font-size: 2.1rem;
+    margin-top: 5rem;
+    padding: 10rem;
+    text-align: center;
+}
+
+#profile_banks_no-results > p {
+    margin: 0;
+}
