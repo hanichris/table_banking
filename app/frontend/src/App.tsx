@@ -4,12 +4,12 @@
 // import Layout from './pages/Layout';
 // import NoPage from './pages/NoPage';
 // import './App.css'
-import NavBar from './components/navbar/NavBar.tsx'
+import Home from './pages/Home.tsx';
 
 
 function App() {
   return (
-    <NavBar />
+    <Home />
     // <BrowserRouter>
     //   <Routes>
     //     <Route path='' element={ <Layout/> }>
