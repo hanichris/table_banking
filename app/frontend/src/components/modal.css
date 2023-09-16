@@ -116,23 +116,3 @@
     font-size: 1.4rem;
     padding: 1.6rem;
 }
-
-a.link {
-    display: inline-block;
-    text-decoration: none;
-    cursor: pointer;
-    position: relative;
-    transition: color .1s;
-}
-
-a.link--black {
-    color: var(--color-black);
-}
-
-a.link--primary {
-    color: var(--color-blue);
-}
-
-a.link--primary:hover {
-    text-decoration: underline;
-}
