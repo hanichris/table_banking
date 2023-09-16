@@ -151,6 +151,10 @@ ul, ol {
   margin-top: 2.4rem;
 }
 
+._m-t-4 {
+  margin-top: 3.5rem;
+}
+
 .btn {
   display: block;
   position: relative;
@@ -206,6 +210,13 @@ ul, ol {
   font-weight: var(--font-weight-bold);
 }
 
+.btn--danger {
+  background: var(--color-red);
+  box-shadow: rgba(255, 255, 255, 0) 0 0 0 3px, rgba(0, 102, 255, 0) 0 0 0 4px;
+  color: var(--color-white);
+  font-weight: var(--font-weight-bold);
+}
+
 .btn--icon {
   display: flex;
   place-items: center;
@@ -239,6 +250,30 @@ ul, ol {
   align-items: center;
   justify-content: center;
   height: 100vh;
+}
+
+a.link {
+  display: inline-block;
+  text-decoration: none;
+  cursor: pointer;
+  position: relative;
+  transition: color .1s;
+}
+
+a.link--black {
+  color: var(--color-black);
+}
+
+a.link--black.is-active {
+  color: var(--color-dark-green);
+}
+
+a.link--primary {
+  color: var(--color-blue);
+}
+
+a.link--primary:hover {
+  text-decoration: underline;
 }
 
 /* button {
