@@ -9,6 +9,7 @@
     background: var(--color-white);
     position: fixed;
     top: 0;
+    z-index: 9;
 }
 
 #header {
@@ -22,7 +23,7 @@ nav.header_menu-btn {
     left: 0;
     top: 0;
     bottom: 0;
-    width: 320px;
+    /* width: 320px; */
     z-index: 10;
 }
 
