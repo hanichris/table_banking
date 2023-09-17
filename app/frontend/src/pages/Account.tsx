@@ -25,7 +25,7 @@ export default function Account() {
                 <nav>
                   <ul>
                     <li><a className={active === 'general' ? 'link link--black is-active' : 'link link--black'} onClick={() => handleClick('general')}>General</a></li>
-                    <li><a className={active === 'delete' ? 'link link--black is-active' : 'link link--black'} onClick={() => handleClick('delete')}>Delete</a></li>
+                    <li><a className={active === 'delete' ? 'link link--black is-active' : 'link link--black'} onClick={() => handleClick('delete')}>Delete account</a></li>
                   </ul>
                 </nav>
               </div>
