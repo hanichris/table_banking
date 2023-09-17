@@ -15,7 +15,10 @@ import { Spinner } from "../Spinner";
 
 export default function SignIn({ state, openForm }: ModalProp) {
   const [pwdType, setPwdType] = useState('password');
-  const [pwdInput, setPwdInput] = useState('');
+  const [userDetails, setUserDetails] = useState({
+    username: '',
+    password: '',
+  });
   const dispatch = useAppDispatch();
   const reqStatus = useAppSelector(state => state.main.status);
 
@@ -23,8 +26,8 @@ export default function SignIn({ state, openForm }: ModalProp) {
 
   const open = state.status === 'signIn' && !state.displayForm;
 
-  function handlePwdChange(e: React.ChangeEvent<HTMLInputElement>) {
-    setPwdInput(e.target.value);
+  function handleChange(e: React.ChangeEvent<HTMLInputElement>) {
+    setUserDetails({...userDetails, [e.target.name]: e.target.value});
   }
 
   function togglePwdType() {
@@ -40,6 +43,10 @@ export default function SignIn({ state, openForm }: ModalProp) {
       pwd: formData.get('password') as string,
     })
     dispatch(actionObj);
+  }
+
+  function handleBlur(e:React.ChangeEvent<HTMLInputElement>) {
+    setUserDetails({...userDetails, [e.target.name]: e.target.value.trim()})
   }
 
     // eslint-disable-next-line no-useless-escape
@@ -67,6 +74,9 @@ export default function SignIn({ state, openForm }: ModalProp) {
                                                 <input 
                                                 type="email"
                                                 name="username"
+                                                value={userDetails.username}
+                                                onChange={handleChange}
+                                                onBlur={handleBlur}
                                                 id="your-email"
                                                 placeholder="john@email.com"
                                                 pattern="[\w!#$%&'*+\/=?`\{\|\}~^\-]+(?:\.[\w!#$%&'*+\/=?`\{\|\}~^\-])*@(?:[a-zA-Z0-9\-]+\.)+[a-zA-Z]{2,6}"
@@ -87,8 +97,8 @@ export default function SignIn({ state, openForm }: ModalProp) {
                                                 <input
                                                 type={pwdType}
                                                 name="password"
-                                                value={pwdInput}
-                                                onChange={handlePwdChange}
+                                                value={userDetails.password}
+                                                onChange={handleChange}
                                                 id="your-password"
                                                 placeholder="password" 
                                                 minLength={8}
