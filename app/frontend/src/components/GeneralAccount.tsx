@@ -15,17 +15,23 @@ export const General = () => {
   }
 
   function handleChange(e:React.ChangeEvent<HTMLInputElement>) {
-    setDetails({...details, [e.target.name]: e.target.value})
+    setDetails({...details, [e.target.name]: e.target.value});
+  }
+
+  function handleBlur(e:React.ChangeEvent<HTMLInputElement>) {
+    setDetails({...details, [e.target.name]: e.target.value.trim()});
   }
 
   function handleFormSubmit(e: React.FormEvent<HTMLFormElement>){
     e.preventDefault();
-    const data: formDataType = {};
+    const data:formDataType = {};
     const formData = new FormData(e.currentTarget as HTMLFormElement);
 
     formData.forEach((value, key:string) => data[key] = value);
     console.log(data);
   }
+  const disabledSave = <button type="submit" className="btn btn--m btn--primary disable" disabled>Save</button>
+  const save = <button type="submit" className="btn btn--m btn--primary" >Save</button>
 
   return (
     <div data-tab='general'>
@@ -44,6 +50,7 @@ export const General = () => {
                   name='user_full_name'
                   value={details.user_full_name}
                   onChange={handleChange}
+                  onBlur={handleBlur}
                   id='account-username'
                   placeholder="Full Name"
                   pattern="[A-Za-zÀ-ž\s]{3,}"
@@ -57,7 +64,7 @@ export const General = () => {
               </div>
             </div>
             <div className="_m-t-4">
-              <button type="submit" className="btn btn--m btn--primary">Save</button>
+              {details.user_full_name.length > 0 ? save : disabledSave}
             </div>
           </form>
         </div>
@@ -77,6 +84,7 @@ export const General = () => {
                 name='user_email'
                 value={details.user_email}
                 onChange={handleChange}
+                onBlur={handleBlur}
                 id='account-useremail'
                 placeholder="john@email.com"
                 pattern="[\w!#$%&'*+\/=?`\{\|\}~^\-]+(?:\.[\w!#$%&'*+\/=?`\{\|\}~^\-])*@(?:[a-zA-Z0-9\-]+\.)+[a-zA-Z]{2,6}"
@@ -90,7 +98,7 @@ export const General = () => {
             </div>
           </div>
           <div className="_m-t-4">
-            <button type="submit" className="btn btn--m btn--primary">Save</button>
+          {details.user_email.length > 0 ? save : disabledSave}
           </div>
         </form>
         </div>
@@ -124,7 +132,7 @@ export const General = () => {
               </div>
             </div>
             <div className="_m-t-4">
-              <button type="submit" className="btn btn--m btn--primary">Save</button>
+            {details.user_pwd.length > 0 ? save : disabledSave}
             </div>
           </form>
         </div>
