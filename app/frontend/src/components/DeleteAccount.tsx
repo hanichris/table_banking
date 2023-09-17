@@ -20,6 +20,9 @@ export const Delete = () => {
     console.log(data);
   }
 
+  const disabledSave = <button type="submit" className="btn btn--m btn--danger disable" disabled>Save</button>
+  const save = <button type="submit" className="btn btn--m btn--danger" >Save</button>
+
   return (
   <div data-tab='delete'>
     <div className="panel _m-b-4">
@@ -37,6 +40,7 @@ export const Delete = () => {
                 name="user_pwd"
                 value={pwd}
                 onChange={handlePwdChange}
+                minLength={8}
                 id="account-delete"
                 />
                 <a className="pwd-icon" onClick={togglePwdType}>
@@ -46,7 +50,7 @@ export const Delete = () => {
             </div>
           </div>
           <div className="_m-t-4">
-            <button type="submit" className="btn btn--m btn--danger">Delete</button>
+            {pwd.length > 0 ? save : disabledSave}
           </div>
         </form>
       </div>
