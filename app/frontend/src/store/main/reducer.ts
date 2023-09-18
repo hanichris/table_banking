@@ -10,12 +10,8 @@ export const mainSlice = createSlice({
   name: 'main',
   initialState: defaultState,
   reducers: {
-    loggedOut: (state) => {
-      state.isLoggedIn = false;
-      state.token = '';
-      state.userProfile = null;
-      state.status = 'idle';
-      state.error = undefined;
+    loggedOut: () => {
+      return defaultState;
     },
     loaded: () => {},
   },
@@ -26,13 +22,13 @@ export const mainSlice = createSlice({
       })
       .addCase(actions.logIn.fulfilled, (state, action) => {
         state.status = 'succeeded';
-        state.token = action.payload.token;
-        state.isLoggedIn = action.payload.isLoggedIn;
-        state.userProfile = action.payload.userProfile
+        Object.assign(state, action.payload);
+        state.error = null;
       })
       .addCase(actions.logIn.rejected, (state, action) => {
+        Object.assign(state, defaultState);
         state.status = 'failed';
-        state.error = action.error.message;
+        state.error = action.error.message as string;
       })
   },
 });
