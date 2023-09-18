@@ -29,9 +29,8 @@ export const actions = {
     const token = respJson.access_token;
     if (token) {
       myWorker.postMessage(token);
-      const getProfile = () => new Promise<WorkerResponse>((resolve, reject) => {
+      const getProfile = () => new Promise<WorkerResponse>((resolve) => {
        myWorker.onmessage = e => resolve(e.data)
-       myWorker.onerror = e => reject(e.message);
       });
       const data = await getProfile();
       result.userProfile = data.json;
