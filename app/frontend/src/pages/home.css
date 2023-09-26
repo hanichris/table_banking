@@ -1,0 +1,37 @@
+#root {
+    min-height: inherit;
+}
+
+.page-wrapper {
+    height: 100vh;
+    background-color: var(--color-dark-green);
+}
+
+.bank-logo {
+    color: var(--color-white);
+    width: 9rem;
+    height: 9rem;
+}
+
+.landing-page {
+    text-align: center;
+}
+
+.landing-page h2 {
+    display: inline-block;
+    color: var(--color-white);
+    font-variation-settings: 'wght' 900;
+    letter-spacing: -0.1rem;
+}
+
+@media (min-width: 768px){
+    .landing-page h2 {
+        font-size: 3rem;
+    }
+}
+
+@media (min-width: 489px) {
+    .landing-page h2 {
+        box-shadow: var(--color-gold) 0 .2rem;
+    }
+}
