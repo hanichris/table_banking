@@ -1,10 +1,15 @@
 import { createSlice } from "@reduxjs/toolkit";
+import { normalize, schema } from "normalizr";
+
 import { defaultState } from ".";
 import { actions } from "./actions";
 
-// import { IUserProfile } from "../../interfaces";
-// import { MainState } from "./state";
-// import type { RootState } from "../store";
+const bank = new schema.Entity('bank');
+const user = new schema.Entity('user', {
+  banks: [bank],
+  banks_admin: [bank],
+})
+
 
 export const mainSlice = createSlice({
   name: 'main',
@@ -13,7 +18,6 @@ export const mainSlice = createSlice({
     loggedOut: () => {
       return defaultState;
     },
-    loaded: () => {},
   },
   extraReducers(builder) {
     builder
@@ -22,7 +26,10 @@ export const mainSlice = createSlice({
       })
       .addCase(actions.logIn.fulfilled, (state, action) => {
         state.status = 'succeeded';
-        Object.assign(state, action.payload);
+        const {userProfile, ...rest} = action.payload;
+        const normalizedUserProfile = normalize(userProfile, user);
+        state.entities = structuredClone(normalizedUserProfile.entities);
+        Object.assign(state, rest);
         state.error = null;
       })
       .addCase(actions.logIn.rejected, (state, action) => {
