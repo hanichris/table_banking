@@ -5,10 +5,8 @@ import { RouterProvider } from 'react-router-dom'
 
 import { store } from './store'
 import './index.css'
-// import App from './App.tsx'
 import { router } from './routes.tsx'
-// import NoPage from './pages/NoPage.tsx'
-// import { UsersProvider } from './context/userContext.tsx'
+
 
 // Perform / trigger the inital render.
 // It targets the target DOM node referenced by the id `root`.
