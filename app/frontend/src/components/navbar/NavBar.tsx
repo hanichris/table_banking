@@ -8,6 +8,8 @@ import { SignInSignUp } from '../modals/ModalForm';
 import './navbar.css'
 import logo from '../../assets/table-bank-transparent-background.svg';
 import { useWindowDimensions } from './useDimensions';
+import { useAppDispatch, useAppSelector } from '../../hooks';
+import { loggedOut } from '../../store/main/reducer';
 
 const sideBar = {
   open: (height: number = 1000) => ({
@@ -38,6 +40,9 @@ function NavBar() {
     status: '',
   });
 
+  const loggedIn = useAppSelector(state => state.main.isLoggedIn);
+  const dispatch = useAppDispatch();
+
 
   function handleClick(state: string = '', open: boolean = true) {
     setAuth({
@@ -46,6 +51,18 @@ function NavBar() {
       status: state,
     });
   }
+
+  const listItem = <>
+  <li>
+    <a id='header_signin-btn' onClick={() => handleClick('signIn')}>Sign in</a>
+  </li>
+  <li>
+    <a id='header_signup-btn' className='btn btn--primary btn--s' onClick={() => handleClick('signUp')}>Sign up</a>
+  </li>
+  </>;
+
+  const listItemLogOut = <li><a id='header_signout-btn' onClick={() => dispatch(loggedOut())}>Sign out</a></li>;
+
 
   return (
     <>
@@ -63,12 +80,7 @@ function NavBar() {
             <li>
               <span className='divider'></span>
             </li>
-            <li>
-              <a id='header_signin-btn' onClick={() => handleClick('signIn')}>Sign in</a>
-            </li>
-            <li>
-              <a id='header_signup-btn' className='btn btn--primary btn--s' onClick={() => handleClick('signUp')}>Sign up</a>
-            </li>
+            {loggedIn === true ? listItemLogOut: listItem}
           </ul>
         </nav>
         <SignInSignUp state={auth} openForm={handleClick}/>
