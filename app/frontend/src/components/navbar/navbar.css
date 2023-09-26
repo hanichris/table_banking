@@ -152,7 +152,7 @@ nav.navbar-menu > ul li > .divider {
     width: .1rem;
 }
 
-#header_signin-btn {
+#header_signin-btn, #header_signout-btn {
     align-items: center;
     color: var(--color-black);
     cursor: pointer;
