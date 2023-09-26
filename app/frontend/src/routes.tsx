@@ -1,11 +1,17 @@
 import { createBrowserRouter } from "react-router-dom";
 import NoPage from "./pages/NoPage";
-import Home from "./pages/Home";
+import Layout from "./pages/Layout";
 
 export const router = createBrowserRouter([
   {
     path: '/',
-    element: <Home />,
-    errorElement: <NoPage />
+    element: <Layout />,
+    errorElement: <NoPage />,
+    children: [
+      {
+        path: '',
+        element: null,
+      }
+    ],
   }
 ]);
