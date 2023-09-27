@@ -1,6 +1,6 @@
-// import { Link } from 'react-router-dom';
 import { motion, useCycle } from 'framer-motion';
 import { useState } from 'react';
+import { Link } from 'react-router-dom';
 
 import MenuToggle from './MenuToggle';
 import { Menu } from './Menu';
@@ -61,7 +61,7 @@ function NavBar() {
   </li>
   </>;
 
-  const listItemLogOut = <li><a id='header_signout-btn' onClick={() => dispatch(loggedOut())}>Sign out</a></li>;
+  const listItemLogOut = <li><Link to={'/'} id='header_signout-btn' onClick={() => dispatch(loggedOut())}>Sign out</Link></li>;
 
 
   return (
