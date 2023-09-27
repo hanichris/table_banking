@@ -11,6 +11,7 @@ export default function Dashboard() {
           <ul>
             <li><Link to='/dashboard/banks'>Banks</Link></li>
             <li><Link to='/dashboard/account'>Account</Link></li>
+            <li><Link to='/dashboard/profile'>Profile</Link></li>
           </ul>
         </nav>
       </aside>
