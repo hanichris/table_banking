@@ -1,6 +1,6 @@
-// import { IToken, IUserProfile } from "../../interfaces";
-
 import React, { useState } from "react";
+import { useNavigate } from "react-router-dom";
+
 import { useAppDispatch, useAppSelector } from "../../hooks";
 import { RiCloseLine } from "react-icons/ri";
 import { VscEye, VscEyeClosed } from "react-icons/vsc";
@@ -8,12 +8,12 @@ import { VscEye, VscEyeClosed } from "react-icons/vsc";
 import '../modal.css'
 import './form.modal.css'
 import { actions } from "../../store/main/actions";
-// import { UsersDispatchContext } from "../../context/userContext";
 import { ModalProp } from "../../interfaces";
 import { Spinner } from "../Spinner";
 
 
 export default function SignIn({ state, openForm }: ModalProp) {
+  const navigate = useNavigate();
   const [pwdType, setPwdType] = useState('password');
   const [userDetails, setUserDetails] = useState({
     username: '',
@@ -42,7 +42,14 @@ export default function SignIn({ state, openForm }: ModalProp) {
       uname: formData.get('username') as string,
       pwd: formData.get('password') as string,
     })
-    dispatch(actionObj);
+    try {
+      await dispatch(actionObj).unwrap();
+      navigate('/dashboard');
+      openForm('', false);
+    } catch (err) {
+      console.error(err);
+      console.log(reqStatus);
+    }
   }
 
   function handleBlur(e:React.ChangeEvent<HTMLInputElement>) {
