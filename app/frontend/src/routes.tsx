@@ -2,20 +2,34 @@ import { createBrowserRouter } from "react-router-dom";
 import NoPage from "./pages/NoPage";
 import Layout from "./pages/Layout";
 import HomePage from "./pages/Home";
+import Dashboard from "./pages/Dashboard";
+import { dashboardLoader } from "./pages/utils";
+import Account from "./pages/Account";
 
 export const router = createBrowserRouter([
   {
-    path: '',
+    path: '/',
     element: <Layout />,
     errorElement: <NoPage />,
     children: [
       {
-        path: '/',
+        index: true,
         element: <HomePage />,
       },
       {
         path: 'dashboard',
-        element: <h1>Welcome to the dashboard</h1>,
+        loader: dashboardLoader,
+        element: <Dashboard />,
+        children: [
+          {
+            path: 'account',
+            element: <Account />,
+          },
+          {
+            path: 'banks',
+            element: <h2>Banks</h2>
+          }
+        ]
       }
     ],
   }
