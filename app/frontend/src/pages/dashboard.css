@@ -20,3 +20,7 @@
         flex-direction: column;
     }
 }
+
+.dashboard_content {
+    flex-grow: 2;
+}
