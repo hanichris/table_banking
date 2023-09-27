@@ -20,8 +20,8 @@ export const Delete = () => {
     console.log(data);
   }
 
-  const disabledSave = <button type="submit" className="btn btn--m btn--danger disable" disabled>Save</button>
-  const save = <button type="submit" className="btn btn--m btn--danger" >Save</button>
+  const disabledSave = <button type="submit" className="btn btn--m btn--danger disable" disabled>Delete</button>
+  const save = <button type="submit" className="btn btn--m btn--danger" >Delete</button>
 
   return (
   <div data-tab='delete'>
