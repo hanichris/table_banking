@@ -5,6 +5,7 @@ import HomePage from "./pages/Home";
 import Dashboard from "./pages/Dashboard";
 import { dashboardLoader } from "./pages/utils";
 import Account from "./pages/Account";
+import UserProfile from "./pages/UserProfile";
 
 export const router = createBrowserRouter([
   {
@@ -28,6 +29,10 @@ export const router = createBrowserRouter([
           {
             path: 'banks',
             element: <h2>Banks</h2>
+          },
+          {
+            path: 'profile',
+            element: <UserProfile />
           }
         ]
       }
