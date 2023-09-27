@@ -1,0 +1,22 @@
+.dashboard {
+    display: flex;
+}
+
+.dashboard--sidebar {
+    display: none;
+    box-shadow: rgb(0, 0, 0, 0.075) 0.1rem 0;
+    width: 22rem;
+}
+
+.dashboard--sidebar_nav {
+    flex-grow: 1;
+    padding: 2rem;
+    overflow: auto;
+}
+
+@media (min-width: 768px){
+    .dashboard--sidebar {
+        display: flex;
+        flex-direction: column;
+    }
+}
