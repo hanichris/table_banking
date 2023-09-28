@@ -22,7 +22,7 @@ class BankCreate(BankBase):
 
 class BankUpdate(BankBase):
     """Model defining the properties to receive on `bank` update."""
-    pass
+    admin_id: int | None = None
 
 class Bank(BankBase):
     id: int
