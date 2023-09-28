@@ -18,7 +18,7 @@ from app.db.base_class import Base, association_table
 
 class Bank(Base):
     id: Mapped[int] = mapped_column(primary_key=True, index=True)
-    admin_id: Mapped[int] = mapped_column(ForeignKey('user.id'))
+    admin_id: Mapped[int | None] = mapped_column(ForeignKey('user.id'))
     title: Mapped[str] = mapped_column(unique=True, index=True)
     interest_rate: Mapped[Decimal] = mapped_column(insert_default=Decimal(0))
     amount: Mapped[Decimal] = mapped_column(insert_default=Decimal(0))
