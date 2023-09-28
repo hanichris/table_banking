@@ -63,3 +63,6 @@ class CRUDBase(
         db.commit()
         db.refresh(db_obj)
         return db_obj
+
+    def remove(self):
+        pass
