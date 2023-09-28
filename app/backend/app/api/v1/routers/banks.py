@@ -9,12 +9,13 @@ from sqlalchemy.orm import Session
 
 from app.api import deps
 from app.crud import user, _bank
-from app.schemas import Bank, BankUsers, BankCreate
+from app.schemas import Bank, BankUsers, BankCreate, BankUpdate
 
 import app.models.user as mdl
 
 
 reg_exp = r"^[\w!#$%&'*+\/=?`{|}~^-]+(?:\.[\w!#$%&'*+\/=?`{|}~^-]+)*@(?:[a-zA-Z0-9-]+\.)+[a-zA-Z]{2,6}$"
+
 router = APIRouter(
     prefix='/banks',
     tags=['banks']
@@ -66,6 +67,33 @@ async def create_bank(
         * The newly created bank instance.
     """
     return _bank.create_with_owner(db, admin_id=current_user.id, obj_in=bank_in)
+
+@router.get('/{bank_id}',
+            dependencies=[Depends(deps.get_current_active_user)],
+            response_model=BankUsers)
+async def read_bank(
+    db: Annotated[Session, Depends(deps.get_db)],
+    bank_id: int,
+):
+    """Get information regarding a particular bank.
+    
+    Args:
+        * `db` - A session object.
+        * `bank_id` - The id of the bank of interest.
+    
+    Raises:
+        HTTPException with status 404 if no bank was found with the provided id.
+
+    Returns:
+        The bank details requested.
+    """
+    stored_bank = _bank.get(db, id=bank_id)
+    if not stored_bank:
+        raise HTTPException(
+            status_code=404,
+            detail='Bank not found'
+        )
+    return stored_bank
 
 @router.patch('/{bank_id}/users/{user_id}', response_model=BankUsers)
 async def add_or_remove_bank_member(
@@ -136,3 +164,23 @@ async def add_or_remove_bank_member(
             db, bank_model=stored_bank, user_model=member
             )
     return _bank.add_bank_member(db, bank_model=stored_bank, user_model=member)
+
+@router.patch('/{bank_id}', response_model=Bank)
+async def update_bank(
+    db: Annotated[Session, Depends(deps.get_db)],
+    current_user: Annotated[mdl.User, Depends(deps.get_current_active_user)],
+    bank_id: int,
+    bank_in: BankUpdate
+):
+    stored_bank = _bank.get(db, id=bank_id)
+    if not stored_bank:
+        raise HTTPException(
+            status_code=404,
+            detail='Bank not found'
+        )
+    if not user.is_superuser(current_user) and (stored_bank.admin_id != current_user.id):
+        raise HTTPException(
+            status_code=400,
+            detail='The user does not have enough permission'
+        )
+    return _bank.update_bank(db, bank_db_model=stored_bank, obj_in=bank_in)
