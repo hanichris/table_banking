@@ -111,5 +111,21 @@ class CRUDBank(CRUDBase[Bank, BankCreate, BankUpdate]):
         """"""
         update_data = obj_in.model_dump(exclude_unset=True)
         return super().update(db, db_obj=bank_db_model, obj_in=update_data)
+    
+    def get_bank_by_title(
+            self,
+            db: Session, /, *,
+            title: str
+    ) -> Bank | None:
+        """Get the bank from the database that has the given title name.
+
+        Args:
+            * `db` - A session object.
+            * `title` - The bank title to query the database with.
+
+        Returns:
+            The bank details or none if no bank was found with the given name.
+        """
+        return db.scalar(select(self.model).filter_by(title=title))
 
 _bank = CRUDBank(Bank)
