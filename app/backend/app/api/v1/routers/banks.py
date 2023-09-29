@@ -66,6 +66,12 @@ async def create_bank(
     Returns:
         * The newly created bank instance.
     """
+    stored_bank = _bank.get_bank_by_title(db, title=bank_in.title)
+    if stored_bank:
+        raise HTTPException(
+            status_code=400,
+            detail="The bank title name is already taken"
+        )
     return _bank.create_with_owner(db, admin_id=current_user.id, obj_in=bank_in)
 
 @router.get('/{bank_id}',
