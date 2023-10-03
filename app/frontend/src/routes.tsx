@@ -4,7 +4,7 @@ import NoPage from "./pages/NoPage";
 import Layout from "./pages/Layout";
 import HomePage from "./pages/Home";
 import Dashboard from "./pages/Dashboard";
-import { dashboardLoader } from "./pages/utils";
+import { dashboardLoader, layoutLoader as rootLoader } from "./pages/utils";
 import Account from "./pages/Account";
 import UserProfile from "./pages/UserProfile";
 import Bank from "./pages/Bank";
@@ -15,6 +15,7 @@ export const router = createBrowserRouter([
     path: '/',
     element: <Layout />,
     errorElement: <NoPage />,
+    loader: rootLoader,
     children: [
       {
         index: true,
