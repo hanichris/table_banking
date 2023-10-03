@@ -9,6 +9,7 @@ from sqlalchemy.orm import Session
 
 from app.api import deps
 from app.core.settings_config import settings
+from app.core.security import verify_password
 from app.crud import user
 from app.schemas import User, UserBanks, UserCreate, UserUpdate
 
@@ -127,6 +128,33 @@ async def read_me(
     """
     return current_user
 
+@router.delete('/me', response_model=User, status_code=204)
+async def delete_me(
+    db: Annotated[Session, Depends(deps.get_db)],
+    current_user: Annotated[mdl.User, Depends(deps.get_current_active_user)],
+    user_pwd: Annotated[str, Body()]
+):
+    """Delete the current user.
+
+    Args:
+        * `db` - A SQLAlchemy session object.
+        * `current_user` - The currently logged in user.
+        * `user_pwd` - The password entered to confirm the deletion of the account
+    
+    Raises:
+        * `HTTPException (400)` if the entered password was incorrect.
+    
+    Returns:
+        * `User` the deleted user details
+    """
+    is_verified = verify_password(user_pwd, current_user.password)
+    if not is_verified:
+        raise HTTPException(
+            status_code=400,
+            detail='Incorrect password entered. Cannot complete operation.'
+        )
+    return user.remove(db, id=current_user.id)
+
 
 @router.post('/open', response_model=User)
 async def create_user_open(
@@ -236,3 +264,34 @@ async def update_user(
         user_db_model=stored_user,
         obj_in=user_in
     )
+
+@router.delete(
+        '/{user_id}',
+        dependencies=[Depends(deps.get_current_active_superuser)],
+        response_model=User,
+        status_code=204
+)
+async def delete_user(
+    db: Annotated[Session, Depends(deps.get_db)],
+    user_id: int,
+):
+    """Delete the user with the given ID.
+
+    An admin can delete the user with the corresponding ID.
+    Args:
+        * `db` - A SQLAlchemy Session object.
+        * `user_id` - The id of the person of interest.
+
+    Raises:
+        * HTTPException (404) if the ID did not match any user in the database.
+
+    Returns:
+        * `User` - The deleled user.
+    """
+    user_to_delete = user.get(db, id=user_id)
+    if not user_to_delete:
+        raise HTTPException(
+            status_code=404,
+            detail='The ID does not match any user in the database.'
+        )
+    return user.remove(db, id=user_id)
