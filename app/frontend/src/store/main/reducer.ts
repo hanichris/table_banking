@@ -18,6 +18,13 @@ export const mainSlice = createSlice({
     loggedOut: () => {
       return defaultState;
     },
+    getMe: (state, action) => {
+      const {userProfile, token} = action.payload;
+      const normalizedUserProfile = normalize(userProfile, user);
+      state.entities = structuredClone(normalizedUserProfile.entities);
+      state.isLoggedIn = true;
+      state.token = token;
+    },
   },
   extraReducers(builder) {
     builder
@@ -40,7 +47,7 @@ export const mainSlice = createSlice({
   },
 });
 
-export const { loggedOut } = mainSlice.actions;
+export const { loggedOut, getMe } = mainSlice.actions;
 export default mainSlice.reducer;
 
 // export default function usersReducer(state: MainState, action: Action) {
