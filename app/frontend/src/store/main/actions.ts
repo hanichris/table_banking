@@ -2,7 +2,7 @@ import { createAsyncThunk } from "@reduxjs/toolkit";
 
 import { api } from "../../api";
 import { IToken, IUserProfile } from "../../interfaces";
-// import { setLocalToken } from "../../utils";
+import { setLocalToken } from "../../utils";
 
 
 type LogInResponse = {
@@ -11,14 +11,16 @@ type LogInResponse = {
   userProfile: IUserProfile | null,
 }
 
-type WorkerResponse = {
-  token: string,
-  json: IUserProfile,
-}
-
-const myWorker = new Worker('src/store/main/worker.ts', { type: 'module'});
 
 export const actions = {
+  getMe:async (token:string) => {
+    const resp = await api.getMe(token);
+    if (!resp.ok) {
+      throw new Error("Could not retrieve user profile");
+    }
+    const respJson = await resp.json();
+    return respJson;
+  },
   logIn: createAsyncThunk('main/logIn',async (payload:{uname: string, pwd: string}) => {
     const result: LogInResponse = {token: '', isLoggedIn: false, userProfile: null};
     const resp = await api.loginGetToken(payload.uname, payload.pwd);
@@ -28,14 +30,10 @@ export const actions = {
     const respJson: IToken = await resp.json();
     const token = respJson.access_token;
     if (token) {
-      myWorker.postMessage(token);
-      const getProfile = () => new Promise<WorkerResponse>((resolve) => {
-       myWorker.onmessage = e => resolve(e.data)
-      });
-      const data = await getProfile();
-      result.userProfile = data.json;
+      setLocalToken(token);
+      result.userProfile = await actions.getMe(token);
       result.isLoggedIn = true;
-      result.token = data.token;
+      result.token = token;
     }
     return result;
   }),
