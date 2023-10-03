@@ -49,7 +49,9 @@ async def read_users(
 
 @router.post('/',
              dependencies=[Depends(deps.get_current_active_superuser)],
-             response_model=User)
+             response_model=User,
+             status_code=201
+)
 async def create_user(
     db: Annotated[Session, Depends(deps.get_db)],
     user_in: UserCreate
@@ -156,7 +158,7 @@ async def delete_me(
     return user.remove(db, id=current_user.id)
 
 
-@router.post('/open', response_model=User)
+@router.post('/open', response_model=User, status_code=201)
 async def create_user_open(
     db: Annotated[Session, Depends(deps.get_db)],
     user_email: Annotated[EmailStr, Body()],
