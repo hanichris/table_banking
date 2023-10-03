@@ -10,6 +10,7 @@ import logo from '../../assets/table-bank-transparent-background.svg';
 import { useWindowDimensions } from './useDimensions';
 import { useAppDispatch, useAppSelector } from '../../hooks';
 import { loggedOut } from '../../store/main/reducer';
+import { removeLocalToken } from '../../utils';
 
 const sideBar = {
   open: (height: number = 1000) => ({
@@ -52,6 +53,11 @@ function NavBar() {
     });
   }
 
+  const handleLogOut = () => {
+    removeLocalToken();
+    dispatch(loggedOut());
+  };
+
   const listItem = <>
   <li>
     <a id='header_signin-btn' onClick={() => handleClick('signIn')}>Sign in</a>
@@ -61,7 +67,7 @@ function NavBar() {
   </li>
   </>;
 
-  const listItemLogOut = <li><Link to={'/'} id='header_signout-btn' onClick={() => dispatch(loggedOut())}>Sign out</Link></li>;
+  const listItemLogOut = <li><Link to={'/'} id='header_signout-btn' onClick={handleLogOut}>Sign out</Link></li>;
 
 
   return (
@@ -92,7 +98,7 @@ function NavBar() {
         >
           <div id='mobile_menu-overlay' style={isOpen || auth.status !== '' ? {opacity: 1, visibility: 'visible'} : {}}></div>
           <motion.div className='background' custom={height} variants={sideBar} />
-          <Menu isOpen={isOpen} openForm={handleClick} state={auth}/>
+          <Menu isOpen={isOpen} openForm={handleClick} state={auth} toggle={() => toggleOpen()}/>
           <MenuToggle toggle={() => toggleOpen()}/>
       </motion.nav>}
     </>
