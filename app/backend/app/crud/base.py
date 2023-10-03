@@ -64,5 +64,8 @@ class CRUDBase(
         db.refresh(db_obj)
         return db_obj
 
-    def remove(self):
-        pass
+    def remove(self, db: Session, /, *, id: int) -> ModelType:
+        db_obj = self.get(db, id=id)
+        db.delete(db_obj)
+        db.commit()
+        return db_obj
