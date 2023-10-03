@@ -1,5 +1,7 @@
-export const getLocalToken = () => localStorage.getItem('token');
+import secureLocalStorage from "react-secure-storage";
 
-export const setLocalToken = (token: string) => localStorage.setItem('token', token);
+export const getLocalToken = () => secureLocalStorage.getItem('token');
 
-export const removeLocalToken = () => localStorage.removeItem('token');
+export const setLocalToken = (token: string) => secureLocalStorage.setItem('token', token);
+
+export const removeLocalToken = () => secureLocalStorage.removeItem('token');
