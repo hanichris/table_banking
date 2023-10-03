@@ -130,7 +130,7 @@ async def read_me(
     """
     return current_user
 
-@router.delete('/me', response_model=User, status_code=204)
+@router.delete('/me', response_model=User)
 async def delete_me(
     db: Annotated[Session, Depends(deps.get_db)],
     current_user: Annotated[mdl.User, Depends(deps.get_current_active_user)],
@@ -270,8 +270,7 @@ async def update_user(
 @router.delete(
         '/{user_id}',
         dependencies=[Depends(deps.get_current_active_superuser)],
-        response_model=User,
-        status_code=204
+        response_model=User
 )
 async def delete_user(
     db: Annotated[Session, Depends(deps.get_db)],
