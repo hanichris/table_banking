@@ -65,6 +65,7 @@ export interface ModalProp {
 
 export interface MenuProp extends ModalProp {
   isOpen: boolean;
+  toggle: () => void;
 }
 
 export interface formDataType {
