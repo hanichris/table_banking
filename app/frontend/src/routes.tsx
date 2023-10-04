@@ -27,6 +27,10 @@ export const router = createBrowserRouter([
         element: <Dashboard />,
         children: [
           {
+            index: true,
+            element: <p>Welcome to the future of banking</p>
+          },
+          {
             path: 'account',
             element: <Account />,
           },
