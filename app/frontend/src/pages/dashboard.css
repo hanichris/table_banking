@@ -86,10 +86,48 @@
     min-height: calc(100vh - 19rem);
 }
 
+.bank-listings__body .bank-listings_content_results {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(25rem, 1fr));
+    gap: 1.5rem 1.5rem;
+}
+
+.bank-listings_content_results .bank-card {
+    border-radius: 1.8rem;
+    /* background: linear-gradient(#e66465, #9198e5); */
+    background-color: var(--color-light-grey);
+    box-shadow: .5rem .5rem .5rem rgb(0, 0, 0, 0.1);
+    padding: 2.5rem;
+}
+
+.bank-card .bank-name {
+    font-variation-settings: 'wght' 700;
+    font-size: x-large;
+}
+
+.bank-card__body div[data-label]::after {
+    content: attr(data-label);
+    text-transform: uppercase;
+    font-size: 1rem;
+    font-variation-settings: 'wght' 200;
+    letter-spacing: 1rem;
+}
+
+.bank-card__body .bank-card__amount {
+    font-size: 2.4rem;
+    font-variation-settings: 'wght' 450;
+}
+
+.bank-card__body .bank-card__amount + a {
+    display: inline-block;
+    width: 100%;
+}
+
 @media (min-width: 768px){
     .dashboard--sidebar {
         display: flex;
         flex-direction: column;
+        height: calc(100vh - 6rem);
     }
     .dashboard_content {
         height: 100%;
