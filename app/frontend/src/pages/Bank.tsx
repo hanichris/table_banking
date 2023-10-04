@@ -1,17 +1,23 @@
 import { useNavigate, useParams } from "react-router-dom";
 import { IoChevronBack } from 'react-icons/io5';
 
+import { useAppSelector } from "../hooks";
+import { selectUserBankById } from "../store/main/selectors";
+
 export default function Bank() {
   const navigate = useNavigate();
   const params = useParams();
+  const bank = useAppSelector(state => selectUserBankById(state, params.bankId as string));
+
   return (
-    <div id="bank-page">
+    <section id="bank-page">
       <a onClick={() => navigate(-1)}><IoChevronBack /></a>
       <header className="bank-page__top">
         <h2 className="bank-page__title">
-          Bank {params.bankId} page
+          {bank.title}
         </h2>
       </header>
-    </div>
+      <div className="bank-page__body"></div>
+    </section>
   )
 }
