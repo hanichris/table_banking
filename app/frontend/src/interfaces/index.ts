@@ -3,7 +3,7 @@ import React from "react";
 export interface IBank {
   title: string,
   interest_rate: number,
-  amount: number,
+  amount: string,
   loaned_out_amount: number,
   id: number,
   admin_id: number,
