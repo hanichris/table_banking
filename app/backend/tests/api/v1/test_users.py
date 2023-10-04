@@ -41,7 +41,7 @@ class TestSuperuserCreator:
         return r
 
     def test_superuser_create_user_status_code(self, create_user: Response):
-        assert create_user.status_code == httpx.codes.OK
+        assert create_user.status_code == httpx.codes.CREATED
     
     def test_superuser_create_user_db(self, create_user: Response, fake_user, db):
         res = create_user.json()
