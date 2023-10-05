@@ -1,4 +1,4 @@
-import { IUserProfileCreate } from "./interfaces";
+import { IBankCreate, IUserProfileCreate } from "./interfaces";
 
 const serverEndpoint = import.meta.env.VITE_SERVER_ENDPOINT;
 
@@ -36,4 +36,19 @@ export const api = {
       body: JSON.stringify(data),
     });
   },
+  getBank:async (token:string, bankId: number) => {
+    return fetch(`${serverEndpoint}/banks/${bankId}`, authHeader(token));
+  },
+  getBanks:async (token:string) => {
+    return fetch(`${serverEndpoint}/banks`, authHeader(token));
+  },
+  createBank: async (token:string, data: IBankCreate) => {
+    const header: Record<string, Record<string, string>> = structuredClone(authHeader(token));
+    header.headers['Content-Type'] = 'application/json;charset=utf-8';
+    return fetch(`${serverEndpoint}/banks/`, {
+      method: 'POST',
+      headers: header.headers,
+      body: JSON.stringify(data)
+    });
+  }
 };
