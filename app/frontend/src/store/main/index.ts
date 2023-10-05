@@ -5,5 +5,8 @@ export const defaultState: MainState = {
   isLoggedIn: null,
   status: 'idle', // or: 'loading' | 'succeeded' | 'failed'
   token: '',
-  entities: {},
+  entities: {
+    bank: {},
+    user: {},
+  },
 };
