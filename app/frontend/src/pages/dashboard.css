@@ -54,6 +54,16 @@
     overflow: auto;
 }
 
+.dashboard_content .wrapper div[data-label='salutations']::after {
+    content: 'Welcome to your future of table banking';
+    color: var(--color-medium-grey);
+    font-size: 1.2rem;
+    font-variation-settings: 'wght' 300;
+    letter-spacing: 1rem;
+    text-transform: uppercase;
+
+}
+
 #dashboard_bank-listings, #bank-page {
     padding: 3rem;
     position: relative;
@@ -123,11 +133,29 @@
     width: 100%;
 }
 
+#bank-page .bank-page__container {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 1.5rem;
+}
+
+#bank-page .bank-page__container div[data-label]::after {
+    content: attr(data-label);
+    font-size: 1rem;
+    letter-spacing: 1rem;
+    text-transform: uppercase;    
+}
+
+#bank-page .bank-page__container div[data-label] + div {
+    margin-top: 1rem;
+    font-size: 2.4rem;
+}
+
 @media (min-width: 768px){
     .dashboard--sidebar {
         display: flex;
         flex-direction: column;
-        height: calc(100vh - 6rem);
+        min-height: calc(100vh - 6rem);
     }
     .dashboard_content {
         height: 100%;
@@ -136,7 +164,8 @@
         padding: 4rem;
     }
     #dashboard_bank-listings .bank-listings__title,
-    #bank-page .bank-page__title {
+    #bank-page .bank-page__title,
+    #bank-page .bank-page__container div[data-label] + div  {
         font-size: 3.5rem;
     }
 }
