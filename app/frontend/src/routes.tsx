@@ -9,6 +9,7 @@ import Account from "./pages/Account";
 import UserProfile from "./pages/UserProfile";
 import Bank from "./pages/Bank";
 import BanksList from "./pages/BanksList";
+import Index from "./pages/DashboardIndex";
 
 export const router = createBrowserRouter([
   {
@@ -28,11 +29,15 @@ export const router = createBrowserRouter([
         children: [
           {
             index: true,
-            element: <p>Welcome to the future of banking</p>
+            element: <Index />
           },
           {
             path: 'account',
             element: <Account />,
+          },
+          {
+            path: 'banks/:bankId/edit',
+            element: <p>Welcome to the bank edit page</p>,
           },
           {
             path: 'banks/:bankId',
