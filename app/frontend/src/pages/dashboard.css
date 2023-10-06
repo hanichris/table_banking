@@ -85,6 +85,26 @@
     white-space: nowrap;
 }
 
+#dashboard_bank-listings .bank-listings__filters {
+    display: flex;
+    position: absolute;
+    right: 0;
+    top: .2rem;
+}
+
+
+#dashboard_bank-listings .bank-listings__filters .icon {
+    position: relative;
+    height: inherit;
+    width: 1.8rem;
+}
+
+#dashboard_bank-listings .bank-listings__filters .icon > svg {
+    position: absolute;
+    top: calc(50% - .9rem);
+    left: 0;
+}
+
 #dashboard_bank-listings .bank-listings__body {
     margin-top: 3rem;
 }
@@ -167,6 +187,9 @@
     #bank-page .bank-page__title,
     #bank-page .bank-page__container div[data-label] + div  {
         font-size: 3.5rem;
+    }
+    #mobile__search-btn {
+        display: none;
     }
 }
 
