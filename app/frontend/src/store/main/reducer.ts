@@ -4,10 +4,10 @@ import { normalize, schema } from "normalizr";
 import { defaultState } from ".";
 import { actions } from "./actions";
 
-const bank = new schema.Entity('bank');
-const user = new schema.Entity('user', {
-  banks: [bank],
-  banks_admin: [bank],
+const bankEntity = new schema.Entity('bank');
+const userEntity = new schema.Entity('user', {
+  banks: [bankEntity],
+  banks_admin: [bankEntity],
 })
 
 
@@ -18,13 +18,6 @@ export const mainSlice = createSlice({
     loggedOut: () => {
       return defaultState;
     },
-    getMe: (state, action) => {
-      const {userProfile, token} = action.payload;
-      const normalizedUserProfile = normalize(userProfile, user);
-      state.entities = structuredClone(normalizedUserProfile.entities);
-      state.isLoggedIn = true;
-      state.token = token;
-    },
   },
   extraReducers(builder) {
     builder
@@ -34,9 +27,13 @@ export const mainSlice = createSlice({
       .addCase(actions.logIn.fulfilled, (state, action) => {
         state.status = 'succeeded';
         const {userProfile, ...rest} = action.payload;
-        const normalizedUserProfile = normalize(userProfile, user);
-        state.entities = structuredClone(normalizedUserProfile.entities);
         Object.assign(state, rest);
+        const normalizedUserProfile = normalize(userProfile, userEntity);
+        const {bank, user} = normalizedUserProfile.entities;
+        if (user && userProfile) {
+          state.user.details = structuredClone(user[userProfile.id])
+          state.user.banks = Object.assign({}, bank);
+        }
         state.error = null;
       })
       .addCase(actions.logIn.rejected, (state, action) => {
@@ -44,10 +41,23 @@ export const mainSlice = createSlice({
         state.status = 'failed';
         state.error = action.error.message as string;
       })
+      .addCase(actions.getMe.fulfilled, (state, action) => {
+        state.status = 'succeeded';
+        const {userProfile, token} = action.payload;
+        state.token = token;
+        state.isLoggedIn = true;
+        const normalizedUserProfile = normalize(userProfile, userEntity);
+        const {bank, user} = normalizedUserProfile.entities;
+        if (user) {
+          state.user.details = structuredClone(user[userProfile.id]);
+          state.user.banks = Object.assign({}, bank);
+        }
+        state.error = null;
+      })
   },
 });
 
-export const { loggedOut, getMe } = mainSlice.actions;
+export const { loggedOut } = mainSlice.actions;
 export default mainSlice.reducer;
 
 // export default function usersReducer(state: MainState, action: Action) {
