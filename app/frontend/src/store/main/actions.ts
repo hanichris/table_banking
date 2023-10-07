@@ -1,26 +1,27 @@
 import { createAsyncThunk } from "@reduxjs/toolkit";
 
 import { api } from "../../api";
-import { IToken, IUserProfile } from "../../interfaces";
+import { IToken, IUser } from "../../interfaces";
 import { setLocalToken } from "../../utils";
 
 
 type LogInResponse = {
   token: string,
   isLoggedIn: boolean,
-  userProfile: IUserProfile | null,
+  userProfile: IUser | null,
 }
 
 
 export const actions = {
-  getMe:async (token:string) => {
+  getMe:createAsyncThunk('main/getMe', async (token:string) => {
     const resp = await api.getMe(token);
     if (!resp.ok) {
       throw new Error("Could not retrieve user profile");
     }
     const respJson = await resp.json();
-    return respJson;
-  },
+    const userProfile = <IUser>respJson;
+    return {userProfile, token};
+  }),
   logIn: createAsyncThunk('main/logIn',async (payload:{uname: string, pwd: string}) => {
     const result: LogInResponse = {token: '', isLoggedIn: false, userProfile: null};
     const resp = await api.loginGetToken(payload.uname, payload.pwd);
@@ -31,7 +32,8 @@ export const actions = {
     const token = respJson.access_token;
     if (token) {
       setLocalToken(token);
-      result.userProfile = await actions.getMe(token);
+      const r = await api.getMe(token);
+      result.userProfile = await r.json();
       result.isLoggedIn = true;
       result.token = token;
     }
