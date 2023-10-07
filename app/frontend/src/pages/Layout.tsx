@@ -11,6 +11,7 @@ export default function Layout() {
   useLayoutEffect(() => {
     let loggedIn = false;
     if (user && user.isLoggedIn == true) {
+      console.log('Navigating to the dashboard...')
       loggedIn = true;
       const goToDashboard = () => navigate('/dashboard');
       if (loggedIn) goToDashboard();
