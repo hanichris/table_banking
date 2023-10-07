@@ -6,8 +6,8 @@ interface IUser extends IUserProfile {
 }
 
 type Entity = {
-    bank: Record<string, IBank>,
-    user: Record<string, IUser>,
+    banks: Record<string, IBank>,
+    details: IUser,
 };
 
 export interface MainState {
@@ -15,7 +15,7 @@ export interface MainState {
     isLoggedIn: boolean | null;
     status: 'idle' | 'loading' | 'succeeded' | 'failed'; // API call state.
     token: string;
-    entities: Entity;
+    user: Entity;
 }
 
 export interface Action {
