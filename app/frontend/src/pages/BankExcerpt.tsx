@@ -7,7 +7,7 @@ import { useAppSelector } from "../hooks";
 export default function BankExcerpt({ bankId }: {bankId: string}) {
   const bank = useAppSelector(state => selectUserBankById(state, bankId));
 
-  console.log(typeof bank.loaned_out_amount);
+  // console.log(typeof bank.loaned_out_amount);
 
   return (
     <article className="bank-card">
