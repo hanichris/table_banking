@@ -1,31 +1,49 @@
 import { redirect } from 'react-router-dom';
 import { store } from '../store';
-import { selectMain } from '../store/main/selectors';
+import { selectMain, selectAllUserBanks } from '../store/main/selectors';
 import { getLocalToken, removeLocalToken } from '../utils';
 import { actions } from '../store/main/actions';
-import { getMe } from '../store/main/reducer';
 
-
-export async function dashboardLoader() {
-  const user = selectMain(store.getState());
-  if (user.isLoggedIn === null) {
-    throw redirect('/');
-  }
-  return user;
-}
 
 export async function layoutLoader() {
+  console.log('running root loader');
   const token = getLocalToken() as string | null;
-  if (token) {
-    console.log(token);
+  const user = selectMain(store.getState());
+  if (token && token !== user.token) {
     try {
-      const userProfile = await actions.getMe(token);
-      store.dispatch(getMe({userProfile, token}));
+      await store.dispatch(actions.getMe(token));
       return selectMain(store.getState());
     } catch (error) {
+      console.error(error);
       removeLocalToken();
       return null;
     }
   }
   return null;
+}
+
+export async function dashboardLoader() {
+  console.log('running dashboard loader');
+  const user = selectMain(store.getState());
+  if (user.isLoggedIn === null) {
+    console.log('The user is not logged in');
+    throw redirect('/');
+  }
+  console.log('The user is logged in.')
+  return user;
+}
+
+export async function bankListLoader({ request }: {request: Request}) {
+  console.log('running banklist loader');
+  const userBanks = selectAllUserBanks(store.getState());
+  const url = new URL(request.url);
+  const q = url.searchParams.get("q");
+  if (q) {
+    const banks = Object
+    .values(userBanks)
+      .filter(bank => bank.title.toLocaleLowerCase().includes(q.toLocaleLowerCase()));
+    return { banks, q};
+  }
+  const banks = Object.keys(userBanks);
+  return { banks, q: null };
 }
