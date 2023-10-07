@@ -23,10 +23,15 @@ export interface IToken {
 
 export interface IUserProfile {
   email: string;
-  is_active: boolean;
-  is_superuser: boolean;
+  is_active: boolean | null;
+  is_superuser: boolean | null;
   full_name: string;
   id: number;
+}
+
+export interface IUser extends IUserProfile{
+  bank_admin: Array<IBank>;
+  banks: Array<IBank>;
 }
 
 export interface IUserProfileCreate {
@@ -51,7 +56,7 @@ type UserBankItem = {
   bankId: number,
 };
 
-export interface IUserBank {
+export interface IUserBanks {
   byId: Record<number, UserBankItem>;
   allIds: Array<number>;
 }
