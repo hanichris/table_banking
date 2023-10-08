@@ -1,5 +1,5 @@
 import { motion } from 'framer-motion';
-import { Link } from 'react-router-dom';
+import { NavLink } from 'react-router-dom';
 
 import { SignInSignUp } from '../modals/ModalForm';
 import { MenuProp } from '../../interfaces';
@@ -54,16 +54,16 @@ export const Menu = ( { state, openForm, isOpen, toggle }: MenuProp ) => {
 
   const listItemLoggedIn = <>
     <motion.li variants={liVariants}>
-      <Link to='/dashboard/banks' onClick={toggle}>Banks</Link>
+      <NavLink to='/dashboard/banks' onClick={toggle}>Banks</NavLink>
     </motion.li>
     <motion.li variants={liVariants}>
-      <Link to='/dashboard/account' onClick={toggle}>Account</Link>
+      <NavLink to='/dashboard/account' onClick={toggle}>Account</NavLink>
     </motion.li>
     <motion.li variants={liVariants}>
-      <Link to='/dashboard/profile' onClick={toggle}>Profile</Link>
+      <NavLink to='/dashboard/profile' onClick={toggle}>Profile</NavLink>
     </motion.li>
     <motion.li variants={liVariants}>
-      <Link to='/' onClick={handleLogOut}>Sign Out</Link>
+      <NavLink to='/' onClick={handleLogOut}>Sign Out</NavLink>
     </motion.li>
   </>
 
