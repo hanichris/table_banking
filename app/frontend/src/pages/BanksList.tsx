@@ -1,4 +1,4 @@
-import { Form, useLoaderData } from "react-router-dom";
+import { Form, useLoaderData, useNavigate, useSubmit } from "react-router-dom";
 import { FiSearch } from 'react-icons/fi';
 import React, { useRef, useState } from "react";
 import { BiPlus } from 'react-icons/bi';
@@ -20,7 +20,8 @@ export default function BanksList() {
   const inputRef = useRef<HTMLInputElement>(null);
   // const banks = useAppSelector(selectAllUserBankIds);
   const { banks, q } = useLoaderData() as BankData  ;
-  // const submit = useSubmit();
+  const submit = useSubmit();
+  const navigate = useNavigate();
 
   const content = banks.map((bank) => {
     if (typeof bank === "string") {
@@ -39,6 +40,7 @@ export default function BanksList() {
     if (inputRef.current) {
       inputRef.current.value = ''; 
     }
+    navigate('.');
   }
 
   return (
@@ -56,6 +58,14 @@ export default function BanksList() {
               type="search" 
               defaultValue={q || search}
               onChange={handleSearchChange}
+              onBlur={(e) => {
+                if (search.length > 0) {
+                  const isFirstSearch = q == null;
+                  submit(e.currentTarget.form, {
+                    replace: !isFirstSearch,
+                  }) 
+                }
+              }}
               />
               <span className="input-search__search-btn">
                 <FiSearch />
