@@ -8,6 +8,7 @@ import { GiCancel } from 'react-icons/gi';
 // import { selectAllUserBankIds } from "../store/main/selectors";
 import BankExcerpt from "./BankExcerpt";
 import { IBank } from "../interfaces";
+import NewBank from "../components/modals/NewBankModal";
 
 
 type BankData = {
@@ -17,6 +18,8 @@ type BankData = {
 
 export default function BanksList() {
   const [search, setSearch] = useState('');
+  const [hasSearch, setHasSearch] = useState(false);
+  const [open, setOpen] = useState(false);
   const inputRef = useRef<HTMLInputElement>(null);
   // const banks = useAppSelector(selectAllUserBankIds);
   const { banks, q } = useLoaderData() as BankData  ;
@@ -36,6 +39,9 @@ export default function BanksList() {
   };
 
   const clearSearch = () => {
+    if (hasSearch) {
+      setHasSearch(false);
+    }
     setSearch('');
     if (inputRef.current) {
       inputRef.current.value = ''; 
@@ -43,8 +49,15 @@ export default function BanksList() {
     navigate('.');
   }
 
+  const handleSearchBtnClick = () => {
+    setHasSearch(true);
+    setTimeout(() => {
+      inputRef.current && inputRef.current.focus()
+    }, 5)
+  }
+
   return (
-    <div id="dashboard_bank-listings">
+    <div id="dashboard_bank-listings" className={hasSearch == true ? "has-search": undefined}>
       <header className="bank-listings__top">
         <h2 className="bank-listings__title">Bank Listings</h2>
         <div className="bank-listings__filters">
@@ -65,6 +78,9 @@ export default function BanksList() {
                     replace: !isFirstSearch,
                   }) 
                 }
+                if (hasSearch && search.length === 0) {
+                  setHasSearch(false);
+                }
               }}
               />
               <span className="input-search__search-btn">
@@ -75,16 +91,16 @@ export default function BanksList() {
               </span>
             </Form>
           </div>
-          <button id='mobile__search-btn' className="btn btn--s btn--icon btn--secondary">
+          <button id='mobile__search-btn' className="btn btn--s btn--icon btn--secondary" onClick={handleSearchBtnClick}>
             <i className="icon">
               <FiSearch />
             </i>
           </button>
-          <button id='banklist-new_bank-btn' className="btn btn--s btn--secondary">
+          <button id='banklist-new_bank-btn' className="btn btn--s btn--secondary" onClick={()=> setOpen(true)}>
             <span>New</span>
               <BiPlus />
           </button>
-          <button id='mobile__new-btn' className="btn btn--s btn--icon btn--secondary">
+          <button id='mobile__new-btn' className="btn btn--s btn--icon btn--secondary" onClick={()=> setOpen(true)}>
             <i className="icon">
               <BiPlus />
             </i>
@@ -96,6 +112,7 @@ export default function BanksList() {
           <p>No banks have been joined</p>
         </div>: <div className="bank-listings_content_results">{content}</div>}
       </div>
+      {open && <NewBank setOpen={setOpen} open={open}/>}
     </div>
   );
 }
