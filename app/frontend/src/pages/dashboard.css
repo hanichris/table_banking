@@ -94,6 +94,7 @@
 
 #dashboard_bank-listings .bank-listings__filters > .bank-listings__search {
     display: none;
+    width: 100%;
 }
 
 .bank-listings__search > form {
@@ -108,6 +109,7 @@
     box-shadow: inset 0 0 0 .1rem #d8d8da, inset 0 0 0 10rem white;
     border-radius: .8rem;
     height: 3.6rem;
+    width: 100%;
     padding: 0 1rem;
     padding-right: 3.6rem;
 }
@@ -158,6 +160,14 @@
     position: absolute;
     top: calc(50% - .9rem);
     left: 0;
+}
+
+#dashboard_bank-listings.has-search .bank-listings__search {
+    display: block;
+}
+
+#dashboard_bank-listings.has-search #mobile__search-btn {
+    display: none;
 }
 
 #dashboard_bank-listings .bank-listings__body {
@@ -243,7 +253,7 @@
     #bank-page .bank-page__container div[data-label] + div  {
         font-size: 3.5rem;
     }
-    #mobile__search-btn, #mobile__new-btn {
+    #mobile__search-btn {
         display: none;
     }
     #dashboard_bank-listings .bank-listings__filters > .bank-listings__search {
@@ -253,15 +263,21 @@
     .bank-listings__search > form  input[type='search'] {
         width: 18rem;
     }
+    #banklist-new_bank-btn span {
+        font-variation-settings: 'wght' 650;
+    }
+}
+
+@media (min-width: 992px) {
+    #mobile__new-btn {
+        display: none;
+    }
     #banklist-new_bank-btn {
         display: inline-flex;
         align-items: center;
         gap: 1rem;
         background-color: var(--color-dark-green);
         color: var(--color-white);
-    }
-    #banklist-new_bank-btn span {
-        font-variation-settings: 'wght' 650;
     }
 }
 
