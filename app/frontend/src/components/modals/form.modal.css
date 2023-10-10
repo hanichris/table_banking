@@ -38,7 +38,8 @@ label {
 
 input[type=email],
 input[type=password],
-input[type=text] {
+input[type=text],
+input[type=number] {
     position: relative;
     width: 100%;
     line-height: 1;
@@ -53,6 +54,7 @@ input[type=text] {
 }
 
 input[type=email]:focus:not(:disabled),
+input[type=number]:focus:not(:disabled),
 input[type=password]:focus:not(:disabled),
 input[type=text]:focus:not(:disabled) {
     box-shadow: inset var(--color-blue) 0 0 0 1px, inset white 0 0 0 100px !important;
@@ -60,7 +62,8 @@ input[type=text]:focus:not(:disabled) {
 
 input[type=email]:focus-visible,
 input[type=password]:focus-visible,
-input[type=text]:focus-visible {
+input[type=text]:focus-visible,
+input[type=number]:focus-visible {
     outline: none;
 }
 
