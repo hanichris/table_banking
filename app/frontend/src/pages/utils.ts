@@ -10,6 +10,7 @@ export async function layoutLoader() {
   const token = getLocalToken() as string | null;
   const user = selectMain(store.getState());
   if (token && token !== user.token) {
+    console.table({token: token, 'store token': user.token});
     try {
       await store.dispatch(actions.getMe(token));
       return selectMain(store.getState());
