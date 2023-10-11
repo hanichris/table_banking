@@ -67,7 +67,7 @@ export default function Bank() {
               </div>
             </div>
             <main>
-              <article>Admin: {userBank.admin_id}</article>
+              {/* <article>Admin: {userBank.admin_id}</article> */}
               <article>Members</article>
             </main>
           </section>
