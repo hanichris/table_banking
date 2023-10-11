@@ -250,17 +250,23 @@
     gap: 1.5rem;
 }
 
-#bank-page .bank-page__container div {
+#bank-page .bank-page__container > div {
     flex-basis: 25rem;
-}
-
-#bank-page .bank-page__container div:first-child {
-    flex-grow: 2;
-}
-
-#bank-page .bank-page__container div:nth-child(2) {
+    border-radius: 1.4rem;
+    /* background: linear-gradient(.25turn, var(--color-light-grey), 60%, var(--color-medium-grey)); */
+    background-color: var(--color-light-grey);
+    box-shadow: .5rem .5rem .5rem rgb(0, 0, 0, 0.1);
+    padding: 2.5rem;
     flex-grow: 1;
 }
+
+#bank-page .bank-page__container > div:first-child {
+    flex-grow: 9999;
+}
+
+/* #bank-page .bank-page__container > div:nth-child(2) {
+    flex-grow: 1;
+} */
 
 
 #bank-page div[data-label]::after {
