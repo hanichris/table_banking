@@ -112,7 +112,7 @@ export default function BanksList() {
           <p>No banks have been joined</p>
         </div>: <div className="bank-listings_content_results">{content}</div>}
       </div>
-      {open && <NewBank setOpen={setOpen} open={open}/>}
+      {open && <NewBank setOpen={setOpen} open={open} title="Save"/>}
     </div>
   );
 }
