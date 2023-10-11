@@ -1,13 +1,13 @@
 import { RiCloseLine } from "react-icons/ri";
 
-export default function NewBank({setOpen, open}: {setOpen: (param: boolean) => void, open: boolean}) {
+export default function NewBank({setOpen, open, title}: {setOpen: (param: boolean) => void, open: boolean, title: string}) {
   return (
     <section className="modal" style={open ? {display: 'block'} : {}}>
       <div className="modal-container">
         <div className="modal-cell">
           <div className="modal-element" style={open ? {position:'relative', transform: 'translate3d(0, 0, 0) scale(1)', opacity:'1'}: {}}>
             <header className="modal-header">
-              <div className="modal-header__title">Save bank</div>
+              <div className="modal-header__title">{title} bank</div>
               <a className="modal_button-left btn btn--icon btn--xs btn--transparent" onClick={() => setOpen(false)}>
                 <RiCloseLine />
               </a>
