@@ -126,6 +126,17 @@
     text-align: center;
 }
 
+#confirm .modal-body {
+    min-height: 10rem;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+#confirm-text {
+    font-size: 1.5rem;
+}
+
 .input-group {
     margin-bottom: 1.5rem;
 }
@@ -141,4 +152,17 @@
     box-shadow: 0 -.1rem rgba(0, 0, 0, 0.075);
     font-size: 1.4rem;
     padding: 1.6rem;
+}
+
+.modal-footer-btns {
+    display: flex;
+    width: 100%;
+}
+
+.modal-footer-btns .btn:not(:last-child) {
+    margin-right: 1rem;
+}
+
+.modal-footer-btns .btn:not(.btn-inline) {
+    flex-grow: 1;
 }
