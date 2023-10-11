@@ -23,6 +23,10 @@ export const router = createBrowserRouter([
         element: <HomePage />,
       },
       {
+        path: 'admin',
+        element: <h1>Admin Page</h1>
+      },
+      {
         path: 'dashboard',
         loader: dashboardLoader,
         element: <Dashboard />,
