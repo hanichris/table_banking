@@ -1,4 +1,4 @@
-import { IBankCreate, IUserProfileCreate } from "./interfaces";
+import { IBankCreate, IParams, IUserProfileCreate } from "./interfaces";
 
 const serverEndpoint = import.meta.env.VITE_SERVER_ENDPOINT;
 
@@ -24,8 +24,13 @@ export const api = {
   getMe:async (token:string) => {
     return fetch(`${serverEndpoint}/users/me`, authHeader(token));
   },
-  getUsers:async (token:string) => {
-    return fetch(`${serverEndpoint}/users/`, authHeader(token));
+  getUsers:async (token:string, signal: AbortSignal, params: IParams) => {
+    const skip = params.pageSize * (params.pageNum - 1);
+    const limit = params.pageSize;
+    return fetch(`${serverEndpoint}/users/?skip=${skip}&limit=${limit}`,{
+      signal,
+      headers: authHeader(token).headers,
+    }).then((res) => res.json());
   },
   createUser:async (token:string, data: IUserProfileCreate) => {
     const header: Record<string, Record<string, string>> = structuredClone(authHeader(token));
