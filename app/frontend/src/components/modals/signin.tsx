@@ -43,8 +43,12 @@ export default function SignIn({ state, openForm }: ModalProp) {
       pwd: formData.get('password') as string,
     })
     try {
-      await dispatch(actionObj).unwrap();
-      navigate('/dashboard');
+      const payload = await dispatch(actionObj).unwrap();
+      if (payload.userProfile?.is_superuser === true) {
+        navigate('/admin');
+      } else {
+        navigate('/dashboard');
+      }
       openForm('', false);
     } catch (err) {
       console.error(err);
