@@ -83,3 +83,12 @@ export interface MenuProp extends ModalProp {
 export interface formDataType {
   [key: string]: FormDataEntryValue;
 }
+
+export interface IParams {
+  pageNum: number;
+  pageSize: number;
+}
+
+export interface IData {
+  data: Array<IUser>;
+}
