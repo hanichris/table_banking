@@ -108,9 +108,10 @@ export default function BanksList() {
         </div>
       </header>
       <div className="bank-listings__body">
-        {banks.length === 0 ? <div className="bank-listings_content_none">
+        {banks.length === 0 ?
+        (<div className="bank-listings_content_none">
           <p>No banks have been joined</p>
-        </div>: <div className="bank-listings_content_results">{content}</div>}
+        </div>): <div className="bank-listings_content_results">{content}</div>}
       </div>
       {open && <NewBank setOpen={setOpen} open={open} title="Save"/>}
     </div>
