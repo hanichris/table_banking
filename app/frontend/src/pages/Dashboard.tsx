@@ -1,15 +1,10 @@
-import { NavLink, Outlet, useLoaderData } from 'react-router-dom';
+import { NavLink, Outlet} from 'react-router-dom';
 import { AiOutlineBank, AiOutlineProfile, AiOutlineUser } from 'react-icons/ai'
 
 import './dashboard.css'
-import { MainState } from '../store/main/state';
 
 
 export default function Dashboard() {
-  const user = useLoaderData() as MainState;
-
-  user.entities
-
 
   return (
     <section className='dashboard'>
