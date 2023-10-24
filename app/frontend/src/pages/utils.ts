@@ -1,8 +1,9 @@
-import { redirect } from 'react-router-dom';
+import { defer, redirect } from 'react-router-dom';
 import { store } from '../store';
 import { selectMain, selectAllUserBanks } from '../store/main/selectors';
 import { getLocalToken, removeLocalToken } from '../utils';
 import { actions } from '../store/main/actions';
+import { api } from '../api';
 
 
 export async function layoutLoader() {
@@ -47,4 +48,33 @@ export async function bankListLoader({ request }: {request: Request}) {
   }
   const banks = Object.keys(userBanks);
   return { banks, q: null };
+}
+
+export async function usersLoader({ request }:{request: Request}) {
+  const params = {
+    pageNum: 1,
+    pageSize: 100
+  };
+  const token = selectMain(store.getState()).token;
+  const url = new URL(request.url);
+  const pageNum = url.searchParams.get('pageNum');
+  const pageSize = url.searchParams.get('limit');
+  if (pageNum) {
+    params.pageNum = +pageNum;
+  }
+  if (pageSize) {
+    params.pageSize = +pageSize;
+  }
+  return defer({
+    data: api.getUsers(token, request.signal, params),
+  });
+}
+
+export default function adminLoader() {
+  const user = selectMain(store.getState());
+  if (user.user.details.is_superuser === false || user.user.details.is_superuser === null) {
+    console.log(user);
+    throw redirect('../dashboard');
+  }
+  return null;
 }
