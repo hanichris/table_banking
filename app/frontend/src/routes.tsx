@@ -4,12 +4,14 @@ import NoPage from "./pages/NoPage";
 import Layout from "./pages/Layout";
 import HomePage from "./pages/Home";
 import Dashboard from "./pages/Dashboard";
-import { dashboardLoader, layoutLoader as rootLoader, bankListLoader } from "./pages/utils";
+import adminLoader, { dashboardLoader, layoutLoader as rootLoader, bankListLoader, usersLoader } from "./pages/utils";
 import Account from "./pages/Account";
 import UserProfile from "./pages/UserProfile";
 import Bank from "./pages/Bank";
 import BanksList from "./pages/BanksList";
 import Index from "./pages/DashboardIndex";
+import AdminDashboard from "./pages/AdminDashboard";
+import UsersListing from "./pages/UsersList";
 
 export const router = createBrowserRouter([
   {
@@ -24,7 +26,16 @@ export const router = createBrowserRouter([
       },
       {
         path: 'admin',
-        element: <h1>Admin Page</h1>
+        element: <AdminDashboard />,
+        loader: adminLoader,
+        children: [
+          {
+            index: true,
+            path: 'users',
+            loader: usersLoader,
+            element: <UsersListing />
+          }
+        ]
       },
       {
         path: 'dashboard',
