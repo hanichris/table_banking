@@ -14,13 +14,28 @@ export default function UsersListing() {
         </h2>
       </header>
       <div className="users-listing__body">
-        <Suspense fallback={<p>Loading users table...</p>}>
-          <Await
-            resolve={users.data}
-            errorElement={<p>Error loading users!</p>}>
-              <Users />
-            </Await>
-        </Suspense>
+        <table>
+          <thead>
+            <tr>
+              <th className="id_col">ID</th>
+              <th className="name_col">Name</th>
+              <th className="email_col">Email</th>
+              <th className="active_col">Active</th>
+              <th className="admin_col">Admin</th>
+              <th className="edit_col">Edit</th>
+              <th className="del_col">Delete</th>
+            </tr>
+          </thead>
+          <tbody>
+            <Suspense fallback={<p>Loading users table...</p>}>
+              <Await
+                resolve={users.data}
+                errorElement={<p>Error loading users!</p>}>
+                  <Users />
+                </Await>
+            </Suspense>
+          </tbody>
+        </table>
       </div>
     </div>
   );
