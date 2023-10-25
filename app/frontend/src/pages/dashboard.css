@@ -64,16 +64,16 @@
 
 }
 
-#dashboard_bank-listings {
+#dashboard_bank-listings, #users-listing {
     padding: 3rem;
     position: relative;
 }
 
-#dashboard_bank-listings > .bank-listings__top {
+#dashboard_bank-listings > .bank-listings__top, #users-listing > .users-listing__top {
     position: relative;
 }
 
-#dashboard_bank-listings .bank-listings__title {
+#dashboard_bank-listings .bank-listings__title, #users-listing .users-listing__title {
     font-size: 2.4rem;
     font-variation-settings: 'wght' 900;
     height: 4rem;
@@ -168,7 +168,7 @@
     display: none;
 }
 
-#dashboard_bank-listings .bank-listings__body {
+#dashboard_bank-listings .bank-listings__body, #users-listing .users-listing__body {
     margin-top: 3rem;
 }
 
@@ -288,6 +288,60 @@
 
 #bank-page__top + .bank-page__body {
     margin-top: 7rem;
+}
+
+#users-listing table {
+    display: grid;
+    border-collapse: collapse;
+    min-width: 100%;
+    grid-template-columns:
+        minmax(10rem, 1fr) /* ID column */
+        minmax(15rem, 1.67fr) /* Name column */
+        minmax(15rem, 1.67fr) /* Email column */
+        minmax(7.5rem, 1.67fr) /* Active column */
+        minmax(9.5rem, 1.67fr) /* Superuser column */
+        minmax(5.5rem, 1.67fr) /* Edit column */
+        minmax(8.5rem, 1.67fr); /* Delete column */
+    row-gap: 1rem;
+}
+
+#users-listing thead,
+#users-listing tbody,
+#users-listing tr {
+    display: contents;
+}
+
+#users-listing th {
+    box-shadow: 0 .1rem rgb(0, 0, 0, 0.075);
+}
+
+#users-listing th,
+#users-listing td {
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+}
+
+#users-listing th {
+    background-color: var(--color-green);
+    color: var(--color-white);
+    line-height: 2.3;
+    position: sticky;
+    top: 0;
+    font-variation-settings: 'wght' 650;
+}
+
+#users-listing td {
+    text-align: center;
+}
+
+#users-listing td.name_col,
+#users-listing td.email_col {
+    text-align: left;
+}
+
+#users-listing tr:nth-child(even) td {
+    background-color: #f8f6ff;
 }
 
 @media (min-width: 768px){
