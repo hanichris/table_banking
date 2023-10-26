@@ -18,10 +18,10 @@ export const router = createBrowserRouter([
     path: '/',
     element: <Layout />,
     errorElement: <NoPage />,
-    loader: rootLoader,
     children: [
       {
         index: true,
+        loader: rootLoader,
         element: <HomePage />,
       },
       {
