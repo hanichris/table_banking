@@ -14,7 +14,7 @@ export async function layoutLoader() {
     if (user.isLoggedIn === true) {
       console.log('The user is already logged in!!!');
       return user.user.details.is_superuser === true ? redirect('admin') : redirect('dashboard');
-      // return user;
+
     }
     try {
       console.log('Token found. Obtaining user details...');
