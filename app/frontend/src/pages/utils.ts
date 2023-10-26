@@ -10,17 +10,24 @@ export async function layoutLoader() {
   console.log('running root loader');
   const token = getLocalToken() as string | null;
   const user = selectMain(store.getState());
-  if (token && token !== user.token) {
-    console.table({token: token, 'store token': user.token});
+  if (token) {
+    if (user.isLoggedIn === true) {
+      console.log('The user is already logged in!!!');
+      return user.user.details.is_superuser === true ? redirect('admin') : redirect('dashboard');
+      // return user;
+    }
     try {
-      await store.dispatch(actions.getMe(token));
-      return selectMain(store.getState());
+      console.log('Token found. Obtaining user details...');
+      const payload = await store.dispatch(actions.getMe(token)).unwrap();
+      console.log(`Is Admin: ${payload.userProfile.is_superuser}`);
+      return payload.userProfile.is_superuser === true ? redirect('admin') : redirect('dashboard');
     } catch (error) {
+      console.log('An error occurred when trying to fetch user details with given token.');
       console.error(error);
       removeLocalToken();
-      return null;
     }
   }
+  console.log('No token found in local storage');
   return null;
 }
 
@@ -28,10 +35,10 @@ export async function dashboardLoader() {
   console.log('running dashboard loader');
   const user = selectMain(store.getState());
   if (user.isLoggedIn === null) {
-    console.log('The user is not logged in');
-    throw redirect('/');
+    console.log('The user is not logged in. Cannot access dashboard. Redirecting to homepage...');
+    return redirect('/');
   }
-  console.log('The user is logged in.')
+  console.log('User is already logged in. View the dashboard.');
   return user;
 }
 
@@ -71,10 +78,16 @@ export async function usersLoader({ request }:{request: Request}) {
 }
 
 export default function adminLoader() {
+  console.log('running admin loader');
   const user = selectMain(store.getState());
-  if (user.user.details.is_superuser === false || user.user.details.is_superuser === null) {
-    console.log(user);
-    throw redirect('../dashboard');
+  if (user.isLoggedIn == true) {
+    if (user.user.details.is_superuser === false || user.user.details.is_superuser === null) {
+      console.log('Not an admin. Navigating to the dashboard...');
+      return redirect('../dashboard');
+    }
+  } else {
+    console.log('Not logged in. Navigating to home page...');
+    return redirect('/');
   }
   return null;
 }
