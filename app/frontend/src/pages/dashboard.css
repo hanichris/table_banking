@@ -83,24 +83,27 @@
     white-space: nowrap;
 }
 
-#dashboard_bank-listings .bank-listings__filters {
+#dashboard_bank-listings .bank-listings__filters, .users-listing__filters {
     display: flex;
     position: absolute;
     right: 0;
     top: .2rem;
 }
 
-#dashboard_bank-listings .bank-listings__filters > .bank-listings__search {
+#dashboard_bank-listings .bank-listings__filters > .bank-listings__search,
+.users-listing__filters > .users-listing__search {
     display: none;
     width: 100%;
 }
 
-.bank-listings__search > form {
+.bank-listings__search > form,
+.users-listing__search > form {
     flex-direction: row;
     position: relative;
 }
 
-.bank-listings__search > form  input[type='search'] {
+.bank-listings__search > form  input[type='search'],
+.users-listing__search > form  input[type='search'] {
     border: none;
     outline: none;
     transition: box-shadow .1s;
@@ -113,7 +116,8 @@
 }
 
 .bank-listings__search > form  input[type='search'] + span.input-search__search-btn,
-#search-form span.input-search__clear-search {
+#search-form span.input-search__clear-search,
+.users-listing__search > form input[type='search'] +  span.input-search__search-btn {
     cursor: pointer;
     position: absolute;
     right: 0;
@@ -123,7 +127,8 @@
     transition: all 0.15s ease;
 }
 
-.bank-listings__search > form  input[type='search'] + span.input-search__search-btn {
+.bank-listings__search > form  input[type='search'] + span.input-search__search-btn,
+.users-listing__search > form  input[type='search'] + span.input-search__search-btn {
     display: inline-flex;
 }
 
@@ -131,7 +136,8 @@
     display: none;
 }
 
-.bank-listings__search > form  input[type='search']:focus {
+.bank-listings__search > form  input[type='search']:focus,
+.users-listing__search > form  input[type='search']:focus {
     box-shadow: inset 0 0 0 .1rem #0066ff, inset 0 0 0 10rem white;
 }
 
@@ -160,11 +166,13 @@
     left: 0;
 }
 
-#dashboard_bank-listings.has-search .bank-listings__search {
+#dashboard_bank-listings.has-search .bank-listings__search,
+#users-listing.has-search .users-listing__search {
     display: block;
 }
 
-#dashboard_bank-listings.has-search #mobile__search-btn {
+#dashboard_bank-listings.has-search #mobile__search-btn,
+#users-listing.has-search #mobile__search-btn {
     display: none;
 }
 
@@ -323,7 +331,7 @@
 }
 
 #users-listing th {
-    background-color: var(--color-green);
+    background-color: var(--color-dark-green);
     color: var(--color-white);
     line-height: 2.3;
     position: sticky;
@@ -340,6 +348,15 @@
     text-align: left;
 }
 
+#users-listing td.del_col a,
+#users-listing td.edit_col a {
+    display: block;
+}
+
+#users-listing td.del_col a {
+    cursor: pointer;
+}
+
 #users-listing tr:nth-child(even) td {
     background-color: #f8f6ff;
 }
@@ -351,6 +368,29 @@
 
 #users-listing tr:nth-child(even) td.skeleton-item {
     background: none;
+}
+
+td.no-results {
+    grid-column-start: 1;
+    grid-column-end: 8;
+}
+
+.no-results__container {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.no-results__container svg {
+    width: 5rem;
+    height: 5rem;
+    color: #7d7c83;
+}
+
+td.no-results span{
+    color: #7d7c83;
+    display: block;
+    margin: 1rem 0 2rem;
 }
 
 @media (min-width: 768px){
@@ -374,11 +414,13 @@
     #mobile__search-btn {
         display: none;
     }
-    #dashboard_bank-listings .bank-listings__filters > .bank-listings__search {
+    #dashboard_bank-listings .bank-listings__filters > .bank-listings__search,
+    .users-listing__filters > .users-listing__search {
         display: block;
         width: auto;
     }
-    .bank-listings__search > form  input[type='search'] {
+    .bank-listings__search > form  input[type='search'],
+    .users-listing__search > form  input[type='search'] {
         width: 18rem;
     }
     #banklist-new_bank-btn span {
