@@ -1,6 +1,7 @@
 import { RiCloseLine } from "react-icons/ri";
+import { EntityProp } from "../../interfaces";
 
-export default function DeleteBank({setOpen, open}: {setOpen: (param: boolean) => void, open: boolean}) {
+export default function DeleteBank({setOpen, open}: EntityProp) {
   return (
     <section className="modal" id="confirm" style={open ? {display: 'block'} : {}}>
       <div className="modal-container">
