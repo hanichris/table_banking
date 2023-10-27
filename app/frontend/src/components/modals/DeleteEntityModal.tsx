@@ -1,20 +1,20 @@
 import { RiCloseLine } from "react-icons/ri";
-import { EntityProp } from "../../interfaces";
+import { DeleteEntityProp } from "../../interfaces";
 
-export default function DeleteBank({setOpen, open}: EntityProp) {
+export default function DeleteEntity({setOpen, open, entity}: DeleteEntityProp) {
   return (
     <section className="modal" id="confirm" style={open ? {display: 'block'} : {}}>
       <div className="modal-container">
         <div className="modal-cell">
           <div className="modal-element" style={open ? {position:'relative', transform: 'translate3d(0, 0, 0) scale(1)', opacity:'1'}: {}}>
             <header className="modal-header">
-              <div className="modal-header__title">Delete bank</div>
+              <div className="modal-header__title">Delete {entity}</div>
               <a className="modal_button-left btn btn--icon btn--xs btn--transparent" onClick={() => setOpen(false)}>
                 <RiCloseLine />
               </a>
             </header>
             <div className="modal-body" id="confirm-text">
-              <div>Do you really want to delete this bank?</div>
+              <div>Do you really want to delete this {entity}?</div>
             </div>
             <div className="modal-footer">
               <div className="modal-footer-btns">
