@@ -1,6 +1,7 @@
 import { RiCloseLine } from "react-icons/ri";
+import { StateEntityProp } from "../../interfaces";
 
-export default function NewBank({setOpen, open, title}: {setOpen: (param: boolean) => void, open: boolean, title: string}) {
+export default function NewBank({setOpen, open, title}: StateEntityProp) {
   return (
     <section className="modal" style={open ? {display: 'block'} : {}}>
       <div className="modal-container">
