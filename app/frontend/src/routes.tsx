@@ -32,7 +32,15 @@ export const router = createBrowserRouter([
           {
             path: 'users',
             loader: usersLoader,
-            element: <UsersListing />
+            element: <UsersListing />,
+          },
+          {
+            path: 'users/:userID',
+            element: <h3>View this user</h3>
+          },
+          {
+            path: 'users/:userID/edit',
+            element: <h3>Edit this user</h3>
           },
           {
             path: 'banks',
