@@ -8,7 +8,7 @@ import { useAppDispatch, useAppSelector } from "../hooks";
 import { selectUserBankById, selectUserToken } from "../store/main/selectors";
 import { bankActions } from "../store/bank/actions";
 import NewBank from "../components/modals/NewBankModal";
-import DeleteBank from "../components/modals/DeleteBankModal";
+import DeleteEntity from "../components/modals/DeleteEntityModal";
 
 
 export default function Bank() {
@@ -74,7 +74,7 @@ export default function Bank() {
         </div>
       </div>
       {open && <NewBank setOpen={setOpen} open={open} title="Edit"/>}
-      {deleteBtn && <DeleteBank setOpen={setDeleteBtn} open={deleteBtn}/>}
+      {deleteBtn && <DeleteEntity setOpen={setDeleteBtn} open={deleteBtn} entity='bank'/>}
     </section>
   )
 }
