@@ -32,6 +32,12 @@ export const api = {
       headers: authHeader(token).headers,
     }).then((res) => res.json());
   },
+  getUser:async (token:string, signal: AbortSignal, userID:string) => {
+    return fetch(`${serverEndpoint}/users/${userID}`, {
+      signal,
+      headers: authHeader(token).headers,
+    }).then((res) => res.json());
+  },
   createUser:async (token:string, data: IUserProfileCreate) => {
     const header: Record<string, Record<string, string>> = structuredClone(authHeader(token));
     header.headers['Content-Type'] = 'application/json;charset=utf-8';
