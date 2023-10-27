@@ -344,6 +344,15 @@
     background-color: #f8f6ff;
 }
 
+#users-listing td.skeleton-item {
+    grid-column-start: 1;
+    grid-column-end: 8;
+}
+
+#users-listing tr:nth-child(even) td.skeleton-item {
+    background: none;
+}
+
 @media (min-width: 768px){
     #bank-page__top {
         margin-bottom: 10rem;
