@@ -64,6 +64,14 @@ export async function usersLoader({ request }:{request: Request}) {
   };
   const token = selectMain(store.getState()).token;
   const url = new URL(request.url);
+  const userID = url.searchParams.get('id');
+  if (userID) {
+    return {
+      data: api.getUser(token, request.signal, userID),
+      userID
+    };
+  }
+  console.log('Not searching for a particular ID. Get all the users.');
   const pageNum = url.searchParams.get('pageNum');
   const pageSize = url.searchParams.get('limit');
   if (pageNum) {
@@ -74,6 +82,7 @@ export async function usersLoader({ request }:{request: Request}) {
   }
   return defer({
     data: api.getUsers(token, request.signal, params),
+    userID
   });
 }
 
