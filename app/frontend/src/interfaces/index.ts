@@ -89,6 +89,10 @@ export interface StateEntityProp extends EntityProp{
   title: string;
 }
 
+export interface DeleteEntityProp extends EntityProp {
+  entity: string;
+}
+
 export interface formDataType {
   [key: string]: FormDataEntryValue;
 }
@@ -101,4 +105,8 @@ export interface IParams {
 export interface IData {
   data: Array<IUser>;
   userID: string | null;
+}
+
+export type I404  = {
+  detail: string;
 }
