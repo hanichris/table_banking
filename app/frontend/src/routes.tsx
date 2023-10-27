@@ -30,10 +30,13 @@ export const router = createBrowserRouter([
         loader: adminLoader,
         children: [
           {
-            index: true,
             path: 'users',
             loader: usersLoader,
             element: <UsersListing />
+          },
+          {
+            path: 'banks',
+            element: <h3>Banks</h3>
           }
         ]
       },
