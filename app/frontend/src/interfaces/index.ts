@@ -80,6 +80,15 @@ export interface MenuProp extends ModalProp {
   toggle: () => void;
 }
 
+export interface EntityProp {
+  setOpen: (param: boolean) => void;
+  open: boolean;
+}
+
+export interface StateEntityProp extends EntityProp{
+  title: string;
+}
+
 export interface formDataType {
   [key: string]: FormDataEntryValue;
 }
@@ -91,4 +100,5 @@ export interface IParams {
 
 export interface IData {
   data: Array<IUser>;
+  userID: string | null;
 }
