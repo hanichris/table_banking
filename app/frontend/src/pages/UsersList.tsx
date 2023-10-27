@@ -7,11 +7,13 @@ import { GiCancel } from 'react-icons/gi';
 import { IData } from "../interfaces";
 import Users from "./Users";
 import UsersSkeleton from "../components/skeletons/UsersSkeleton";
+import NewUser from "../components/modals/NewUserModal";
 
 
 export default function UsersListing() {
   const [search, setSearch] = useState('');
   const [hasSearch, setHasSearch] = useState(false);
+  const [open, setOpen] = useState(false);
   const inputRef = useRef<HTMLInputElement>(null);
 
   const submit = useSubmit();
@@ -31,6 +33,13 @@ export default function UsersListing() {
       inputRef.current.value = '';
     }
     navigate('.');
+  }
+
+  const handleSearchBtnClick = () => {
+    setHasSearch(true);
+    setTimeout(() => {
+      inputRef.current && inputRef.current.focus()
+    }, 5)
   }
 
   return (
@@ -68,16 +77,16 @@ export default function UsersListing() {
                 </span>
             </Form>
           </div>
-          <button id='banklist-new_bank-btn' className="btn btn--s btn--secondary">
+          <button id='banklist-new_bank-btn' className="btn btn--s btn--secondary" onClick={()=> setOpen(true)}>
             <span>New</span>
             <BiPlus />
           </button>
-          <button id='mobile__search-btn' className="btn btn--s btn--icon btn--secondary">
+          <button id='mobile__search-btn' className="btn btn--s btn--icon btn--secondary" onClick={handleSearchBtnClick}>
             <i className="icon">
               <FiSearch />
             </i>
           </button>
-          <button id='mobile__new-btn' className="btn btn--s btn--icon btn--secondary">
+          <button id='mobile__new-btn' className="btn btn--s btn--icon btn--secondary" onClick={()=> setOpen(true)}>
             <i className="icon">
               <BiPlus />
             </i>
@@ -102,12 +111,13 @@ export default function UsersListing() {
               <Await
                 resolve={users.data}
                 errorElement={<tr><td>Error loading users!!!</td></tr>}>
-                  <Users />
+                  <Users clear={clearSearch}/>
                 </Await>
             </Suspense>
           </tbody>
         </table>
       </div>
+      {open && <NewUser setOpen={setOpen} open={open} title="Create new"/>}
     </div>
   );
 }
