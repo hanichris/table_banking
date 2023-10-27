@@ -98,7 +98,7 @@ export default function BanksList() {
           </button>
           <button id='banklist-new_bank-btn' className="btn btn--s btn--secondary" onClick={()=> setOpen(true)}>
             <span>New</span>
-              <BiPlus />
+            <BiPlus />
           </button>
           <button id='mobile__new-btn' className="btn btn--s btn--icon btn--secondary" onClick={()=> setOpen(true)}>
             <i className="icon">
