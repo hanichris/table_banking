@@ -1,8 +1,16 @@
+import { useFetcher } from "react-router-dom";
 import { RiCloseLine } from "react-icons/ri";
+
 import { StateEntityProp } from "../../interfaces";
+import { Spinner } from "../Spinner";
 
 
 export default function NewUser({setOpen, open, title}: StateEntityProp) {
+  const fetcher = useFetcher();
+
+  
+  const isLoading = fetcher.state === 'loading';
+
   return (
     <section className="modal" style={open ? {display: 'block'} : {}}>
       <div className="modal-container">
@@ -14,7 +22,7 @@ export default function NewUser({setOpen, open, title}: StateEntityProp) {
                 <RiCloseLine />
               </a>
             </header>
-            <form action="" method="post">
+            <fetcher.Form method="post">
               <div className="modal-body">
                 <div className="input-group">
                   <label htmlFor="new-user--email">Email</label>
@@ -22,8 +30,10 @@ export default function NewUser({setOpen, open, title}: StateEntityProp) {
                   autoFocus
                   id="new-user--email"
                   type="text"
-                  name="user_email"
+                  name="email"
                   placeholder="john@email.com"
+                  disabled={isLoading}
+                  className={isLoading ? 'disabled': ''}
                   required
                   />
                 </div>
@@ -32,8 +42,10 @@ export default function NewUser({setOpen, open, title}: StateEntityProp) {
                   <input
                   id="new-user--password"
                   type="password"
-                  name="user_pwd"
+                  name="password"
                   placeholder="password"
+                  disabled={isLoading}
+                  className={isLoading ? 'disabled': ''}
                   required
                   />
                 </div>
@@ -45,17 +57,18 @@ export default function NewUser({setOpen, open, title}: StateEntityProp) {
                       type="checkbox"
                       name="is_superuser"
                       value='true'
+                      disabled={isLoading}
                     />
                   </div>
-                  <input type="hidden" name='not_superuser' value='false' />
                 </div>
               </div>
               <div className="modal-footer">
-                <button type="submit" className="btn btn--m btn--primary">
+                <button type="submit" className={isLoading ? "btn btn--m btn--primary is-disabled": "btn btn--m btn--primary"} disabled={isLoading}>
                   Save
+                  {isLoading && <Spinner />}
                 </button>
               </div>
-            </form>
+            </fetcher.Form>
           </div>
         </div>
       </div>

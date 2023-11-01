@@ -4,6 +4,7 @@ import { selectMain, selectAllUserBanks } from '../store/main/selectors';
 import { getLocalToken, removeLocalToken } from '../utils';
 import { actions } from '../store/main/actions';
 import { api } from '../api';
+import { IUserProfileCreate } from '../interfaces';
 
 
 export async function layoutLoader() {
@@ -84,6 +85,20 @@ export async function usersLoader({ request }:{request: Request}) {
     data: api.getUsers(token, request.signal, params),
     userID
   });
+}
+
+export async function editUsers({ request }: {request: Request}) {
+  const token = selectMain(store.getState()).token;
+  const data: IUserProfileCreate = {
+    email: '',
+    password: '',
+    is_active: true
+  };
+  const formData = await request.formData();
+  const user = Object.fromEntries(formData);
+  Object.assign(data, user);
+  data.is_superuser = Boolean(data.is_superuser);
+  return api.createUser(token, data);
 }
 
 export default function adminLoader() {
