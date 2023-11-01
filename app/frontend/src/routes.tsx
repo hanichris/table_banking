@@ -4,7 +4,12 @@ import NoPage from "./pages/NoPage";
 import Layout from "./pages/Layout";
 import HomePage from "./pages/Home";
 import Dashboard from "./pages/Dashboard";
-import adminLoader, { dashboardLoader, layoutLoader as rootLoader, bankListLoader, usersLoader } from "./pages/utils";
+import adminLoader, {
+  dashboardLoader,
+  layoutLoader as rootLoader,
+  bankListLoader,
+  usersLoader,
+  editUsers } from "./pages/utils";
 import Account from "./pages/Account";
 import UserProfile from "./pages/UserProfile";
 import Bank from "./pages/Bank";
@@ -32,6 +37,7 @@ export const router = createBrowserRouter([
           {
             path: 'users',
             loader: usersLoader,
+            action: editUsers,
             element: <UsersListing />,
           },
           {
