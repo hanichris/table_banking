@@ -12,6 +12,7 @@ import NewUser from "../components/modals/NewUserModal";
 
 export default function UsersListing() {
   const [search, setSearch] = useState('');
+  const [limit, setLimit] = useState(0);
   const [hasSearch, setHasSearch] = useState(false);
   const [open, setOpen] = useState(false);
   const inputRef = useRef<HTMLInputElement>(null);
@@ -23,6 +24,10 @@ export default function UsersListing() {
   const handleSearchChange = (e:React.ChangeEvent<HTMLInputElement>) => {
     setSearch(e.target.value);
   };
+
+  const handleLimitChange = (e:React.ChangeEvent<HTMLInputElement>) => {
+    setLimit(+e.target.value);
+  }
 
   const clearSearch = () => {
     if (hasSearch) {
@@ -91,6 +96,24 @@ export default function UsersListing() {
               <BiPlus />
             </i>
           </button>
+        </div>
+        <div className="users-listing__limit">
+          <Form id='limit_users' role="search">
+            <label htmlFor="limit">No. of entries: </label>
+            <input
+              type="number"
+              name="limit"
+              id="limit"
+              defaultValue={limit}
+              onChange={handleLimitChange}
+              onBlur={(e) => {
+                if (limit > 0) {
+                  submit(e.currentTarget.form, {
+                    replace: true,
+                  });
+                }
+              }}/>
+          </Form>
         </div>
       </header>
       <div className="users-listing__body">
