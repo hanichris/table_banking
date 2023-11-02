@@ -295,4 +295,4 @@ async def delete_user(
             status_code=404,
             detail='The ID does not match any user in the database.'
         )
-    return user.remove(db, id=user_id)
+    return user.remove(db, db_obj=user_to_delete)
