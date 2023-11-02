@@ -9,7 +9,8 @@ import adminLoader, {
   layoutLoader as rootLoader,
   bankListLoader,
   usersLoader,
-  editUsers } from "./pages/utils";
+  editUsers, 
+  deleteUser} from "./pages/utils";
 import Account from "./pages/Account";
 import UserProfile from "./pages/UserProfile";
 import Bank from "./pages/Bank";
@@ -47,6 +48,10 @@ export const router = createBrowserRouter([
           {
             path: 'users/:userID/edit',
             element: <h3>Edit this user</h3>
+          },
+          {
+            path: 'users/:userID/destroy',
+            action: deleteUser
           },
           {
             path: 'banks',
