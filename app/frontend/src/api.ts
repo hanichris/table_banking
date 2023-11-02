@@ -47,6 +47,12 @@ export const api = {
       body: JSON.stringify(data),
     });
   },
+  deleteUser:async (token:string, userID: string) => {
+    return fetch(`${serverEndpoint}/users/${userID}`, {
+      method: 'DELETE',
+      headers: authHeader(token).headers,
+    });
+  },
   getBank:async (token:string, bankId: number) => {
     return fetch(`${serverEndpoint}/banks/${bankId}`, authHeader(token));
   },
