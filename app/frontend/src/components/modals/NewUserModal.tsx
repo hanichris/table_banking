@@ -7,7 +7,6 @@ import { Spinner } from "../Spinner";
 
 export default function NewUser({setOpen, open, title}: StateEntityProp) {
   const fetcher = useFetcher();
-
   
   const isLoading = fetcher.state === 'loading';
 
