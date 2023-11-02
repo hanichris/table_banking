@@ -54,6 +54,12 @@
     overflow: auto;
 }
 
+main.dashboard_content.loading {
+    opacity: 0.25;
+    transition: opacity 200ms;
+    transition-delay: 200ms;
+}
+
 .dashboard_content .wrapper div[data-label='salutations']::after {
     content: 'Welcome to your future of table banking';
     color: var(--color-medium-grey);
