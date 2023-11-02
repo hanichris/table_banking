@@ -90,7 +90,8 @@ export interface StateEntityProp extends EntityProp{
 }
 
 export interface DeleteEntityProp extends EntityProp {
-  entity: string;
+  entity: IUser | IBank;
+  text: string
 }
 
 export interface formDataType {
