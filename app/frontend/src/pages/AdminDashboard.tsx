@@ -1,8 +1,9 @@
-import { NavLink, Outlet} from 'react-router-dom';
+import { NavLink, Outlet, useNavigation} from 'react-router-dom';
 import { AiOutlineBank, AiOutlineUser } from 'react-icons/ai'
 
 
 export default function AdminDashboard() {
+  const navigation = useNavigation();
 
   return (
     <section className='dashboard'>
@@ -24,7 +25,7 @@ export default function AdminDashboard() {
           </ul>
         </nav>
       </aside>
-      <main className='dashboard_content'>
+      <main className={navigation.state === 'loading' ? 'dashboard_content loading' : 'dashboard_content'}>
         <Outlet />
       </main>
     </section>
