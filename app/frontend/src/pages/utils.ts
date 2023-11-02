@@ -1,4 +1,4 @@
-import { defer, redirect } from 'react-router-dom';
+import { defer, redirect, Params } from 'react-router-dom';
 import { store } from '../store';
 import { selectMain, selectAllUserBanks } from '../store/main/selectors';
 import { getLocalToken, removeLocalToken } from '../utils';
@@ -99,6 +99,12 @@ export async function editUsers({ request }: {request: Request}) {
   Object.assign(data, user);
   data.is_superuser = Boolean(data.is_superuser);
   return api.createUser(token, data);
+}
+
+export async function deleteUser({ params }: {params: Params}) {
+  const token = selectMain(store.getState()).token;
+  console.log("Deleting the user with ID" + params.userID);
+  return api.deleteUser(token, params.userID as string);
 }
 
 export default function adminLoader() {
