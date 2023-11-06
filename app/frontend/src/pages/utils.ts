@@ -87,7 +87,16 @@ export async function usersLoader({ request }:{request: Request}) {
   });
 }
 
-export async function editUsers({ request }: {request: Request}) {
+export async function userLoader({ request, params }: {request: Request, params: Params}) {
+  const token = selectMain(store.getState()).token;
+  const userID = params.userID;
+  if (!userID) {
+    return null;
+  }
+  return api.getUser(token, request.signal, userID);
+}
+
+export async function createUsers({ request }: {request: Request}) {
   const token = selectMain(store.getState()).token;
   const data: IUserProfileCreate = {
     email: '',
@@ -105,6 +114,10 @@ export async function deleteUser({ params }: {params: Params}) {
   const token = selectMain(store.getState()).token;
   console.log("Deleting the user with ID" + params.userID);
   return api.deleteUser(token, params.userID as string);
+}
+
+export function getMe() {
+  return selectMain(store.getState()).user;
 }
 
 export default function adminLoader() {
