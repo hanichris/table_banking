@@ -18,7 +18,7 @@ export default function Bank() {
   const params = useParams();
   const userBank = useAppSelector(state => selectUserBankById(state, params.bankId as string));
   const token = useAppSelector(selectUserToken);
-  const bankId = useAppSelector(state => state.bank.id)
+  const bankId = useAppSelector(state => state.bank.id);
 
   const dispatch = useAppDispatch();
 
@@ -74,7 +74,7 @@ export default function Bank() {
         </div>
       </div>
       {open && <NewBank setOpen={setOpen} open={open} title="Edit"/>}
-      {deleteBtn && <DeleteEntity setOpen={setDeleteBtn} open={deleteBtn} entity='bank'/>}
+      {deleteBtn && <DeleteEntity setOpen={setDeleteBtn} open={deleteBtn} entity={userBank} text='bank'/>}
     </section>
   )
 }
