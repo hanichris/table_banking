@@ -12,7 +12,7 @@ import NewUser from "../components/modals/NewUserModal";
 
 export default function UsersListing() {
   const [search, setSearch] = useState('');
-  const [limit, setLimit] = useState(0);
+  // const [limit, setLimit] = useState(0);
   const [hasSearch, setHasSearch] = useState(false);
   const [open, setOpen] = useState(false);
   const inputRef = useRef<HTMLInputElement>(null);
@@ -25,9 +25,9 @@ export default function UsersListing() {
     setSearch(e.target.value);
   };
 
-  const handleLimitChange = (e:React.ChangeEvent<HTMLInputElement>) => {
-    setLimit(+e.target.value);
-  }
+  // const handleLimitChange = (e:React.ChangeEvent<HTMLInputElement>) => {
+  //   setLimit(+e.target.value);
+  // }
 
   const clearSearch = () => {
     if (hasSearch) {
@@ -97,7 +97,7 @@ export default function UsersListing() {
             </i>
           </button>
         </div>
-        <div className="users-listing__limit">
+        {/* <div className="users-listing__limit">
           <Form id='limit_users' role="search">
             <label htmlFor="limit">No. of entries: </label>
             <input
@@ -114,7 +114,7 @@ export default function UsersListing() {
                 }
               }}/>
           </Form>
-        </div>
+        </div> */}
       </header>
       <div className="users-listing__body">
         <table>
