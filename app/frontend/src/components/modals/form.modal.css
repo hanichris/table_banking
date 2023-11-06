@@ -107,6 +107,15 @@ input[type=number]:focus-visible {
     max-height: 3rem;
 }
 
+#user-form input[type='checkbox'] {
+    position: relative;
+    left: .5rem;
+}
+
+#user-form label {
+    font-variation-settings: 'wght' 550;
+}
+
 /* FORM ERROR HANDLING */
 input:not(:placeholder-shown) ~ .form-field-icon::after {
     height: 100%;
