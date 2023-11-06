@@ -30,7 +30,7 @@ export default function UserExcerpt({ user }: {user: IUser}) {
           <RiDeleteBin6Line style={{marginTop: '.5rem', fontSize: '1.8rem', fill: '#cd3e65'}}/>
         </a>
       </td>
-      {deleteBtn && <DeleteEntity setOpen={setDeleteBtn} open={deleteBtn} entity={user} text='user'/>}
+      {deleteBtn && <td style={{position: 'fixed', top: '0', left:'0'}}><DeleteEntity setOpen={setDeleteBtn} open={deleteBtn} entity={user} text='user'/></td>}
     </tr>
   );
 }
