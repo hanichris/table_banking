@@ -9,8 +9,10 @@ import adminLoader, {
   layoutLoader as rootLoader,
   bankListLoader,
   usersLoader,
-  editUsers, 
-  deleteUser} from "./pages/utils";
+  createUsers, 
+  deleteUser,
+  userLoader,
+  getMe} from "./pages/utils";
 import Account from "./pages/Account";
 import UserProfile from "./pages/UserProfile";
 import Bank from "./pages/Bank";
@@ -18,6 +20,7 @@ import BanksList from "./pages/BanksList";
 import Index from "./pages/DashboardIndex";
 import AdminDashboard from "./pages/AdminDashboard";
 import UsersListing from "./pages/UsersList";
+import EditUser from "./pages/AdminEditUser";
 
 export const router = createBrowserRouter([
   {
@@ -36,18 +39,24 @@ export const router = createBrowserRouter([
         loader: adminLoader,
         children: [
           {
+            index: true,
+            element: <Index />
+          },
+          {
             path: 'users',
             loader: usersLoader,
-            action: editUsers,
+            action: createUsers,
             element: <UsersListing />,
           },
           {
             path: 'users/:userID',
+            loader: userLoader,
             element: <h3>View this user</h3>
           },
           {
             path: 'users/:userID/edit',
-            element: <h3>Edit this user</h3>
+            loader: userLoader,
+            element: <EditUser />
           },
           {
             path: 'users/:userID/destroy',
@@ -87,6 +96,7 @@ export const router = createBrowserRouter([
           },
           {
             path: 'profile',
+            loader: getMe,
             element: <UserProfile />
           }
         ]
