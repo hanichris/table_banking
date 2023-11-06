@@ -28,10 +28,10 @@ export default function BanksList() {
 
   const content = banks.map((bank) => {
     if (typeof bank === "string") {
-      return <BankExcerpt key={bank} bankId={bank} />
+      return <BankExcerpt key={bank} bankId={bank} fromProfileView={false}/>
     }
     const bankId = String(bank.id);
-    return <BankExcerpt key={bankId} bankId={bankId}/>
+    return <BankExcerpt key={bankId} bankId={bankId} fromProfileView={false}/>
   });
 
   const handleSearchChange = (e: React.ChangeEvent<HTMLInputElement>) => {
