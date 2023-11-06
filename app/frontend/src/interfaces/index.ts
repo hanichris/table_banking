@@ -34,6 +34,11 @@ export interface IUser extends IUserProfile{
   banks: Array<IBank>;
 }
 
+export type Entity = {
+  banks: Record<string, IBank>,
+  details: IUser,
+};
+
 export interface IUserProfileCreate {
   email: string;
   full_name?: string;
