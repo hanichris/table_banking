@@ -4,10 +4,8 @@ import { selectUserBankById } from "../store/main/selectors";
 import { useAppSelector } from "../hooks";
 
 
-export default function BankExcerpt({ bankId }: {bankId: string}) {
+export default function BankExcerpt({ bankId, fromProfileView }: {bankId: string, fromProfileView: boolean}) {
   const bank = useAppSelector(state => selectUserBankById(state, bankId));
-
-  // console.log(typeof bank.loaned_out_amount);
 
   return (
     <article className="bank-card">
@@ -17,7 +15,7 @@ export default function BankExcerpt({ bankId }: {bankId: string}) {
       <div className="bank-card__body">
         <div data-label="Amount"></div>
         <div className="bank-card__amount">{+(bank.amount) === 0 ? 'Ksh. 0.00': `Ksh. ${bank.amount}`}</div>
-        <Link to={`${bank.id}`}> ...</Link>
+        {fromProfileView === true ? <Link to={`../banks/${bank.id}`}> ...</Link> : <Link to={`${bank.id}`}> ...</Link>}
       </div>
     </article>
   );
