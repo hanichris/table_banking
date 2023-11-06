@@ -155,7 +155,7 @@ async def delete_me(
             status_code=400,
             detail='Incorrect password entered. Cannot complete operation.'
         )
-    return user.remove(db, id=current_user.id)
+    return user.remove(db, db_obj=current_user)
 
 
 @router.post('/open', response_model=User, status_code=201)
