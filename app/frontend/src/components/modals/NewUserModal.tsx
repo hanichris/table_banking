@@ -8,7 +8,7 @@ import { Spinner } from "../Spinner";
 export default function NewUser({setOpen, open, title}: StateEntityProp) {
   const fetcher = useFetcher();
   
-  const isLoading = fetcher.state === 'loading';
+  const isLoading = fetcher.state === 'submitting';
 
   return (
     <section className="modal" style={open ? {display: 'block'} : {}}>
@@ -48,16 +48,22 @@ export default function NewUser({setOpen, open, title}: StateEntityProp) {
                   required
                   />
                 </div>
-                <div className="input-group admin-input _m-b-0">
-                  <div>
-                    <label htmlFor="new-user--isAdmin">Admin</label>
-                    <input
-                      id="new-user--isAdmin"
-                      type="checkbox"
-                      name="is_superuser"
-                      value='true'
-                      disabled={isLoading}
-                    />
+                <div className="input-group" style={{marginBottom: '0'}}>
+                  <div className="form-group">
+                    <label id="new_user__admin-label">Admin</label>
+                    <div className="form-group__radio-btns">
+                      <input
+                        type="radio"
+                        name="is_superuser"
+                        id="is_superuser_yes" />
+                      <label htmlFor="is_superuser_yes">Yes</label>
+                      <input
+                        type="radio"
+                        name="is_superuser"
+                        id="is_superuser_no"
+                        defaultChecked/>
+                      <label htmlFor="is_superuser_no">No</label>
+                    </div>
                   </div>
                 </div>
               </div>
