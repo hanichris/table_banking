@@ -32,7 +32,7 @@ export default function EditUser() {
                 <div className="form-field">
                   <input
                     type="text"
-                    name="user_full_name"
+                    name="full_name"
                     id="fullname"
                     defaultValue={user.full_name}
                     placeholder="Full Name"
@@ -54,25 +54,49 @@ export default function EditUser() {
                   <p className="form-help">Email should be a valid email address that matches the RFC standard</p>
               </div>
               <div className="form-group" style={{marginTop: '0.5rem'}}>
-                <label htmlFor="is_active">Active</label>
-                <input
-                  type="checkbox"
-                  name="is_active"
-                  id="is_active"
-                  defaultChecked={user.is_active as boolean}
-                  />
+                <div>
+                  <label>Active</label>
+                  <div className="form-group__radio-btns">
+                    <input
+                      type="radio"
+                      name="is_active"
+                      id="is_active_yes"
+                      value='true'
+                      defaultChecked={user.is_active as boolean}/>
+                    <label htmlFor="is_active_yes">Yes</label>
+                    <input
+                      type="radio"
+                      name="is_active"
+                      id="is_active_no"
+                      value='false'
+                      defaultChecked={!user.is_active as boolean} />
+                    <label htmlFor="is_active_no">No</label>
+                  </div>
+                </div>
               </div>
               <div className="form-group" style={{marginTop: '0.5rem'}}>
-                <label htmlFor="is_superuser">Admin</label>
-                <input
-                  type="checkbox"
-                  name="is_superuser"
-                  id="is_superuser"
-                  defaultChecked={user.is_superuser as boolean}
-                  />
+                <div>
+                  <label>Admin</label>
+                  <div className="form-group__radio-btns">
+                    <input
+                      type="radio"
+                      name="is_superuser"
+                      id="is_superuser_yes"
+                      value='true'
+                      defaultChecked={user.is_superuser as boolean} />
+                    <label htmlFor="is_superuser_yes">Yes</label>
+                    <input
+                      type="radio"
+                      name="is_superuser"
+                      id="is_superuser_no"
+                      value='false'
+                      defaultChecked={!user.is_superuser as boolean} />
+                    <label htmlFor="is_superuser_no">No</label>
+                  </div>
+                </div>
               </div>
-              <div className="form-group" style={{marginTop: '0.5rem'}}>
-                <button type="button" className="btn btn--m btn--primary">
+              <div className="form-group" style={{marginTop: '0.9rem'}}>
+                <button type="submit" className="btn btn--m btn--primary">
                   Update user details
                 </button>
               </div>
