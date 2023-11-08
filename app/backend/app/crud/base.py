@@ -1,6 +1,6 @@
 #!/usr/bin/env python3
 """Define the base class for CRUD operations."""
-from typing import Any, Generic, TypeVar
+from typing import Any, Generic, TypeVar, Sequence
 
 from fastapi.encoders import jsonable_encoder
 from pydantic import BaseModel
@@ -30,12 +30,12 @@ class CRUDBase(
         """
         self.model = model
 
-    def get(self, db: Session, /, *, id: int) -> ModelType | None:
+    def get(self, db: Session, /, *, id: int | None) -> ModelType | None:
         return db.get(self.model, id)
 
     def get_multi(
             self, db: Session, /, *, skip: int = 0, limit: int = 100
-            ) -> list[ModelType]:
+            ) -> Sequence[ModelType]:
         stmt = select(self.model).offset(skip).limit(limit)
         return db.execute(stmt).scalars().unique().all()
 
