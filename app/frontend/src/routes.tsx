@@ -12,7 +12,8 @@ import adminLoader, {
   createUsers, 
   deleteUser,
   userLoader,
-  getMe} from "./pages/utils";
+  getMe,
+  editUser} from "./pages/utils";
 import Account from "./pages/Account";
 import UserProfile from "./pages/UserProfile";
 import Bank from "./pages/Bank";
@@ -56,6 +57,7 @@ export const router = createBrowserRouter([
           {
             path: 'users/:userID/edit',
             loader: userLoader,
+            action: editUser,
             element: <EditUser />
           },
           {
