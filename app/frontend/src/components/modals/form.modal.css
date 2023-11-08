@@ -36,6 +36,10 @@ label {
     text-align: start;
 }
 
+#user-form label {
+    font-variation-settings: 'wght' 550;
+}
+
 input[type=email],
 input[type=password],
 input[type=text],
@@ -51,6 +55,21 @@ input[type=number] {
     transition: box-shadow .1s;
     font-size: var(--font-size-medium);
     font-family: var(--font-family);
+}
+
+input[type='radio'] {
+    appearance: none;
+
+    border-radius: 50%;
+    width: 1.6rem;
+    height: 1.6rem;
+
+    border: .2rem solid #999;
+    transition: all .2s linear;
+}
+
+input[type='radio']:checked {
+    border: .6rem solid var(--color-black);
 }
 
 input[type=email]:focus:not(:disabled),
@@ -76,6 +95,19 @@ input[type=number]:focus-visible {
 .form-group-size-m {
     margin-top: .5rem;
     margin-bottom: 1.5rem;
+}
+
+.form-group__radio-btns {
+    display: flex;
+    align-items: center;
+    justify-content: flex-start;
+    margin-left: .5rem;
+}
+
+.form-group__radio-btns label {
+    margin-right: 1.5rem;
+    padding-bottom: 0;
+    font-variation-settings: 'wght' 400 !important;
 }
 
 /* FORM FIELD CONTAINER */
@@ -105,15 +137,6 @@ input[type=number]:focus-visible {
 
 .form-group:focus-within .form-help {
     max-height: 3rem;
-}
-
-#user-form input[type='checkbox'] {
-    position: relative;
-    left: .5rem;
-}
-
-#user-form label {
-    font-variation-settings: 'wght' 550;
 }
 
 /* FORM ERROR HANDLING */
