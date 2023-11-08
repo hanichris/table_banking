@@ -1,10 +1,10 @@
 import { defer, redirect, Params } from 'react-router-dom';
 import { store } from '../store';
-import { selectMain, selectAllUserBanks } from '../store/main/selectors';
+import { selectMain, selectAllUserBanks, selectUserToken } from '../store/main/selectors';
 import { getLocalToken, removeLocalToken } from '../utils';
 import { actions } from '../store/main/actions';
 import { api } from '../api';
-import { IUserProfileCreate } from '../interfaces';
+import { IUserProfileCreate, IUserProfileUpdate } from '../interfaces';
 
 
 export async function layoutLoader() {
@@ -63,7 +63,7 @@ export async function usersLoader({ request }:{request: Request}) {
     pageNum: 1,
     pageSize: 100
   };
-  const token = selectMain(store.getState()).token;
+  const token = selectUserToken(store.getState());
   const url = new URL(request.url);
   const userID = url.searchParams.get('id');
   if (userID) {
@@ -88,7 +88,7 @@ export async function usersLoader({ request }:{request: Request}) {
 }
 
 export async function userLoader({ request, params }: {request: Request, params: Params}) {
-  const token = selectMain(store.getState()).token;
+  const token = selectUserToken(store.getState());
   const userID = params.userID;
   if (!userID) {
     return null;
@@ -97,7 +97,7 @@ export async function userLoader({ request, params }: {request: Request, params:
 }
 
 export async function createUsers({ request }: {request: Request}) {
-  const token = selectMain(store.getState()).token;
+  const token = selectUserToken(store.getState());
   const data: IUserProfileCreate = {
     email: '',
     password: '',
@@ -110,8 +110,17 @@ export async function createUsers({ request }: {request: Request}) {
   return api.createUser(token, data);
 }
 
+export async function editUser({request, params}: {request: Request, params: Params}) {
+  const token = selectUserToken(store.getState());
+  const data: IUserProfileUpdate = {};
+  const formData = await request.formData();
+  Object.assign(data, Object.fromEntries(formData));
+  await api.updateUser(token, params.userID as string, data);
+  return redirect(`../users/${params.userID}`);
+}
+
 export async function deleteUser({ params }: {params: Params}) {
-  const token = selectMain(store.getState()).token;
+  const token = selectUserToken(store.getState());
   console.log("Deleting the user with ID" + params.userID);
   return api.deleteUser(token, params.userID as string);
 }
