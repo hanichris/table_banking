@@ -6,7 +6,7 @@ import { GiCancel } from 'react-icons/gi';
 
 import { IData } from "../interfaces";
 import Users from "./Users";
-import UsersSkeleton from "../components/skeletons/UsersSkeleton";
+import ArraySkeleton from "../components/skeletons/ArraySkeleton";
 import NewUser from "../components/modals/NewUserModal";
 
 
@@ -130,7 +130,7 @@ export default function UsersListing() {
             </tr>
           </thead>
           <tbody>
-            <Suspense fallback={<UsersSkeleton />}>
+            <Suspense fallback={<ArraySkeleton />}>
               <Await
                 resolve={users.data}
                 errorElement={<tr><td>Error loading users!!!</td></tr>}>
