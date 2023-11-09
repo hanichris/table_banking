@@ -62,11 +62,19 @@ export const api = {
       body: JSON.stringify(data),
     });
   },
-  getBank:async (token:string, bankId: number) => {
-    return fetch(`${serverEndpoint}/banks/${bankId}`, authHeader(token));
+  getBank:async (token:string, bankId: string, signal: AbortSignal) => {
+    return fetch(`${serverEndpoint}/banks/${bankId}`, {
+      signal,
+      headers: authHeader(token).headers,
+    }).then((res) => res.json());
   },
-  getBanks:async (token:string) => {
-    return fetch(`${serverEndpoint}/banks`, authHeader(token));
+  getBanks:async (token:string, signal: AbortSignal, params: IParams) => {
+    const skip = params.pageSize * (params.pageNum - 1);
+    const limit = params.pageSize;
+    return fetch(`${serverEndpoint}/banks/?skip=${skip}&limit=${limit}`, {
+      signal,
+      headers: authHeader(token).headers,
+    }).then((res) => res.json());
   },
   createBank: async (token:string, data: IBankCreate) => {
     const header: Record<string, Record<string, string>> = structuredClone(authHeader(token));
