@@ -13,7 +13,9 @@ import adminLoader, {
   deleteUser,
   userLoader,
   getMe,
-  editUser} from "./pages/utils";
+  editUser,
+  banksLoader,
+  bankLoader} from "./pages/utils";
 import Account from "./pages/Account";
 import UserProfile from "./pages/UserProfile";
 import Bank from "./pages/Bank";
@@ -22,6 +24,7 @@ import Index from "./pages/DashboardIndex";
 import AdminDashboard from "./pages/AdminDashboard";
 import UsersListing from "./pages/UsersList";
 import EditUser from "./pages/AdminEditUser";
+import AdminBanksList from "./pages/AdminBankList";
 
 export const router = createBrowserRouter([
   {
@@ -66,7 +69,18 @@ export const router = createBrowserRouter([
           },
           {
             path: 'banks',
-            element: <h3>Banks</h3>
+            loader: banksLoader,
+            element: <AdminBanksList />
+          },
+          {
+            path: 'banks/:bankID',
+            loader: bankLoader,
+            element: <h3>View this bank</h3>
+          },
+          {
+            path: 'banks/:bankID/edit',
+            loader: bankLoader,
+            element: <h3>Edit this bank</h3>
           }
         ]
       },
