@@ -58,33 +58,56 @@ export async function bankListLoader({ request }: {request: Request}) {
   return { banks, q: null };
 }
 
-export async function usersLoader({ request }:{request: Request}) {
-  const params = {
-    pageNum: 1,
-    pageSize: 100
-  };
-  const token = selectUserToken(store.getState());
+function getIDAndQueryParams(request: Request) {
   const url = new URL(request.url);
-  const userID = url.searchParams.get('id');
-  if (userID) {
+  const id = url.searchParams.get('id');
+
+  return {
+    id,
+    params : {
+      pageNum: 1 + Number(url.searchParams.get('pageNum')),
+      pageSize: 100 + Number(url.searchParams.get('limit')),
+    }
+  };
+
+}
+
+export async function usersLoader({ request }:{request: Request}) {
+  const token = selectUserToken(store.getState());
+  const { id, params } = getIDAndQueryParams(request);
+
+  if (id) {
+    console.log(`User ID being searched: ${id}`);
     return {
-      data: api.getUser(token, request.signal, userID),
-      userID
+      data: api.getUser(token, request.signal, id),
+      userID: id,
     };
   }
   console.log('Not searching for a particular ID. Get all the users.');
-  const pageNum = url.searchParams.get('pageNum');
-  const pageSize = url.searchParams.get('limit');
-  if (pageNum) {
-    params.pageNum = +pageNum;
-  }
-  if (pageSize) {
-    params.pageSize = +pageSize;
-  }
+
   return defer({
     data: api.getUsers(token, request.signal, params),
-    userID
+    userID: id,
   });
+}
+
+export async function banksLoader({ request }:{ request: Request }) {
+  const token = selectUserToken(store.getState());
+  const { id, params } = getIDAndQueryParams(request);
+
+  if (id) {
+    console.log(`Bank ID being searched: ${id}`);
+    return {
+      data: api.getBank(token, id, request.signal),
+      bankID: id,
+    }
+  }
+
+  console.log('Get all the banks!!!');
+  return defer({
+    data: api.getBanks(token, request.signal, params),
+    bankID: id,
+  })
 }
 
 export async function userLoader({ request, params }: {request: Request, params: Params}) {
@@ -94,6 +117,15 @@ export async function userLoader({ request, params }: {request: Request, params:
     return null;
   }
   return api.getUser(token, request.signal, userID);
+}
+
+export async function bankLoader({ request, params }: {request: Request, params: Params}) {
+  const token = selectUserToken(store.getState());
+  const bankID = params.bankID;
+  if (!bankID) {
+    return null;
+  }
+  return api.getBank(token, bankID, request.signal);
 }
 
 export async function createUsers({ request }: {request: Request}) {
@@ -106,7 +138,6 @@ export async function createUsers({ request }: {request: Request}) {
   const formData = await request.formData();
   const user = Object.fromEntries(formData);
   Object.assign(data, user);
-  data.is_superuser = Boolean(data.is_superuser);
   return api.createUser(token, data);
 }
 
