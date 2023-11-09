@@ -113,6 +113,11 @@ export interface IData {
   userID: string | null;
 }
 
+export interface IBankData {
+  data: Array<IBank>;
+  bankID: string | null;
+}
+
 export type I404  = {
   detail: string;
 }
