@@ -1,11 +1,14 @@
-import { useLoaderData, Form, useNavigate, useParams } from "react-router-dom";
+import { useLoaderData, Form, useNavigate, useParams, useNavigation } from "react-router-dom";
 import { IoChevronBack } from "react-icons/io5";
 
 import { IUser } from "../interfaces";
+import { Spinner } from "../components/Spinner";
 
 export default function EditUser() {
   const user = useLoaderData() as IUser | null;
   const navigate = useNavigate();
+  const navigation = useNavigation();
+  const isSubmitting = navigation.state === 'submitting';
   const params = useParams();
   if (!user) {
     return (
@@ -25,7 +28,7 @@ export default function EditUser() {
         </div>
         <div className="bank-page__body">
           <Form method="post" id="user-form">
-            <fieldset>
+            <fieldset disabled={isSubmitting}>
               <legend className="visually-hidden">Users personal information</legend>
               <div className="form-group">
                 <label htmlFor="fullname">Full Name</label>
@@ -96,8 +99,9 @@ export default function EditUser() {
                 </div>
               </div>
               <div className="form-group" style={{marginTop: '0.9rem'}}>
-                <button type="submit" className="btn btn--m btn--primary">
+                <button type="submit" className={isSubmitting ? "btn btn--m btn--primary is-disabled": "btn btn--m btn--primary"}>
                   Update user details
+                  {isSubmitting && <Spinner />}
                 </button>
               </div>
             </fieldset>
