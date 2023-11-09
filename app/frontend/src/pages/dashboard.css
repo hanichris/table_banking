@@ -186,6 +186,10 @@ main.dashboard_content.loading {
     margin-top: 3rem;
 }
 
+.users-listing__body {
+    overflow: auto;
+}
+
 .bank-listings__body .bank-listings_content_none {
     display: flex;
     align-items: center;
@@ -304,10 +308,9 @@ main.dashboard_content.loading {
     margin-top: 7rem;
 }
 
-#users-listing table {
-    display: grid;
+table {
     border-collapse: collapse;
-    min-width: 100%;
+    display: grid;
     grid-template-columns:
         minmax(10rem, 1fr) /* ID column */
         minmax(15rem, 1.67fr) /* Name column */
@@ -319,60 +322,58 @@ main.dashboard_content.loading {
     row-gap: 1rem;
 }
 
-#users-listing thead,
-#users-listing tbody,
-#users-listing tr {
+thead, tbody, tr {
     display: contents;
 }
 
-#users-listing th {
-    box-shadow: 0 .1rem rgb(0, 0, 0, 0.075);
+thead {
+    position: sticky;
+    top: 0;
 }
 
-#users-listing th,
-#users-listing td {
+th,
+td {
     overflow: hidden;
     text-overflow: ellipsis;
     white-space: nowrap;
 }
 
-#users-listing th {
+th {
     background-color: var(--color-dark-green);
+    box-shadow: 0 .1rem rgb(0, 0, 0, 0.075);
     color: var(--color-white);
-    line-height: 2.3;
-    position: sticky;
-    top: 0;
     font-variation-settings: 'wght' 650;
+    line-height: 2.3;
 }
 
-#users-listing td {
+td {
     text-align: center;
 }
 
-#users-listing td.name_col,
-#users-listing td.email_col {
+td.name_col,
+td.email_col {
     text-align: left;
 }
 
-#users-listing td.del_col a,
-#users-listing td.edit_col a {
+td.del_col a,
+td.edit_col a {
     display: block;
 }
 
-#users-listing td.del_col a {
+td.del_col a {
     cursor: pointer;
 }
 
-#users-listing tr:nth-child(even) td {
+tr:nth-child(even) td {
     background-color: #f8f6ff;
 }
 
-#users-listing td.skeleton-item {
+td.skeleton-item {
     grid-column-start: 1;
     grid-column-end: 8;
 }
 
-#users-listing tr:nth-child(even) td.skeleton-item {
+tr:nth-child(even) td.skeleton-item {
     background: none;
 }
 
