@@ -4,14 +4,8 @@ import { useLoaderData } from 'react-router-dom';
 import { Entity } from '../interfaces';
 import './user_profile.css';
 import BankExcerpt from './BankExcerpt';
+import { getName } from './lib';
 
-function getName(fullName:string, email: string) {
-  if (fullName.length > 0) {
-    return fullName;
-  }
-  const atIndex = email.indexOf('@');
-  return email.slice(0, atIndex);
-}
 
 export default function UserProfile() {
   const user = useLoaderData() as Entity;
