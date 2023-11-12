@@ -25,6 +25,8 @@ import AdminDashboard from "./pages/AdminDashboard";
 import UsersListing from "./pages/UsersList";
 import EditUser from "./pages/AdminEditUser";
 import AdminBanksList from "./pages/AdminBankList";
+import AdminViewUser from "./pages/AdminViewUser";
+import AdminViewBank from "./pages/AdminViewBank";
 
 export const router = createBrowserRouter([
   {
@@ -55,7 +57,7 @@ export const router = createBrowserRouter([
           {
             path: 'users/:userID',
             loader: userLoader,
-            element: <h3>View this user</h3>
+            element: <AdminViewUser />
           },
           {
             path: 'users/:userID/edit',
@@ -75,7 +77,7 @@ export const router = createBrowserRouter([
           {
             path: 'banks/:bankID',
             loader: bankLoader,
-            element: <h3>View this bank</h3>
+            element: <AdminViewBank />
           },
           {
             path: 'banks/:bankID/edit',
