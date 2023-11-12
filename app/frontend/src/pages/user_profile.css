@@ -1,6 +1,7 @@
 #profile_info {
     text-align: center;
     padding-bottom: 6rem;
+    overflow: auto;
 }
 
 .avatar {
