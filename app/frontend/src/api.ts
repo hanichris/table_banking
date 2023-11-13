@@ -1,4 +1,4 @@
-import { IBankCreate, IParams, IUserProfileCreate, IUserProfileUpdate } from "./interfaces";
+import { IBankCreate, IBankUpdate, IParams, IUserProfileCreate, IUserProfileUpdate } from "./interfaces";
 
 const serverEndpoint = import.meta.env.VITE_SERVER_ENDPOINT;
 
@@ -84,5 +84,20 @@ export const api = {
       headers: header.headers,
       body: JSON.stringify(data)
     });
+  },
+  updateBank:async (token:string, bankID: string, data: IBankUpdate) => {
+    const header: Record<string, Record<string, string>> = structuredClone(authHeader(token));
+    header.headers['Content-Type'] = 'application/json;charset=utf-8';
+    return fetch(`${serverEndpoint}/banks/${bankID}`, {
+      method: 'PATCH',
+      headers: header.headers,
+      body: JSON.stringify(data),
+    });
+  },
+  removeUser:async (token:string, bankID:string, userID: string) => {
+    return fetch(`${serverEndpoint}/banks/${bankID}/users/${userID}?r=True`, authHeader(token));
+  },
+  addUser:async (token:string, bankID: string, userID: string) => {
+    return fetch(`${serverEndpoint}/banks/${bankID}/users/${userID}`, authHeader(token));
   }
 };
