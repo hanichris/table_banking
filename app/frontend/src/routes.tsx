@@ -15,7 +15,8 @@ import adminLoader, {
   getMe,
   editUser,
   banksLoader,
-  bankLoader} from "./pages/utils";
+  bankLoader,
+  editBank} from "./pages/utils";
 import Account from "./pages/Account";
 import UserProfile from "./pages/UserProfile";
 import Bank from "./pages/Bank";
@@ -27,6 +28,7 @@ import EditUser from "./pages/AdminEditUser";
 import AdminBanksList from "./pages/AdminBankList";
 import AdminViewUser from "./pages/AdminViewUser";
 import AdminViewBank from "./pages/AdminViewBank";
+import AdminEditBank from "./pages/AdminEditBank";
 
 export const router = createBrowserRouter([
   {
@@ -82,7 +84,8 @@ export const router = createBrowserRouter([
           {
             path: 'banks/:bankID/edit',
             loader: bankLoader,
-            element: <h3>Edit this bank</h3>
+            action: editBank,
+            element: <AdminEditBank />
           }
         ]
       },
