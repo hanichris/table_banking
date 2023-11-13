@@ -7,6 +7,7 @@ export interface IBank {
   loaned_out_amount: number;
   id: number;
   admin_id: number;
+  members: Array<IUserProfile>;
 }
 
 export interface IBankCreate {
@@ -53,6 +54,14 @@ export interface IUserProfileUpdate {
   password?: string;
   is_active?: boolean;
   is_superuser?: boolean;
+}
+
+export interface IBankUpdate {
+  title?: string;
+  admin_id?: number;
+  amount?: number;
+  loaned_out_amount?: number;
+  interest_rate?: number;
 }
 
 type UserBankItem = {
