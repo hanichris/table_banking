@@ -4,7 +4,7 @@ import { selectMain, selectAllUserBanks, selectUserToken } from '../store/main/s
 import { getLocalToken, removeLocalToken } from '../utils';
 import { actions } from '../store/main/actions';
 import { api } from '../api';
-import { IUserProfileCreate, IUserProfileUpdate } from '../interfaces';
+import { IBankUpdate, IUserProfileCreate, IUserProfileUpdate } from '../interfaces';
 
 
 export async function layoutLoader() {
@@ -148,6 +148,15 @@ export async function editUser({request, params}: {request: Request, params: Par
   Object.assign(data, Object.fromEntries(formData));
   await api.updateUser(token, params.userID as string, data);
   return redirect(`../users/${params.userID}`);
+}
+
+export async function editBank({ request, params }: {request: Request, params: Params}) {
+  const token = selectUserToken(store.getState());
+  const data: IBankUpdate = {};
+  const formData = await request.formData();
+  Object.assign(data, Object.fromEntries(formData));
+  await api.updateBank(token, params.bankID as string, data);
+  return redirect(`../banks/${params.bankID}`);
 }
 
 export async function deleteUser({ params }: {params: Params}) {
