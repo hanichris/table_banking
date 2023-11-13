@@ -12,8 +12,6 @@ export default function AdminViewBank() {
   const bank = useLoaderData() as IBank;
   const navigate = useNavigate();
 
-  console.log(bank);
-
   return (
     <section className="wrapper bank-page__wrapper">
       <div className="container container--xxl">
