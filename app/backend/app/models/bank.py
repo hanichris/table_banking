@@ -7,9 +7,9 @@ the SQLAlchemy type `Mapped` to derive its column-configuration
 information.
 """
 
-from decimal import Decimal
+from datetime import datetime
 
-from sqlalchemy import ForeignKey
+from sqlalchemy import ForeignKey, func, FetchedValue
 from sqlalchemy.orm import Mapped
 from sqlalchemy.orm import mapped_column, relationship
 
@@ -20,9 +20,11 @@ class Bank(Base):
     id: Mapped[int] = mapped_column(primary_key=True, index=True)
     admin_id: Mapped[int | None] = mapped_column(ForeignKey('user.id'))
     title: Mapped[str] = mapped_column(unique=True, index=True)
-    interest_rate: Mapped[Decimal] = mapped_column(insert_default=Decimal(0))
-    amount: Mapped[Decimal] = mapped_column(insert_default=Decimal(0))
-    loaned_out_amount: Mapped[Decimal] = mapped_column(insert_default=Decimal(0))
+    created_at: Mapped[datetime] = mapped_column(server_default=func.now())
+    updated_at: Mapped[datetime] = mapped_column(onupdate=func.now(), server_default=func.now(), server_onupdate=FetchedValue())
+    interest_rate: Mapped[int] = mapped_column(insert_default=int)
+    amount: Mapped[int] = mapped_column(insert_default=0)
+    loaned_out_amount: Mapped[int] = mapped_column(insert_default=0)
 
     members = relationship(
         "User",
