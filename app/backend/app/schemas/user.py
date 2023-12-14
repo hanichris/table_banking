@@ -4,6 +4,8 @@
 These models will provide validation, conversion (where necessary)
 and data parsing.
 """
+from datetime import datetime
+
 from pydantic import BaseModel, EmailStr, ConfigDict
 
 
@@ -37,6 +39,8 @@ class User(UserBase):
     a `dict`, but an ORM model. Makes it compatible with ORMs.
     """
     id: int
+    created_at: datetime
+    updated_at: datetime
 
     model_config = ConfigDict(from_attributes=True)
 
