@@ -17,7 +17,6 @@ def main() -> None:
 
     Calls the initiation function `init` defined above.
     """
-    print('Generating inital data for the database.')
     init()
     print('Initial data generated.')
 
@@ -27,5 +26,3 @@ if __name__ == "__main__":
     
     pwd_context.load_path(settings.SECURITY_CONIFIG_FILE)
     main()
-    # import sys
-    # print(sys.path)
