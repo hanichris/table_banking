@@ -1,5 +1,7 @@
 #!/usr/bin/env python3
 """Define CRUD operations for SQLAlchemy class `Bank`"""
+from typing import Sequence
+
 from fastapi.encoders import jsonable_encoder
 from sqlalchemy import select
 from sqlalchemy.orm import Session
@@ -84,7 +86,7 @@ class CRUDBank(CRUDBase[Bank, BankCreate, BankUpdate]):
             admin_id: int, 
             skip: int = 0,
             limit: int = 100
-    ) -> list[Bank]:
+    ) -> Sequence[Bank]:
         """Obtain a list of `Bank` instances in a paginated manner.
 
         Args:
