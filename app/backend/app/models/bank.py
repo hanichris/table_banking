@@ -8,6 +8,7 @@ information.
 """
 
 from datetime import datetime
+from uuid import UUID, uuid4
 
 from sqlalchemy import ForeignKey, func, FetchedValue
 from sqlalchemy.orm import Mapped
@@ -17,8 +18,8 @@ from app.db.base_class import Base, association_table
 
 
 class Bank(Base):
-    id: Mapped[int] = mapped_column(primary_key=True, index=True)
-    admin_id: Mapped[int | None] = mapped_column(ForeignKey('user.id'))
+    id: Mapped[UUID] = mapped_column(primary_key=True, index=True, default=lambda: uuid4())
+    admin_id: Mapped[UUID| None] = mapped_column(ForeignKey('user.id'))
     title: Mapped[str] = mapped_column(unique=True, index=True)
     created_at: Mapped[datetime] = mapped_column(server_default=func.now())
     updated_at: Mapped[datetime] = mapped_column(onupdate=func.now(), server_default=func.now(), server_onupdate=FetchedValue())
@@ -38,3 +39,6 @@ class Bank(Base):
         collection_class=set,
         lazy='selectin',
         back_populates='banks_admin')
+    
+    def __repr__(self) -> str:
+        return f"Bank(id={self.id!r}, title={self.title!r}, created_at={self.created_at!r}, amount={self.amount!r})"
