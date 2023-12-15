@@ -7,6 +7,7 @@ the SQLAlchemy type `Mapped` to derive its column-configuration
 information.
 """
 import datetime
+from uuid import UUID, uuid4
 
 from sqlalchemy import func, FetchedValue
 from sqlalchemy.orm import Mapped
@@ -16,7 +17,7 @@ from app.db.base_class import Base, association_table
 
 
 class User(Base):
-    id: Mapped[int] = mapped_column(primary_key=True, index=True)
+    id: Mapped[UUID] = mapped_column(primary_key=True, index=True, default=lambda: uuid4())
     email: Mapped[str] = mapped_column(unique=True, index=True)
     full_name: Mapped[str | None] = mapped_column(index=True)
     created_at: Mapped[datetime.datetime] = mapped_column(server_default=func.now())
@@ -37,3 +38,6 @@ class User(Base):
         collection_class=set,
         lazy='selectin',
         back_populates='admin')
+    
+    def __repr__(self) -> str:
+        return f"User(id={self.id!r}, email={self.email!r}, created_at={self.created_at!r}, is_admin={self.is_active!r})"
