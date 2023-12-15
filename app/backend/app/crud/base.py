@@ -1,6 +1,7 @@
 #!/usr/bin/env python3
 """Define the base class for CRUD operations."""
 from typing import Any, Generic, TypeVar, Sequence
+from uuid import UUID
 
 from fastapi.encoders import jsonable_encoder
 from pydantic import BaseModel
@@ -30,14 +31,20 @@ class CRUDBase(
         """
         self.model = model
 
-    def get(self, db: Session, /, *, id: int | None) -> ModelType | None:
-        return db.get(self.model, id)
+    def get(self, db: Session, /, *, id: str | None) -> ModelType | None:
+        return db.get(self.model, UUID(id))
 
     def get_multi(
             self, db: Session, /, *, skip: int = 0, limit: int = 100
             ) -> Sequence[ModelType]:
         stmt = select(self.model).offset(skip).limit(limit)
         return db.execute(stmt).scalars().unique().all()
+    
+    def paginate_query(self, /, *, criteria: str = 'created_at'):
+        return select(self.model).order_by(criteria)
+    
+    def paginate_query_with_filters(self, order_by: str = 'created_at', **filters):
+        return select(self.model).filter_by(**filters).order_by(order_by)
 
     def create(
             self, db: Session, /, *, obj_in: CreateSchemaType
