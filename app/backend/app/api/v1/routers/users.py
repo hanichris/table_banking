@@ -4,6 +4,8 @@ from typing import Annotated
 
 from fastapi import APIRouter, Body, Depends, HTTPException
 from fastapi.encoders import jsonable_encoder
+from fastapi_pagination.links import Page
+from fastapi_pagination.ext.sqlalchemy import paginate
 from pydantic import EmailStr
 from sqlalchemy.orm import Session
 
@@ -28,11 +30,9 @@ router = APIRouter(
 
 @router.get('/',
             dependencies=[Depends(deps.get_current_active_superuser)],
-            response_model=list[UserBanks])
+            response_model=Page[UserBanks])
 async def read_users(
-    db: Annotated[Session, Depends(deps.get_db)],
-    skip: int = 0,
-    limit: int = 100,
+    db: Annotated[Session, Depends(deps.get_db)]
 ):
     """Obtain a list of users in a paginated manner.
  
@@ -44,7 +44,7 @@ async def read_users(
     Returns:
         * A list of users.
     """
-    return user.get_multi(db, skip=skip, limit=limit) 
+    return paginate(db, user.paginate_query())
 
 
 @router.post('/',
@@ -209,7 +209,7 @@ async def create_user_open(
 )
 async def read_user(
     db: Annotated[Session, Depends(deps.get_db)],
-    user_id: int,
+    user_id: str,
 ):
     """Admin can get the details of the user with the specified id.
 
@@ -239,7 +239,7 @@ async def read_user(
 )
 async def update_user(
     db: Annotated[Session, Depends(deps.get_db)],
-    user_id: int,
+    user_id: str,
     user_in: UserUpdate
 ):
     """Update a user's details.
@@ -274,7 +274,7 @@ async def update_user(
 )
 async def delete_user(
     db: Annotated[Session, Depends(deps.get_db)],
-    user_id: int,
+    user_id: str,
 ):
     """Delete the user with the given ID.
 
