@@ -5,6 +5,7 @@ These models will provide validation, conversion (where necessary)
 and data parsing.
 """
 from datetime import datetime
+from uuid import UUID
 
 from pydantic import BaseModel, EmailStr, ConfigDict
 
@@ -38,7 +39,7 @@ class User(UserBase):
     Provides configuration to enable Pydantic to read data even if it's not
     a `dict`, but an ORM model. Makes it compatible with ORMs.
     """
-    id: int
+    id: UUID
     created_at: datetime
     updated_at: datetime
 
