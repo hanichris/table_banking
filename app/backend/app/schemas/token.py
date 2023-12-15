@@ -12,5 +12,5 @@ class Token(BaseModel):
     token_type: str
 
 class TokenPayload(BaseModel):
-    sub: int | None = None
+    sub: str | None = None
     scopes: list[str] = []
