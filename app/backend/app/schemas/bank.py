@@ -7,6 +7,7 @@ These models will parse the data providing validation and conversion
 
 
 from datetime import datetime
+from uuid import UUID
 
 from pydantic import BaseModel, ConfigDict
 
@@ -24,11 +25,11 @@ class BankCreate(BankBase):
 
 class BankUpdate(BankBase):
     """Model defining the properties to receive on `bank` update."""
-    admin_id: int | None = None
+    admin_id: UUID | None = None
 
 class Bank(BankBase):
-    id: int
-    admin_id: int
+    id: UUID
+    admin_id: UUID
     created_at: datetime
     updated_at: datetime
 
