@@ -2,6 +2,7 @@
 """Main application."""
 from fastapi import FastAPI
 from fastapi.middleware.cors import CORSMiddleware
+from fastapi_pagination import add_pagination
 
 from app.api.v1.api import api_router
 from app.core.security import pwd_context
@@ -24,3 +25,4 @@ if settings.BACKEND_CORS_ORIGINS:
     )
 
 app.include_router(api_router, prefix=settings.API_V1_STR)
+add_pagination(app)
