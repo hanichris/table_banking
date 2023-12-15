@@ -4,6 +4,8 @@ from typing import Annotated
 
 from fastapi import APIRouter, Body, Depends, HTTPException, Query
 from fastapi.encoders import jsonable_encoder
+from fastapi_pagination.ext.sqlalchemy import paginate
+from fastapi_pagination.links import Page
 from pydantic import EmailStr
 from sqlalchemy.orm import Session
 
@@ -21,12 +23,10 @@ router = APIRouter(
     tags=['banks']
 )
 
-@router.get('/', response_model=list[BankUsers])
+@router.get('/', response_model=Page[BankUsers])
 async def read_banks(
     db: Annotated[Session, Depends(deps.get_db)],
-    current_user: Annotated[mdl.User, Depends(deps.get_current_active_user)],
-    skip: int = 0,
-    limit: int = 100
+    current_user: Annotated[mdl.User, Depends(deps.get_current_active_user)]
 ):
     """Get a list of bank instances in a paginated manner.
 
@@ -42,12 +42,8 @@ async def read_banks(
         * A paginated list of results.
     """
     if user.is_superuser(current_user):
-        banks = _bank.get_multi(db, skip=skip, limit=limit)
-    else:
-        banks = _bank.get_multi_by_admin(
-            db, admin_id=current_user.id, skip=skip, limit=limit
-        )
-    return banks
+        return paginate(db, _bank.paginate_query())
+    return paginate(db, _bank.paginate_query_with_filters(admin_id=current_user.id))
 
 @router.post('/', response_model=Bank)
 async def create_bank(
