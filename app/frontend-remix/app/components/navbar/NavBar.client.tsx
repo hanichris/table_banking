@@ -3,6 +3,7 @@ import { useState } from 'react';
 import { Link } from '@remix-run/react';
 
 import { useWindowDimensions } from './useDimensions';
+import { SignInSignUp } from '../modals/ModalForm';
 
 const sideBar = {
   open: (height: number = 1000) => ({
@@ -62,13 +63,14 @@ export default function NavBar() {
             </li>
           </ul>
         </nav>
+        <SignInSignUp state={auth} toggleForm={handleClick}/>
       </header>}
       {width < 768 &&
       <motion.nav className='header_menu-btn'
       initial={false}
       animate={isOpen || auth.status !== '' ? 'open' : 'closed'}
       custom={height}>
-        <div id="mobile_menu-overlay"></div>
+        <div id="mobile_menu-overlay" style={isOpen || auth.status !== '' ? {opacity: 1, visibility: 'visible'} : {}}></div>
         <motion.div className='background' custom={height} variants={sideBar}/>
       </motion.nav>}
     </>
