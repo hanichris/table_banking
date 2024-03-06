@@ -1,0 +1,183 @@
+ /* Helpers
+============================= */
+
+.visually-hidden:not(:focus):not(:active) {
+    position: absolute !important;
+    height: 1px;
+    width: 1px;
+    overflow: hidden;
+    clip: rect(1px, 1px, 1px, 1px);
+    white-space: nowrap;
+}
+
+/* FORM */
+form {
+    display: flex;
+    flex-direction: column;
+    margin: 0;
+}
+
+fieldset {
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-start;
+    padding: 0;
+    margin: 0;
+    border: none;
+}
+
+label {
+    cursor: pointer;
+    display: block;
+    white-space: nowrap;
+    font-size: 1.6rem;
+    font-family: var(--font-family);
+    padding: 0 0 .5rem .5rem;
+    text-align: start;
+}
+
+#user-form label {
+    font-variation-settings: 'wght' 550;
+}
+
+input[type=email],
+input[type=password],
+input[type=text],
+input[type=number] {
+    position: relative;
+    width: 100%;
+    line-height: 1;
+    padding: 0 1.4rem;
+    height: 4.6rem;
+    border: none;
+    border-radius: 1rem;
+    box-shadow: inset #d8d8da 0 0 0 1px, inset white 0 0 0 100px !important;
+    transition: box-shadow .1s;
+    font-size: var(--font-size-medium);
+    font-family: var(--font-family);
+}
+
+input[type='radio'] {
+    appearance: none;
+
+    border-radius: 50%;
+    width: 1.6rem;
+    height: 1.6rem;
+
+    border: .2rem solid #999;
+    transition: all .2s linear;
+}
+
+input[type='radio']:checked {
+    border: .6rem solid var(--color-black);
+}
+
+input[type=email]:focus:not(:disabled),
+input[type=number]:focus:not(:disabled),
+input[type=password]:focus:not(:disabled),
+input[type=text]:focus:not(:disabled) {
+    box-shadow: inset var(--color-blue) 0 0 0 1px, inset white 0 0 0 100px !important;
+}
+
+input[type=email]:focus-visible,
+input[type=password]:focus-visible,
+input[type=text]:focus-visible,
+input[type=number]:focus-visible {
+    outline: none;
+}
+
+::placeholder {
+    color: #d8d8da;
+}
+
+/* FORM GROUP */
+
+.form-group-size-m {
+    margin-top: .5rem;
+    margin-bottom: 1.5rem;
+}
+
+.form-group__radio-btns {
+    display: flex;
+    align-items: center;
+    justify-content: flex-start;
+    margin-left: .5rem;
+}
+
+.form-group__radio-btns label {
+    margin-right: 1.5rem;
+    padding-bottom: 0;
+    font-variation-settings: 'wght' 400 !important;
+}
+
+/* FORM FIELD CONTAINER */
+.form-field {
+    position: relative;
+}
+.form-field-container {
+    position: relative;
+}
+
+.form-field-icon {
+    font-style: normal;
+}
+
+/* FORM HELP */
+.form-group .form-help {
+    margin: 0;
+    line-height: 1.3;
+    letter-spacing: .019rem;
+    font-size: var(--font-size-small);
+    font-weight: var(--font-weight-regular);
+    color: var(--color-grey);
+    max-height: 0;
+    overflow: hidden;
+    transition: .3s;
+}
+
+.form-group:focus-within .form-help {
+    max-height: 3rem;
+}
+
+/* FORM ERROR HANDLING */
+input:not(:placeholder-shown) ~ .form-field-icon::after {
+    height: 100%;
+    position: absolute;
+    pointer-events: none;
+    right: .5rem;
+    top: 0;
+    width: 1.3em;
+}
+
+input:required:invalid:not(:focus):not(:placeholder-shown) ~ .form-field-icon::after {
+    content: '✘';
+    color: var(--error-color);
+}
+
+input:required:valid ~ .form-field-icon::after {
+    content: '✔';
+    color: var(--valid-color);
+}
+
+input:required:valid:not(:placeholder-shown) {
+    box-shadow: inset var(--valid-color) 0 0 0 1px, inset white 0 0 0 100px !important;
+}
+
+input:required:invalid:not(:focus):not(:placeholder-shown) {
+    box-shadow: inset var(--error-color) 0 0 0 1px, inset white 0 0 0 100px !important;
+}
+
+/* Password Visibility icon */
+.pwd-icon {
+    position: absolute;
+    right: 1rem;
+    top: .09rem;
+}
+
+.is-disabled {
+    color: var(--color-dark-green);
+}
+
+input[type='email'].disabled, input[type='password'].disabled {
+    color: #d8d8da !important;
+}
