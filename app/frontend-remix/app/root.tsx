@@ -13,10 +13,12 @@ import Header from "./components/navbar/Header";
 
 import stylesUrl from "./styles/index.css?url";
 import navStyleUrl from "./styles/navbar.css?url";
+import modalStyleUrl from "~/styles/modal.css?url";
 
 export const links: LinksFunction = () => [
   { rel: "stylesheet", href: stylesUrl },
   { rel: "stylesheet", href: navStyleUrl },
+  { rel: "stylesheet", href: modalStyleUrl },
 ];
 
 export function Layout({ children }: { children: React.ReactNode }) {
