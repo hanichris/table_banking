@@ -6,11 +6,17 @@ import {
   Scripts,
   ScrollRestoration,
 } from "@remix-run/react";
+import { ClientOnly } from "remix-utils/client-only";
+
+import NavBar from "./components/navbar/NavBar.client";
+import Header from "./components/navbar/Header";
 
 import stylesUrl from "./styles/index.css?url";
+import navStyleUrl from "./styles/navbar.css?url";
 
 export const links: LinksFunction = () => [
   { rel: "stylesheet", href: stylesUrl },
+  { rel: "stylesheet", href: navStyleUrl },
 ];
 
 export function Layout({ children }: { children: React.ReactNode }) {
@@ -32,5 +38,14 @@ export function Layout({ children }: { children: React.ReactNode }) {
 }
 
 export default function App() {
-  return <Outlet />;
+  return (
+    <>
+      <ClientOnly fallback={<Header />}>
+        {() => <NavBar />}
+      </ClientOnly>
+      <div id="detail">
+        <Outlet />
+      </div>
+    </>
+  );
 }
