@@ -4,6 +4,8 @@ import { Link } from '@remix-run/react';
 
 import { useWindowDimensions } from './useDimensions';
 import { SignInSignUp } from '../modals/ModalForm';
+// eslint-disable-next-line import/no-unresolved
+import logoUrl from "/table-bank-transparent-background.svg?url";
 
 const sideBar = {
   open: (height: number = 1000) => ({
@@ -44,13 +46,13 @@ export default function NavBar() {
     <>
       <header id="mobile-header">
         <Link to="/" id="mobile_header-logo">
-          <img src="" alt="logo" width={90} height={60}/>
+          <img src={logoUrl} alt="logo" width={90} height={60}/>
         </Link>
       </header>
       {width > 767 && 
       <header id='header'>
         <Link to="/" id="header-logo">
-          <img src="" alt="logo" width={100} height={60}/>
+          <img src={logoUrl} alt="logo" width={100} height={60}/>
         </Link>
         <nav className='navbar-menu' id='header_nav'>
           <ul>

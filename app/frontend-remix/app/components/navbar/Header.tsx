@@ -1,14 +1,17 @@
+// eslint-disable-next-line import/no-unresolved
+import logoUrl from "/table-bank-transparent-background.svg?url";
+
 export default function Header() {
   return (
     <>
       <header id="mobile-header">
         <a href="/" id="mobile_header-logo">
-          <img src="" alt="logo" width={90} height={60}/>
+          <img src={logoUrl} alt="logo" width={90} height={60}/>
         </a>
       </header>
       <header id='header'>
         <a href="/" id="header-logo">
-          <img src="" alt="logo" width={100} height={60}/>
+          <img src={logoUrl} alt="logo" width={100} height={60}/>
         </a>
         <nav className='navbar-menu' id='header_nav'>
           <ul>
