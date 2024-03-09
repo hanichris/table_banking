@@ -26,9 +26,9 @@ export default function SignIn({ toggleForm, state }: IModalProp) {
               <h2>Sign in</h2>
               <div>Sign in with your email</div>
             </header>
-            <a className="modal_button-left btn btn--icon btn--xs btn--transparent" onClick={() => toggleForm('', false)}>
+            <button className="modal_button-left btn btn--icon btn--xs btn--transparent" onClick={() => toggleForm('', false)}>
               <RiCloseLine />
-            </a>
+            </button>
             <div className="modal-body">
               <Form action="" method="post" className={actionData?.fieldErrors || actionData?.formError ? "has-errors" : ""}>
                 <fieldset>
@@ -105,27 +105,11 @@ export default function SignIn({ toggleForm, state }: IModalProp) {
             <footer className="modal-footer">
               Forgot password? <a className="link link--primary">Reset</a>
               <br />
-              Don't have an account? <a className="link link--primary" onClick={() => toggleForm("signUp", false)}>Sign  up</a>
+              Don&apos;t have an account? <a className="link link--primary" onClick={() => toggleForm("signUp", false)}>Sign  up</a>
             </footer>
           </div>
         </div>
       </div>
     </section>
   );
-}
-
-function validateEmail(email: string) {
-  const re = /[\w!#$%&'*+/=?`{|}~^-]+(?:\.[\w!#$%&'*+/=?`{|}~^-])*@(?:[a-zA-Z0-9-]+\.)+[a-zA-Z]{2,6}/;
-  if (email.length > 55 && !re.test(email)) {
-    return "Invalid email address provided";
-  }
-}
-
-function validatePassword(password: string) {
-  const re = /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*?&])[A-Za-z\d@$!%*?&]{8,}$/;
-  if (re.test(password)) {
-    return `Your password must have a minimum of eight characters,
-    at least one uppercase character, one lowercase character,
-    a number and one special character.`;
-  }
 }
