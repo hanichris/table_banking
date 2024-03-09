@@ -1,4 +1,4 @@
-import type { LinksFunction } from "@remix-run/node";
+import type { ActionFunctionArgs, LinksFunction } from "@remix-run/node";
 import {
   Links,
   Meta,
@@ -7,6 +7,8 @@ import {
   ScrollRestoration,
 } from "@remix-run/react";
 import { ClientOnly } from "remix-utils/client-only";
+
+import { badRequest } from "./utils/request.server";
 
 import NavBar from "./components/navbar/NavBar.client";
 import Header from "./components/navbar/Header";
@@ -54,3 +56,54 @@ export default function App() {
   );
 }
 
+
+function validateEmail(email: string) {
+  const re = /[\w!#$%&'*+/=?`{|}~^-]+(?:\.[\w!#$%&'*+/=?`{|}~^-])*@(?:[a-zA-Z0-9-]+\.)+[a-zA-Z]{2,6}/;
+  if (email.length > 55 || !re.test(email)) {
+    return "Invalid email provided";
+  }
+}
+
+function validateePassword(password: string) {
+  const re = /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*?&])[A-Za-z\d@$!%*?&]{8,}$/;
+  if (!re.test(password)) {
+    return `Password must have a minimum of eight characters,
+    at least one uppercase letter, one lowercase letter,
+    a number and one special character`;
+  }
+}
+
+
+export const action = async ({
+  request
+}: ActionFunctionArgs) => {
+  const formData = await request.formData();
+  const authType = formData.get("auth");
+  if (authType === "login") {
+    const username = formData.get("username");
+    const password = formData.get("password");
+
+    if (typeof username !== "string" || typeof password !== "string") {
+      return badRequest({
+        fieldErrors: null,
+        fields: null,
+        formError: "Form not submitted correctly",
+      });
+    }
+
+    const fields = { username, password };
+    const fieldErrors = {
+      username: validateEmail(username),
+      password: validateePassword(password),
+    }
+
+    if (Object.values(fieldErrors).some(Boolean)) {
+      return badRequest({
+        fieldErrors,
+        fields,
+        formError: null,
+      });
+    }
+  }
+  return null;
+}
