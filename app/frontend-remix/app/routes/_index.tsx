@@ -2,6 +2,9 @@ import type { LinksFunction, MetaFunction } from "@remix-run/node";
 import { CiBank } from 'react-icons/ci';
 
 import homeStyles from "../styles/home.css?url";
+import modalStyleUrl from "../styles/modal.css?url";
+import formModalStyleUrl from "../styles/form.modal.css?url";
+import spinnerStyleUrl from "../styles/spinner.css?url";
 
 export const meta: MetaFunction = () => {
   return [
@@ -12,6 +15,9 @@ export const meta: MetaFunction = () => {
 
 export const links: LinksFunction = () => [
   { rel: "stylesheet", href: homeStyles },
+  { rel: "stylesheet", href: modalStyleUrl },
+  { rel: "stylesheet", href: formModalStyleUrl },
+  { rel: "stylesheet", href: spinnerStyleUrl },
 ];
 
 export default function Index() {
