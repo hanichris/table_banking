@@ -1,12 +1,19 @@
+import { Form, useActionData, useNavigation } from "@remix-run/react";
 import { useState } from "react";
 import { RiCloseLine } from "react-icons/ri";
 import { VscEye, VscEyeClosed } from "react-icons/vsc";
 
 import { IModalProp } from "~/interfaces";
+import { Spinner } from "../Spinner";
+import { action } from "~/root";
 
 export default function SignIn({ toggleForm, state }: IModalProp) {
   const [pwdType, setPwdType] = useState("password")
+  const navigation = useNavigation();
+  const actionData = useActionData<typeof action>();
+
   const open = state.status === "signIn" && !state.isRendered;
+  const isSubmitting = navigation.state === "submitting";
 
   const togglePwdType = () => pwdType === "password" ? setPwdType("text") : setPwdType("password");
 
@@ -23,49 +30,72 @@ export default function SignIn({ toggleForm, state }: IModalProp) {
               <RiCloseLine />
             </a>
             <div className="modal-body">
-              <form action="" method="post">
+              <Form action="" method="post" className={actionData?.fieldErrors || actionData?.formError ? "has-errors" : ""}>
                 <fieldset>
                   <legend className="visually-hidden">Your personal information</legend>
+                  <input type="hidden" name="auth" value="login"/>
                   <div className="form-group">
                     <label htmlFor="your-email">Email</label>
-                    <div className="form-field">
+                    <div className={actionData?.fieldErrors ? "form-field email-error" : "form-field"}>
                       <span className="form-field-container">
                         <input
                           type="email"
                           name="username"
-                          // value={}
+                          defaultValue={actionData?.fields?.username}
                           id="your-email"
                           placeholder="john@email.com"
                           pattern="[\w!#$%&'*+\/=?`\{\|\}~^\-]+(?:\.[\w!#$%&'*+\/=?`\{\|\}~^\-])*@(?:[a-zA-Z0-9\-]+\.)+[a-zA-Z]{2,6}"
                           maxLength={55}
                           autoComplete="on"
+                          disabled={isSubmitting}
+                          className={isSubmitting ? "disabled": ""}
                           required/>
+                          {actionData?.fieldErrors?.username ? (
+                            <p className="form-error">{actionData.fieldErrors.username}</p>
+                          ) : null}
                       </span>
                     </div>
                   </div>
                   <div className="form-group form-group-size-m">
                     <label htmlFor="your-password">Password</label>
-                    <div className="form-field">
+                    <div className={actionData?.fieldErrors ? "form-field pwd-error" : "form-field"}>
                       <span className="form-field-container">
                         <input
                           type={pwdType}
                           name="password"
-                          // value={}
+                          defaultValue={actionData?.fields?.password}
                           id="your-password"
                           placeholder="password"
                           minLength={8}
-                          required/>
+                          required
+                          disabled={isSubmitting}
+                          className={isSubmitting ? "disabled": ""}
+                          />
                           <a className="pwd-icon" onClick={togglePwdType}>
                             { pwdType === "password" ? <VscEye /> :<VscEyeClosed />}
                           </a>
+                          {actionData?.fieldErrors?.password ? (
+                            <p className="form-error">{actionData.fieldErrors.password}</p>
+                          ) : null}
                       </span>
                     </div>
                   </div>
-                  <button type="submit" className="btn btn--m btn--primary">
-                    Sign in
-                  </button>
+                  <div>
+                  </div>
+                  <div>
+                    {actionData?.formError ? (
+                      <p role="alert">{actionData.formError}</p>
+                    ) : null}
+                    <button
+                      type="submit"
+                      disabled={isSubmitting}
+                      className={isSubmitting ? "btn btn--m btn--primary is-disabled" : "btn btn--m btn--primary"}>
+                      Sign in
+                      {isSubmitting && <Spinner />}
+                    </button>
+                  </div>
                 </fieldset>
-              </form>
+              </Form>
               <div className="small-text _m-t-3">
                 By continuing you agree to our <a className="link link--black">Terms of Service</a>.
                 <br />
@@ -82,4 +112,20 @@ export default function SignIn({ toggleForm, state }: IModalProp) {
       </div>
     </section>
   );
+}
+
+function validateEmail(email: string) {
+  const re = /[\w!#$%&'*+/=?`{|}~^-]+(?:\.[\w!#$%&'*+/=?`{|}~^-])*@(?:[a-zA-Z0-9-]+\.)+[a-zA-Z]{2,6}/;
+  if (email.length > 55 && !re.test(email)) {
+    return "Invalid email address provided";
+  }
+}
+
+function validatePassword(password: string) {
+  const re = /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*?&])[A-Za-z\d@$!%*?&]{8,}$/;
+  if (re.test(password)) {
+    return `Your password must have a minimum of eight characters,
+    at least one uppercase character, one lowercase character,
+    a number and one special character.`;
+  }
 }
