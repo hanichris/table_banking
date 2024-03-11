@@ -18,6 +18,7 @@ import navStyleUrl from "./styles/navbar.css?url";
 
 // eslint-disable-next-line import/no-unresolved
 import tableBankFaviconUrl from "/table-bank-website-favicon-color.webp?url";
+import { api } from "./utils/api.server";
 
 export const links: LinksFunction = () => [
   { rel: "icon", href: tableBankFaviconUrl },
@@ -79,6 +80,7 @@ export const action = async ({
 }: ActionFunctionArgs) => {
   const formData = await request.formData();
   const authType = formData.get("auth");
+
   if (authType === "login") {
     const username = formData.get("username");
     const password = formData.get("password");
@@ -104,6 +106,19 @@ export const action = async ({
         formError: null,
       });
     }
+    //login to get the user.
+    //if there is no user, return the fields and a formError.
+    //if there is a user, create a session and redirect to /dashboard.
+    const response = await api.getAccessToken(username, password);
+    if (!response.ok) {
+      return badRequest({
+        fieldErrors: null,
+        fields,
+        formError: "Incorrect username or password"
+      });
+    }
+    const json = await response.json();
+    console.log(json);
   }
   return null;
 }
