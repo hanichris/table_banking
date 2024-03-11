@@ -36,7 +36,7 @@ export default function SignIn({ toggleForm, state }: IModalProp) {
                   <input type="hidden" name="auth" value="login"/>
                   <div className="form-group">
                     <label htmlFor="your-email">Email</label>
-                    <div className={actionData?.fieldErrors ? "form-field email-error" : "form-field"}>
+                    <div className={actionData?.fieldErrors || actionData?.formError ? "form-field email-error" : "form-field"}>
                       <span className="form-field-container">
                         <input
                           type="email"
@@ -58,7 +58,7 @@ export default function SignIn({ toggleForm, state }: IModalProp) {
                   </div>
                   <div className="form-group form-group-size-m">
                     <label htmlFor="your-password">Password</label>
-                    <div className={actionData?.fieldErrors ? "form-field pwd-error" : "form-field"}>
+                    <div className={actionData?.formError || actionData?.fieldErrors ? "form-field pwd-error" : "form-field"}>
                       <span className="form-field-container">
                         <input
                           type={pwdType}
@@ -84,7 +84,7 @@ export default function SignIn({ toggleForm, state }: IModalProp) {
                   </div>
                   <div>
                     {actionData?.formError ? (
-                      <p role="alert">{actionData.formError}</p>
+                      <p className="form-error" role="alert">{actionData.formError}</p>
                     ) : null}
                     <button
                       type="submit"
