@@ -12,3 +12,9 @@ export interface IModalProp {
   state: TState;
   toggleForm: (state?: string, open?: boolean) => void;
 }
+
+export interface IMenuProp extends IModalProp {
+  isOpen: boolean;
+  onHomepage: boolean;
+  toggle: () => void;
+}
