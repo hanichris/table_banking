@@ -6,6 +6,8 @@ import { useWindowDimensions } from './useDimensions';
 import { SignInSignUp } from '../modals/ModalForm';
 // eslint-disable-next-line import/no-unresolved
 import logoUrl from "/table-bank-transparent-background.svg?url";
+import { Menu } from './Menu';
+import { MenuToggle } from './MenuToggle';
 
 const sideBar = {
   open: (height: number = 1000) => ({
@@ -71,6 +73,8 @@ export default function NavBar() {
       custom={height}>
         <div id="mobile_menu-overlay" style={isOpen || auth.status !== '' ? {opacity: 1, visibility: 'visible'} : {}}></div>
         <motion.div className='background' custom={height} variants={sideBar}/>
+        <Menu isOpen={isOpen} toggleForm={handleClick} state={auth} toggle={() => toggleOpen()} onHomepage={isHomepage}/>
+        <MenuToggle toggle={() => toggleOpen()} />
       </motion.nav>}
     </>
   );
