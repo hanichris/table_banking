@@ -19,4 +19,6 @@ export const api = {
       body: params,
     });
   },
+  getMe: async (token:string) => fetch(`${apiEndpoint}/users/me`, authHeader(token)),
+  
 };
