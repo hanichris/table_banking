@@ -5,6 +5,7 @@ import {
   Outlet,
   Scripts,
   ScrollRestoration,
+  redirect,
 } from "@remix-run/react";
 import { ClientOnly } from "remix-utils/client-only";
 
@@ -19,6 +20,8 @@ import navStyleUrl from "./styles/navbar.css?url";
 // eslint-disable-next-line import/no-unresolved
 import tableBankFaviconUrl from "/table-bank-website-favicon-color.webp?url";
 import { api } from "./utils/api.server";
+import { TToken } from "./interfaces";
+import { commitSession, getSession } from "./utils/session.server";
 
 export const links: LinksFunction = () => [
   { rel: "icon", href: tableBankFaviconUrl },
@@ -117,8 +120,17 @@ export const action = async ({
         formError: "Incorrect username or password"
       });
     }
-    const json = await response.json();
-    console.log(json);
+
+    const json: TToken = await response.json();
+    const session = await getSession();
+    session.set("token", json.access_token);
+
+    return redirect("dashboard", {
+      headers: {
+        "Set-Cookie": await commitSession(session),
+      }
+    })
+    
   }
   return null;
 }
