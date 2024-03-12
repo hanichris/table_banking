@@ -1,5 +1,8 @@
-import type { LinksFunction, MetaFunction } from "@remix-run/node";
+import type { LinksFunction, MetaFunction, LoaderFunctionArgs } from "@remix-run/node";
+import { redirect } from "@remix-run/node";
 import { CiBank } from 'react-icons/ci';
+
+import { getSession } from "../utils/session.server";
 
 import homeStyles from "../styles/home.css?url";
 import modalStyleUrl from "../styles/modal.css?url";
@@ -19,6 +22,19 @@ export const links: LinksFunction = () => [
   { rel: "stylesheet", href: formModalStyleUrl },
   { rel: "stylesheet", href: spinnerStyleUrl },
 ];
+
+export const loader = async ({
+  request
+}: LoaderFunctionArgs) => {
+  const session = await getSession(
+    request.headers.get("Cookie")
+  );
+
+  if (session.has("token")) {
+    return redirect("dashboard");
+  }
+  return null;
+}
 
 export default function Index() {
   return (
