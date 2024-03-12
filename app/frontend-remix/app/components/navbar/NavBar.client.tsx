@@ -1,6 +1,6 @@
 import { motion, useCycle } from 'framer-motion';
 import { useState } from 'react';
-import { Link } from '@remix-run/react';
+import { Link, useLocation } from '@remix-run/react';
 
 import { useWindowDimensions } from './useDimensions';
 import { SignInSignUp } from '../modals/ModalForm';
@@ -35,6 +35,8 @@ export default function NavBar() {
     isRendered: false,
     status: '',
   });
+  const location = useLocation();
+  const isHomepage = location.pathname === "/";
 
   const handleClick = (state = '', open = true) => setAuth({
     ...auth,
@@ -57,15 +59,10 @@ export default function NavBar() {
         <nav className='navbar-menu' id='header_nav'>
           <ul>
             <li><span className='divider'></span></li>
-            <li>
-              <a id="header_signin-btn" onClick={() => handleClick("signIn")}>Sign in</a>
-            </li>
-            <li>
-            <a id="header_signup-btn" className="btn btn--primary btn--s" onClick={() => handleClick("signUp")}>Sign up</a>
-            </li>
+            
           </ul>
         </nav>
-        <SignInSignUp state={auth} toggleForm={handleClick}/>
+        {isHomepage && <SignInSignUp state={auth} toggleForm={handleClick}/>}
       </header>}
       {width < 768 &&
       <motion.nav className='header_menu-btn'
