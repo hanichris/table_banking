@@ -1,0 +1,464 @@
+.dashboard {
+    display: flex;
+}
+
+.dashboard--sidebar {
+    display: none;
+    box-shadow: rgb(0, 0, 0, 0.075) 0.1rem 0;
+    max-width: 22rem;
+    min-width: 22rem;
+}
+
+.dashboard--sidebar_nav {
+    flex-grow: 1;
+    padding: 2rem;
+    overflow: auto;
+}
+
+.dashboard--sidebar_nav a {
+    font-size: 1.6rem;
+    border-radius: .8rem;
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+    padding: 1rem 1.2rem;
+}
+
+.dashboard--sidebar_nav li:not(:last-child) {
+    margin-bottom: 1rem;
+}
+
+.dashboard--sidebar_nav a:hover {
+    background-color: var(--color-light-grey);
+}
+
+.dashboard--sidebar_nav a.active {
+    background-color: #ededee;
+}
+
+.dashboard--sidebar_nav a.active div::after {
+    font-variation-settings: 'wght' 650;
+}
+
+.dashboard--sidebar_nav a div::after {
+    content: attr(data-label);
+    font-variation-settings: 'wght' 450;
+}
+
+.dashboard--sidebar_nav a > .icon--dashboard {
+    font-size: 2rem;
+}
+
+.dashboard_content {
+    flex-grow: 2;
+    overflow: auto;
+}
+
+main.dashboard_content.loading {
+    opacity: 0.25;
+    transition: opacity 200ms;
+    transition-delay: 200ms;
+}
+
+.dashboard_content .wrapper div[data-label='salutations']::after {
+    content: 'Welcome to your future of table banking';
+    color: var(--color-medium-grey);
+    font-size: 1.2rem;
+    font-variation-settings: 'wght' 300;
+    letter-spacing: 1rem;
+    text-transform: uppercase;
+
+}
+
+#dashboard_bank-listings, #users-listing {
+    padding: 3rem;
+    position: relative;
+}
+
+#dashboard_bank-listings > .bank-listings__top, #users-listing > .users-listing__top {
+    position: relative;
+}
+
+#dashboard_bank-listings .bank-listings__title, #users-listing .users-listing__title {
+    font-size: 2.4rem;
+    font-variation-settings: 'wght' 900;
+    height: 4rem;
+    line-height: 4rem;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+}
+
+#dashboard_bank-listings .bank-listings__filters, .users-listing__filters {
+    display: flex;
+    position: absolute;
+    right: 0;
+    top: .2rem;
+}
+
+#dashboard_bank-listings .bank-listings__filters > .bank-listings__search,
+.users-listing__filters > .users-listing__search {
+    display: none;
+    width: 100%;
+}
+
+.bank-listings__search > form,
+.users-listing__search > form {
+    flex-direction: row;
+    position: relative;
+}
+
+.bank-listings__search > form  input[type='search'],
+.users-listing__search > form  input[type='search'] {
+    border: none;
+    outline: none;
+    transition: box-shadow .1s;
+    box-shadow: inset 0 0 0 .1rem #d8d8da, inset 0 0 0 10rem white;
+    border-radius: .8rem;
+    height: 3.6rem;
+    width: 100%;
+    padding: 0 1rem;
+    padding-right: 3.6rem;
+}
+
+.bank-listings__search > form  input[type='search'] + span.input-search__search-btn,
+#search-form span.input-search__clear-search,
+.users-listing__search > form input[type='search'] +  span.input-search__search-btn {
+    cursor: pointer;
+    position: absolute;
+    right: 0;
+    height: 3.6rem;
+    width: 2.6rem;
+    align-items: center;
+    transition: all 0.15s ease;
+}
+
+.bank-listings__search > form  input[type='search'] + span.input-search__search-btn,
+.users-listing__search > form  input[type='search'] + span.input-search__search-btn {
+    display: inline-flex;
+}
+
+#search-form span.input-search__clear-search {
+    display: none;
+}
+
+.bank-listings__search > form  input[type='search']:focus,
+.users-listing__search > form  input[type='search']:focus {
+    box-shadow: inset 0 0 0 .1rem #0066ff, inset 0 0 0 10rem white;
+}
+
+#banklist-new_bank-btn {
+    display: none;
+}
+
+#banklist-new_bank-btn, #mobile__new-btn {
+    margin-left: 1.5rem;
+}
+
+#mobile__new-btn {
+    background-color: var(--color-dark-green);
+    color: var(--color-white);
+}
+
+#dashboard_bank-listings .bank-listings__filters .icon {
+    position: relative;
+    height: inherit;
+    width: 1.8rem;
+}
+
+#dashboard_bank-listings .bank-listings__filters .icon > svg {
+    position: absolute;
+    top: calc(50% - .9rem);
+    left: 0;
+}
+
+#dashboard_bank-listings.has-search .bank-listings__search,
+#users-listing.has-search .users-listing__search {
+    display: block;
+}
+
+#dashboard_bank-listings.has-search #mobile__search-btn,
+#users-listing.has-search #mobile__search-btn {
+    display: none;
+}
+
+#dashboard_bank-listings .bank-listings__body, #users-listing .users-listing__body {
+    margin-top: 3rem;
+}
+
+.users-listing__body {
+    overflow: auto;
+}
+
+.bank-listings__body .bank-listings_content_none {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    min-height: calc(100vh - 19rem);
+}
+
+.bank-listings_content_results {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(25rem, 1fr));
+    gap: 1.5rem 1.5rem;
+}
+
+.bank-card {
+    border-radius: 1.8rem;
+    /* background: linear-gradient(#e66465, #9198e5); */
+    background-color: var(--color-light-grey);
+    box-shadow: .5rem .5rem .5rem rgb(0, 0, 0, 0.1);
+    padding: 2.5rem;
+}
+
+.bank-card .bank-name {
+    font-variation-settings: 'wght' 700;
+    font-size: x-large;
+}
+
+.bank-card__body div[data-label]::after {
+    content: attr(data-label);
+    text-transform: uppercase;
+    font-size: 1rem;
+    font-variation-settings: 'wght' 200;
+    letter-spacing: 1rem;
+}
+
+.bank-card__body .bank-card__amount {
+    font-size: 2.4rem;
+    font-variation-settings: 'wght' 450;
+}
+
+.bank-card__body .bank-card__amount + a {
+    display: inline-block;
+    width: 100%;
+}
+
+.wrapper.bank-page__wrapper {
+    justify-content: flex-start;
+}
+
+#bank-page__top {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: space-between;
+    margin-bottom: 8rem;
+}
+
+#bank-page__top > .bank-page__header {
+    margin: 0 0 5rem;
+}
+
+#bank-page__top .bank-page__title {
+    font-size: 5rem;
+    font-variation-settings: 'wght' 900;
+    letter-spacing: -.225rem;
+    line-height: 5.5rem;
+}
+
+#bank-page__top .btn-compound {
+    display: flex;
+    gap: 1rem;
+}
+
+#bank-page .bank-page__container {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 1.5rem;
+}
+
+#bank-page .bank-page__container > div {
+    flex-basis: 25rem;
+    border-radius: 1.4rem;
+    /* background: linear-gradient(.25turn, var(--color-light-grey), 60%, var(--color-medium-grey)); */
+    background-color: var(--color-light-grey);
+    box-shadow: .5rem .5rem .5rem rgb(0, 0, 0, 0.1);
+    padding: 2.5rem;
+    flex-grow: 1;
+}
+
+#bank-page .bank-page__container > div:first-child {
+    flex-grow: 9999;
+}
+
+/* #bank-page .bank-page__container > div:nth-child(2) {
+    flex-grow: 1;
+} */
+
+
+#bank-page div[data-label]::after {
+    content: attr(data-label);
+    font-size: 1rem;
+    letter-spacing: 1rem;
+    text-transform: uppercase;
+}
+
+.btn-compound button {
+    display: flex;
+    align-items: center;
+}
+
+.btn-compound button span {
+    font-size: 1.6rem;
+    font-variation-settings: 'wght' 600;
+}
+
+#bank-page__top + .bank-page__body {
+    margin-top: 7rem;
+}
+
+table {
+    border-collapse: collapse;
+    display: grid;
+    grid-template-columns:
+        minmax(10rem, 1fr) /* ID column */
+        minmax(15rem, 1.67fr) /* Name column */
+        minmax(15rem, 1.67fr) /* Email column */
+        minmax(7.5rem, 1.67fr) /* Active column */
+        minmax(9.5rem, 1.67fr) /* Superuser column */
+        minmax(5.5rem, 1.67fr) /* Edit column */
+        minmax(8.5rem, 1.67fr); /* Delete column */
+    row-gap: 1rem;
+}
+
+thead, tbody, tr {
+    display: contents;
+}
+
+thead {
+    position: sticky;
+    top: 0;
+}
+
+th,
+td {
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+}
+
+th {
+    background-color: var(--color-dark-green);
+    box-shadow: 0 .1rem rgb(0, 0, 0, 0.075);
+    color: var(--color-white);
+    font-variation-settings: 'wght' 650;
+    line-height: 2.3;
+}
+
+td {
+    text-align: center;
+}
+
+td.name_col,
+td.email_col {
+    text-align: left;
+}
+
+td.del_col a,
+td.edit_col a {
+    display: block;
+}
+
+td.del_col a {
+    cursor: pointer;
+}
+
+tr:nth-child(even) td {
+    background-color: #f8f6ff;
+}
+
+td.skeleton-item {
+    grid-column-start: 1;
+    grid-column-end: 8;
+}
+
+tr:nth-child(even) td.skeleton-item {
+    background: none;
+}
+
+td.no-results {
+    grid-column-start: 1;
+    grid-column-end: 8;
+}
+
+.no-results__container {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.no-results__container svg {
+    width: 5rem;
+    height: 5rem;
+    color: #7d7c83;
+}
+
+td.no-results span{
+    color: #7d7c83;
+    display: block;
+    margin: 1rem 0 2rem;
+}
+
+@media (min-width: 768px){
+    #bank-page__top {
+        margin-bottom: 10rem;
+    }
+    .dashboard--sidebar {
+        display: flex;
+        flex-direction: column;
+        min-height: calc(100vh - 6rem);
+    }
+    .dashboard_content {
+        height: 100%;
+    }
+    #dashboard_bank-listings {
+        padding: 4rem;
+    }
+    #dashboard_bank-listings .bank-listings__title {
+        font-size: 3.5rem;
+    }
+    #mobile__search-btn {
+        display: none;
+    }
+    #dashboard_bank-listings .bank-listings__filters > .bank-listings__search,
+    .users-listing__filters > .users-listing__search {
+        display: block;
+        width: auto;
+    }
+    .bank-listings__search > form  input[type='search'],
+    .users-listing__search > form  input[type='search'] {
+        width: 18rem;
+    }
+    #banklist-new_bank-btn span {
+        font-variation-settings: 'wght' 650;
+    }
+}
+
+@media (min-width: 992px) {
+    #bank-page__top {
+        flex-direction: row;
+        text-align: left;
+    }
+    #bank-page__top > .bank-page__header {
+        margin: 0 15rem 0 0;
+    }
+    #mobile__new-btn {
+        display: none;
+    }
+    #banklist-new_bank-btn {
+        display: inline-flex;
+        align-items: center;
+        gap: 1rem;
+        background-color: var(--color-dark-green);
+        color: var(--color-white);
+    }
+}
+
+#search-form > input[type='search']:not(:placeholder-shown):not(:focus) + .input-search__search-btn {
+    display: none;
+}
+
+#search-form > input[type='search']:not(:placeholder-shown):not(:focus) ~ .input-search__clear-search {
+    display: inline-flex;
+}
