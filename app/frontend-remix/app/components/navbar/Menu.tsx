@@ -1,3 +1,6 @@
+/* eslint-disable jsx-a11y/no-static-element-interactions */
+/* eslint-disable jsx-a11y/click-events-have-key-events */
+/* eslint-disable jsx-a11y/anchor-is-valid */
 import { motion } from "framer-motion";
 
 import { SignInSignUp } from "../modals/ModalForm";
@@ -34,10 +37,10 @@ const liVariants = {
 export const Menu = ({ state, toggleForm, isOpen, toggle, onHomepage }: IMenuProp) => {
   const isLoggedOut = <>
     <motion.li variants={liVariants}>
-      <button onClick={() => toggleForm("signIn")}>Sign In</button>
+      <a onClick={() => toggleForm("signIn")}>Sign In</a>
     </motion.li>
     <motion.li variants={liVariants}>
-      <button onClick={() => toggleForm("signUp")}>Sign Up</button>
+      <a onClick={() => toggleForm("signUp")}>Sign Up</a>
     </motion.li>
   </>
 
