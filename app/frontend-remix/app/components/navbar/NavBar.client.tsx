@@ -46,6 +46,19 @@ export default function NavBar() {
     status: state,
   });
 
+  const loggedOut = <>
+    <li>
+      <a id='header_signin-btn' onClick={() => handleClick("signIn")}>Sign in</a>
+    </li>
+    <li>
+      <a id='header_signup-btn' className='btn btn--primary btn--s' onClick={() => handleClick("signUp")}>Sign up</a>
+    </li>
+  </>
+
+  const loggedIn = <li>
+    <a id="header_signout-btn">Sign out</a>
+  </li>
+
   return (
     <>
       <header id="mobile-header">
@@ -61,7 +74,7 @@ export default function NavBar() {
         <nav className='navbar-menu' id='header_nav'>
           <ul>
             <li><span className='divider'></span></li>
-            
+            {isHomepage === true ? loggedOut: loggedIn}
           </ul>
         </nav>
         {isHomepage && <SignInSignUp state={auth} toggleForm={handleClick}/>}
