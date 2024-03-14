@@ -61,7 +61,7 @@ export const Menu = ({ state, toggleForm, isOpen, toggle, onHomepage }: IMenuPro
 
   return (
     <>
-      <motion.ul variants={ulVariants} className={isOpen || state.status != '' ? "is-visible" : ""}>
+      <motion.ul variants={ulVariants} className={isOpen || state.status !== '' ? "is-visible" : ""}>
         <motion.li variants={liVariants}>
           <div>Account</div>
         </motion.li>
