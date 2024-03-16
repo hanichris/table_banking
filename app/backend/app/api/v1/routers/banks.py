@@ -75,7 +75,7 @@ async def create_bank(
             response_model=BankUsers)
 async def read_bank(
     db: Annotated[Session, Depends(deps.get_db)],
-    bank_id: int,
+    bank_id: str,
 ):
     """Get information regarding a particular bank.
     
@@ -100,8 +100,8 @@ async def read_bank(
 @router.patch('/{bank_id}/users/{user_id}', response_model=BankUsers)
 async def add_or_remove_bank_member(
     db: Annotated[Session, Depends(deps.get_db)],
-    bank_id: int,
-    user_id: int,
+    bank_id: str,
+    user_id: str,
     current_user: Annotated[mdl.User, Depends(deps.get_current_active_user)],
     r: Annotated[
         bool,
@@ -171,7 +171,7 @@ async def add_or_remove_bank_member(
 async def update_bank(
     db: Annotated[Session, Depends(deps.get_db)],
     current_user: Annotated[mdl.User, Depends(deps.get_current_active_user)],
-    bank_id: int,
+    bank_id: str,
     bank_in: BankUpdate
 ):
     stored_bank = _bank.get(db, id=bank_id)
