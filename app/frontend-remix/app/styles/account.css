@@ -1,0 +1,114 @@
+.wrapper--align-top {
+    justify-content: flex-start;
+}
+
+.page-title {
+    margin-bottom: 6rem;
+    text-align: center;
+}
+
+.page-title__header {
+    font-size: 5rem;
+    font-variation-settings: 'wght' 900;
+    margin-bottom: 3rem;
+}
+
+.page_title__subheader {
+    color: #7d7c83;
+    font-size: 2rem;
+    line-height: 1.7;
+    margin: 0;
+}
+
+.account-content {
+    display: flex;
+    flex-direction: column;
+}
+
+@media (min-width: 1024px) {
+    .account-content {
+        flex-direction: row;
+        gap: 1.5rem;
+    }
+    .account-content--sidebar {
+        flex-basis: 30rem;
+        flex-grow: 1;
+    }
+
+    .account-content--details {
+        flex-basis: 60rem;
+        flex-grow: 999;
+    }
+    
+}
+
+.account-content--sidebar {
+    margin: 2rem 0;
+}
+
+.sidebar {
+    background-color: #f7f7f8;
+    border-radius: 1rem;
+    padding: 3rem;
+}
+
+.sidebar nav {
+    font-size: 1.7rem;
+    margin: -1rem 0;
+}
+
+.sidebar nav a {
+    padding: .5rem 0;
+}
+
+.account-content--details {
+    margin: 2rem 0;
+}
+
+.panel {
+    border-radius: 1.4rem;
+    box-shadow: inset 0 0 0 0.1rem rgb(0, 0, 0, 0.11);
+    text-align: left;
+}
+
+.panel header {
+    padding: 3rem;
+    position: relative;
+}
+
+.panel-body {
+    padding: 3rem;
+    padding-top: 0;
+}
+
+label.account_full-name_label,
+label.account_email_label,
+label.account_pwd_label {
+    font-size: 1.3rem;
+    font-variation-settings: 'wght' 550;
+    letter-spacing: 0;
+    padding-bottom: 1.4rem;
+}
+
+.panel h3 {
+    font-size: 2.4rem;
+    font-variation-settings: 'wght' 800;
+    letter-spacing: -.108rem;
+    line-height: 2.64rem;
+}
+
+.alert {
+    border-radius: 1rem;
+    line-height: 1.375;
+    padding: 1.2rem;
+    text-align: center;
+}
+
+.alert-info {
+    background-color: #e6f0ff;
+    color: #0047b3;
+}
+
+.btn.disable {
+    cursor: not-allowed;
+}
