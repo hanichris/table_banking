@@ -1,6 +1,7 @@
 #!/usr/bin/env python3
 """Define CRUD operations for SQLAlchemy class `Bank`"""
 from typing import Sequence
+from uuid import UUID
 
 from fastapi.encoders import jsonable_encoder
 from sqlalchemy import select
@@ -16,7 +17,7 @@ class CRUDBank(CRUDBase[Bank, BankCreate, BankUpdate]):
     def create_with_owner(
             self,
             db: Session, /, *,
-            admin_id: int,
+            admin_id: UUID,
             obj_in: BankCreate
     ) -> Bank:
         """Create a new table bank and link it with an admin.
